@@ -24,7 +24,7 @@
     <!--Title-->
 
 
-<title>天宇</title>
+<title>Android NDK开发系列教程1：环境搭建及基本代码结构 | 天宇</title>
 
 
     <link rel="alternate" href="/atom.xml" title="天宇" type="application/atom+xml">
@@ -36,6 +36,8 @@
 
 
 
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css?rev=9.12.0">
 
 
 <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css?rev=3.3.4">
@@ -134,154 +136,16 @@ var _hmt = _hmt || [];
     <section class="content-wrap">
         <div class="container">
             <div class="row">
-                <main class="col-md-8 main-content ">
-                    <div class="carousel">
-    <img src="/img/head-img.jpg">
-</div>
-
-
-
-
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
 <article class="post">
-    
-    <div class="post-content">
-        <div class="post-head home-post-head">
-            <h1 class="post-title">
-                <a href="/2018/10/05/Kotlin学习笔记二-常用操作符/">Kotlin学习笔记二--常用操作符</a>
-            </h1>
-            <div class="post-meta">  &bull;
-                <time class="post-date" datetime="" title="">
-                    2018年10月05日
-                </time>
-            </div>
-        </div>
-        <p class="brief">
-            ?操作符表示这个对象可能为空
-//在变量类型后面加上问号表示该变量是可空变量
-var name: String? = &quot;test&quot;
-返回值类型若可能为空则也需加?
-fun parseInt(str: String)...
-        </p> 
-    </div>
-    <footer class="post-footer clearfix">
-        <div class="pull-left tag-list">
-            <div class="post-meta">
-    
-    
-    <span class="categories-meta fa-wrap">
-        <i class="fa fa-folder-open-o"></i>
-        <span>Kotlin</span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-tags"></i>
-        <span class="tags-meta">
+    <div class="post-head">
+        <h1 id="Android NDK开发系列教程1：环境搭建及基本代码结构">
             
-            Kotlin学习
+            Android NDK开发系列教程1：环境搭建及基本代码结构
             
-        </span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-clock-o"></i>
-        <span class="date-meta">2018/10/05</span>
-    </span>
-
-</div>
-
-        </div>
-
-        <div class="post-permalink"> 
-            <a href="/2018/10/05/Kotlin学习笔记二-常用操作符/" class="btn btn-default">阅读全文</a>
-        </div>
-    </footer>
-</article>
-
-
-<article class="post">
-    
-    <div class="post-content">
-        <div class="post-head home-post-head">
-            <h1 class="post-title">
-                <a href="/2018/10/03/Kotlin学习笔记一-基本语法/">Kotlin学习笔记一</a>
-            </h1>
-            <div class="post-meta">  &bull;
-                <time class="post-date" datetime="" title="">
-                    2018年10月03日
-                </time>
-            </div>
-        </div>
-        <p class="brief">
-            Kotlin简介Kotlin是一门与Swift类似的静态类型JVM语言，由JetBrains设计开发并开源。与Java相比，Kotlin的语法更简洁、更具表达性，而且提供了更多的特性，比如，高阶函数、操作符重载、字符串模板。它与Jav...
-        </p> 
-    </div>
-    <footer class="post-footer clearfix">
-        <div class="pull-left tag-list">
-            <div class="post-meta">
-    
-    
-    <span class="categories-meta fa-wrap">
-        <i class="fa fa-folder-open-o"></i>
-        <span>Kotlin</span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-tags"></i>
-        <span class="tags-meta">
-            
-            Kotlin学习
-            
-        </span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-clock-o"></i>
-        <span class="date-meta">2018/10/03</span>
-    </span>
-
-</div>
-
-        </div>
-
-        <div class="post-permalink"> 
-            <a href="/2018/10/03/Kotlin学习笔记一-基本语法/" class="btn btn-default">阅读全文</a>
-        </div>
-    </footer>
-</article>
-
-
-<article class="post">
-    
-        <div class="post-media">
-            <a href="javascript:">
-                <img class="img-ajax" src="/img/loading.gif"  data-src="//img-blog.csdn.net/20180322123239909?watermark/2/text/Ly9ibG9nLmNzZG4ubmV0L2h0eTEwNTMyNDAxMjM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"   alt="Android中Handler导致内存泄漏的原理分析"> 
-            </a>
-        </div>
-    
-    <div class="post-content">
-        <div class="post-head home-post-head">
-            <h1 class="post-title">
-                <a href="/2018/03/22/Android中Handler导致内存泄漏的原理分析/">Android中Handler导致内存泄漏的原理分析</a>
-            </h1>
-            <div class="post-meta">  &bull;
-                <time class="post-date" datetime="" title="">
-                    2018年03月22日
-                </time>
-            </div>
-        </div>
-        <p class="brief">
-            1. 简介在写Android应用程序时，Handler应该是很常见的一个类。我们一般在使用该类时有采用如下方法：
-// 1.新建一个匿名的Handler内部类，并重新handleMessage
-private Handler mHan...
-        </p> 
-    </div>
-    <footer class="post-footer clearfix">
-        <div class="pull-left tag-list">
-            <div class="post-meta">
+        </h1>
+        <div class="post-meta">
     
     
     <span class="categories-meta fa-wrap">
@@ -294,7 +158,7 @@ private Handler mHan...
         <i class="fa fa-tags"></i>
         <span class="tags-meta">
             
-            Android源码分析
+            Android NDK开发，JNI开发
             
         </span>
     </span>
@@ -302,191 +166,118 @@ private Handler mHan...
     
     <span class="fa-wrap">
         <i class="fa fa-clock-o"></i>
-        <span class="date-meta">2018/03/22</span>
+        <span class="date-meta">2018/02/01</span>
     </span>
 
 </div>
 
-        </div>
-
-        <div class="post-permalink"> 
-            <a href="/2018/03/22/Android中Handler导致内存泄漏的原理分析/" class="btn btn-default">阅读全文</a>
-        </div>
-    </footer>
-</article>
-
-
-<article class="post">
-    
-    <div class="post-content">
-        <div class="post-head home-post-head">
-            <h1 class="post-title">
-                <a href="/2018/03/06/解决ViewPager+Fragment预加载导致未显示界面提前加载数据/">解决ViewPager+Fragment预加载导致未显示界面提前加载数据</a>
-            </h1>
-            <div class="post-meta">  &bull;
-                <time class="post-date" datetime="" title="">
-                    2018年03月06日
-                </time>
-            </div>
-        </div>
-        <p class="brief">
-            1. 简介当我们使用ViewPager+Fragment结构时，由于谷歌在设计ViewPager时会提前加载下一个界面。虽然用户在滑动到下一页时不会感觉卡顿。但这也存在一个问题：当进入Activity时，当前界面和下一个界面均由网络请...
-        </p> 
+            
+            
     </div>
-    <footer class="post-footer clearfix">
-        <div class="pull-left tag-list">
-            <div class="post-meta">
     
-    
-    <span class="categories-meta fa-wrap">
-        <i class="fa fa-folder-open-o"></i>
-        <span>Android</span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-tags"></i>
-        <span class="tags-meta">
-            
-            ViewPager+Fragment预加载
-            
-        </span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-clock-o"></i>
-        <span class="date-meta">2018/03/06</span>
-    </span>
+    <div class="post-body post-content">
+        <h3 id="1-Eclipse-NDK开发环境搭建"><a href="#1-Eclipse-NDK开发环境搭建" class="headerlink" title="1. Eclipse NDK开发环境搭建"></a>1. Eclipse NDK开发环境搭建</h3><p>在开发NDK之前，Java的SDK，Android的NDK，以及Eclipse的ADT工具都需要大家先安装好，在SDK早期版本中没有ndk相关文件，当最近的AndroidSDK中包含了ndk相关文件，所以下载NDK工具的麻烦事这里就没有了。唯一要注意的是需要配置下NDK的环境变量。这样可以方便进行编译。AndroidSDK主要文件夹参考如下：<br><img src="http://img.blog.csdn.net/20180201161034954?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvaHR5MTA1MzI0MDEyMw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="AndroidSDK目录结构"><br>这里讲Eclipse的配置就将下如何添加External Tool来快速生成.h文件以及快速进行ndk_build编译。</p>
+<h4 id="1-1-配置快速生成-h头文件的命令"><a href="#1-1-配置快速生成-h头文件的命令" class="headerlink" title="1.1 配置快速生成.h头文件的命令"></a>1.1 配置快速生成.h头文件的命令</h4><ol>
+<li>点击Eclipse上面的图标，打开External Tool Configurations。<br><img src="http://img.blog.csdn.net/20180201162000196?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvaHR5MTA1MzI0MDEyMw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></li>
+<li>然后打开如下界面，在如下界面中双击Program，在底下会生成一个New_configuration。<br><img src="http://img.blog.csdn.net/20180201162930719?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvaHR5MTA1MzI0MDEyMw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>然后按照图片上面的格式填写相应的参数。<br>Location填写javah.exe的位置：C:\Program Files\Java\jdk1.8.0_91\bin\javah.exe<br>Working Directory填写当前的工作目录：${workspace_loc:/MyTest/src}<br>Arguments填写相应的参数：<pre><code>-classpath ${workspace_loc:/MyTest/src/bin/classes} -d ${workspace_loc:/MyTest/jni} -jni com.scu.MyNDK
+</code></pre>之后在External Tool的地方就会生成一个JavaH的命令工具，点击即可生成对应的.h头文件了。这里要注意的是生成都文件前要先编译出.class文件。<br>其实这个和用javah.exe命令是一样的，具体命令如下：<br><img src="http://img.blog.csdn.net/20180201163500478?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvaHR5MTA1MzI0MDEyMw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><h3 id="2-Android-Studio的配置"><a href="#2-Android-Studio的配置" class="headerlink" title="2. Android Studio的配置"></a>2. Android Studio的配置</h3>AS太强大了，所有你想要的只需要简单的添加一个依赖，AS就会自动帮你下载，完全不用你去下载。最新的Android Studio在新建工程的时候，选中Include C++ Support后，即可进行NDK开发，这里注意下在AS中的编译换成了CMake工具，这个工具配置上稍微和Android.mk有些许不同。其配置文件在新建工程的CMakeLists.txt里面配置。</li>
+</ol>
+<p>在build.gradle里面也会自动配置cmake工具，配置如下：</p>
+<pre><code class="xml">    externalNativeBuild {
+        cmake {
+            path &quot;CMakeLists.txt&quot;
+        }
+    }
+</code></pre>
+<h3 id="3-基本代码结构"><a href="#3-基本代码结构" class="headerlink" title="3. 基本代码结构"></a>3. 基本代码结构</h3><p>利用AS创建工程后，工程会自动生成如下代码：</p>
+<pre><code class="java">package zqc.com.example;
 
-</div>
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
-        </div>
+public class MainActivity extends AppCompatActivity {
 
-        <div class="post-permalink"> 
-            <a href="/2018/03/06/解决ViewPager+Fragment预加载导致未显示界面提前加载数据/" class="btn btn-default">阅读全文</a>
-        </div>
-    </footer>
-</article>
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
+    }
+    // Used to load the &#39;native-lib&#39; library on application startup.
+    static {
+        System.loadLibrary(&quot;native-lib&quot;);
+    }
 
-<article class="post">
-    
-    <div class="post-content">
-        <div class="post-head home-post-head">
-            <h1 class="post-title">
-                <a href="/2018/02/06/Android-NDK开发系列教程5：局部引用，全局引用，弱全局引用/">Android NDK开发系列教程5：局部引用，全局引用，弱全局引用</a>
-            </h1>
-            <div class="post-meta">  &bull;
-                <time class="post-date" datetime="" title="">
-                    2018年02月06日
-                </time>
-            </div>
-        </div>
-        <p class="brief">
-            1. 简介从Java虚拟机创建的对象当传入到native层时会产生一个引用，在进行垃圾回收时如果有native的引用，改对象同样也不会被回收。在native引用中分局部引用和全局引用。
-1.1 局部引用局部引用又称本地引用，大多数见到...
-        </p> 
+    /**
+     * A native method that is implemented by the &#39;native-lib&#39; native library,
+     * which is packaged with this application.
+     */
+    public native String stringFromJNI();
+}
+</code></pre>
+<p>其中在static静态代码块中会加载动态链接库。在一个方法前加上native关键字即表明该方法是一个jni方法，因而只有声明，没有实现，其具体实现在c/c++代码中。<br>找到cpp文件，打开后内容如下：</p>
+<pre><code class="cpp">#include &lt;jni.h&gt;
+#include &lt;string&gt;
+
+extern &quot;C&quot;
+JNIEXPORT jstring
+
+JNICALL
+Java_zqc_com_example_MainActivity_stringFromJNI(
+        JNIEnv *env, jobject /* this */) {
+    std::string hello = &quot;Hello from C++&quot;;
+    return env-&gt;NewStringUTF(hello.c_str());
+}
+</code></pre>
+<p>其中extern “C”表示在编译的时候导出为c语言的格式，JNIEXPORT表示该函数是可以导出的，可以由外部方法进行调用，这和dll类似，jstring表示返回值，JNICALL关键字表示这是一个jni方法，Java_zqc_com_example_MainActivity_stringFromJNI其中Java是固定格式，zqc_com_example_MainActivity是全类名，stringFromJNI是具体的方法名，具体参数：JNIEnv <em>env为env指针，调用jni的很多方法都需要该指针，jobject /</em> this */这个表示当前类的this指针，这里因为没用到就没有命名。<br>在以往开发中可能是把.h和.cpp分开了，这个是AS自动生成的，这里并没有单独生成.h文件。c/c++开发也有自己的结构，这里除了需要对外暴露接口的需要按照上面格式编写外，其他的都可以用古老的c/c++进行编写并遵循古老的结构。你可以先定义.h文件，然后在.cpp里面具体实现。<br>点击Build-&gt;Make Project（快捷键Ctrl+F9）即可生成动态链接库文件.so，其路径在：<br><img src="http://img.blog.csdn.net/20180201172808764?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvaHR5MTA1MzI0MDEyMw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>AS自动生成了Debug版和Release版，并且在各个版本中又生成了不同平台的.so文件。只能说这个AS太牛叉了~<br>之后运行工程，安装到手机上时就把对应的so也拷贝到了手机中了。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>目前应该是绝大多数人都采用AndroidStudio进行开发，谷歌官方已经不再对Eclipse的ADT进行维护了。而AS是绝对强大的工具，当你选择Include C++ Support的时候，AS会将NDK开发的一切都下载下来。所以如果采用AS开发，那么你学NDK开发的话，只需要把Android开发需要安装的JDK，SDK，AS等工具安装好后，即可进行开发。这个系列教程我也采用AS进行讲解。</p>
+
     </div>
-    <footer class="post-footer clearfix">
-        <div class="pull-left tag-list">
-            <div class="post-meta">
-    
-    
-    <span class="categories-meta fa-wrap">
-        <i class="fa fa-folder-open-o"></i>
-        <span>Android</span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-tags"></i>
-        <span class="tags-meta">
+
+    <div class="post-footer">   
+        <div>
             
-            Android JNI开发
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="http://blog.csdn.net/hty1053240123?viewmode=contents" target="_blank">天宇240</a>
             
-        </span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-clock-o"></i>
-        <span class="date-meta">2018/02/06</span>
-    </span>
-
-</div>
-
         </div>
-
-        <div class="post-permalink"> 
-            <a href="/2018/02/06/Android-NDK开发系列教程5：局部引用，全局引用，弱全局引用/" class="btn btn-default">阅读全文</a>
-        </div>
-    </footer>
-</article>
-
-
-<article class="post">
-    
-    <div class="post-content">
-        <div class="post-head home-post-head">
-            <h1 class="post-title">
-                <a href="/2018/02/04/Android-NDK开发系列教程4：对类变量进行操作/">Android NDK开发系列教程4：对类变量进行操作</a>
-            </h1>
-            <div class="post-meta">  &bull;
-                <time class="post-date" datetime="" title="">
-                    2018年02月04日
-                </time>
-            </div>
-        </div>
-        <p class="brief">
-            通常我们也可以直接利用jni来访问和处理类的变量，不一定非要通过Java方法来操作Java类变量。对类变量操作时，类的静态变量和类的实例变量的操作稍微有些不同，下面进行讲解。
-对类的静态变量进行操作类的静态变量属于类，是所有该类实例共...
-        </p> 
+        <div>
+            
+        </div>  
     </div>
-    <footer class="post-footer clearfix">
-        <div class="pull-left tag-list">
-            <div class="post-meta">
-    
-    
-    <span class="categories-meta fa-wrap">
-        <i class="fa fa-folder-open-o"></i>
-        <span>Android</span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-tags"></i>
-        <span class="tags-meta">
-            
-            Android JNI开发
-            
-        </span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-clock-o"></i>
-        <span class="date-meta">2018/02/04</span>
-    </span>
-
-</div>
-
-        </div>
-
-        <div class="post-permalink"> 
-            <a href="/2018/02/04/Android-NDK开发系列教程4：对类变量进行操作/" class="btn btn-default">阅读全文</a>
-        </div>
-    </footer>
 </article>
 
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2018/02/02/Android-NDK开发系列教程2：基本方法调用及传参/" class="pre-post btn btn-default"><i class="fa fa-angle-left fa-fw"></i>上一篇</a>
+    
+    
+        <a href="/2018/01/23/深度学习课程资源/" class="next-post btn btn-default">下一篇<i class="fa fa-angle-right fa-fw"></i></a>
+    
+</div>
 
 
+    <div id="comments">
+        <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNTA2NC8xMTU5OQ==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
 
-    <nav class="pagination" role="navigation">
-        <div id="page-nav">
-            <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class='fa fa-angle-right'></i></a>
-        </div>
-    </nav>
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+    </div>
+
+
 
 
 

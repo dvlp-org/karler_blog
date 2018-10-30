@@ -1,0 +1,971 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://yoursite.com">
+    <!--SEO-->
+
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+
+<title>SharedPreferences源码详解 | 天宇</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="天宇" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico"  type="image/x-icon">
+
+    
+
+
+
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css?rev=9.12.0">
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css?rev=3.3.4">
+<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+    <div class="hide">
+    	<script src="https://s4.cnzz.com/z_stat.php?id=1263868967&web_id=1263868967" language="JavaScript"></script>
+    </div>
+
+
+
+
+
+
+    
+    
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?c3d1d4bce7d4ef1c50d7ef35d759a5b7";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.2.0/styles/github.min.css">
+<script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+<body>
+    <header class="main-header"  style="background-image:url(/img/banner.jpg); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;"  >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title="">
+            <img src="/img/avatar.jpg" alt="logo头像">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                 <img src="/img/branding.png" alt="从未如此简单有趣">  
+             
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only">Toggle navigation</span>
+                    <i class="fa fa-bars"></i>
+                    </span>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation"><a href="/"><i class="fa fa-fw /favicon.ico"></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/前端/"><i class="fa fa-fw /favicon.ico"></i>前端</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/后端/"><i class="fa fa-fw /favicon.ico"></i>后端</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/工具/"><i class="fa fa-fw /favicon.ico"></i>工具</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/资源/"><i class="fa fa-fw /favicon.ico"></i>资源</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/关于/"><i class="fa fa-fw /favicon.ico"></i>关于</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="SharedPreferences源码详解">
+            
+            SharedPreferences源码详解
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <span>Android</span>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            SharedPreferences Editor
+            
+        </span>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">2018/01/17</span>
+    </span>
+
+</div>
+
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <h3 id="1-简介"><a href="#1-简介" class="headerlink" title="1.简介"></a>1.简介</h3><p>写这篇博客目的在于巩固自己对SharedPreferences的理解。SharePreferences是Android系统提供的轻量级数据存储方案，主要基于键值对方式保存数据，真实的数据是保存在/data/data/packageName/shared_pref/目录下面的。可以保存多种数据到该文件中，以下是一个简单的Sharepreference文件。</p>
+<pre><code class="xml">&lt;?xml version=&#39;1.0&#39; encoding=&#39;utf-8&#39; standalone=&#39;yes&#39; ?&gt;
+&lt;map&gt;
+    &lt;boolean name=&quot;btest&quot; value=&quot;true&quot; /&gt;
+    &lt;string name=&quot;stest&quot;&gt;string&lt;/string&gt;
+    &lt;int name=&quot;itest&quot; value=&quot;999&quot; /&gt;
+    &lt;long name=&quot;ltest&quot; value=&quot;1516358782&quot; /&gt;
+    &lt;int name=&quot;itest_1&quot; value=&quot;2&quot; /&gt;
+&lt;/map&gt;
+</code></pre>
+<p>从文件中可以看出就是采用简单xml方式进行保存的。</p>
+<h4 id="1-1使用实例"><a href="#1-1使用实例" class="headerlink" title="1.1使用实例"></a>1.1使用实例</h4><pre><code>SharedPreferences preferences = context.getSharedPreferences(&quot;share&quot;, Context.MODE_PRIVATE);
+SharedPreferences.Editor editor = preferences.edit();
+editor.putBoolean(&quot;btest&quot;, true);
+editor.putString(&quot;stest&quot;, &quot;string test&quot;);
+//editor.apply();//异步保存
+editor.commit();//同步保存
+</code></pre><h4 id="1-2基本结构"><a href="#1-2基本结构" class="headerlink" title="1.2基本结构"></a>1.2基本结构</h4><p>这里借用Gityuan博客中的类继承图<br><img src="https://s1.ax1x.com/2018/01/17/pDZT58.jpg" alt="Sharepreference架构图"><br>在Sharepreference中，Sharepreference和Editor只是两个接口，在这两个接口中定义了一个普通的键值对存储的数据一些常用的操作。然后具体你想把这键值对存哪，你可以自己定义相应的文件或数据库，甚至你可以写个保存到网络中去。在Android系统中给出的是采用xml方式存在xml的文件中，具体实现类是SharepreferenceImpl和SharepreferenceImpl.EditorImpl。同时在ContextImpl中有Sharepreference的对应内存中的数据。</p>
+<h3 id="2-Sharepreference源码分析"><a href="#2-Sharepreference源码分析" class="headerlink" title="2.Sharepreference源码分析"></a>2.Sharepreference源码分析</h3><h4 id="2-1获取Sharepreference"><a href="#2-1获取Sharepreference" class="headerlink" title="2.1获取Sharepreference"></a>2.1获取Sharepreference</h4><p>Activity.java</p>
+<pre><code>    public SharedPreferences getPreferences(int mode) {
+        return getSharedPreferences(getLocalClassName(), mode);
+    }
+
+        @Override
+    public SharedPreferences getSharedPreferences(String name, int mode) {
+        return mBase.getSharedPreferences(name, mode);
+    }
+</code></pre><p>Context采用的是装饰模式，其中正在干活的是ContextImpl，mBase即为ContextImpl，具体代码如下：<br>ContextImpl.java</p>
+<pre><code class="java">//ContextImpl类中的静态Map声明，全局的一个sSharedPrefs
+private static ArrayMap&lt;String, ArrayMap&lt;String, SharedPreferencesImpl&gt;&gt; sSharedPrefs;
+
+    @Override
+    public SharedPreferences getSharedPreferences(String name, int mode) {
+        SharedPreferencesImpl sp; 
+        synchronized (ContextImpl.class) {
+            if (sSharedPrefs == null) { //静态变量，全局唯一
+                sSharedPrefs = new ArrayMap&lt;String, ArrayMap&lt;String, SharedPreferencesImpl&gt;&gt;();
+            }
+
+            final String packageName = getPackageName();//通过包名找到对应的prefs集合
+            ArrayMap&lt;String, SharedPreferencesImpl&gt; packagePrefs = sSharedPrefs.get(packageName);
+            if (packagePrefs == null) {
+                packagePrefs = new ArrayMap&lt;String, SharedPreferencesImpl&gt;();
+                sSharedPrefs.put(packageName, packagePrefs);
+            }
+
+            // At least one application in the world actually passes in a null
+            // name.  This happened to work because when we generated the file name
+            // we would stringify it to &quot;null.xml&quot;.  Nice.
+            if (mPackageInfo.getApplicationInfo().targetSdkVersion &lt;
+                    Build.VERSION_CODES.KITKAT) {
+                if (name == null) {
+                    name = &quot;null&quot;;
+                }
+            }
+
+            sp = packagePrefs.get(name);//这里获取sp
+            if (sp == null) {//如果为空，则构建一个sp，并将它放入packagePrefs里面
+                File prefsFile = getSharedPrefsFile(name);//正在获取文件的地方
+                sp = new SharedPreferencesImpl(prefsFile, mode);
+                packagePrefs.put(name, sp);
+                return sp;
+            }
+        }
+        //下面是为了跨进程使用Sharepreference的，跨进程使用也就是重新装载一次sharepreference
+        if ((mode &amp; Context.MODE_MULTI_PROCESS) != 0 ||
+            getApplicationInfo().targetSdkVersion &lt; android.os.Build.VERSION_CODES.HONEYCOMB) {
+            // If somebody else (some other process) changed the prefs
+            // file behind our back, we reload it.  This has been the
+            // historical (if undocumented) behavior.
+            sp.startReloadIfChangedUnexpectedly();
+        }
+        return sp;
+    }
+</code></pre>
+<p>正在保存的文件获取是getSharedPrefsFile(name)，代码如下：</p>
+<pre><code class="java">    @Override
+    public File getSharedPrefsFile(String name) { //文件以.xml结尾
+        return makeFilename(getPreferencesDir(), name + &quot;.xml&quot;);
+    }
+    private File makeFilename(File base, String name) {
+        if (name.indexOf(File.separatorChar) &lt; 0) { //name中不能存在文件路径分隔符
+            return new File(base, name);
+        }
+        throw new IllegalArgumentException(
+                &quot;File &quot; + name + &quot; contains a path separator&quot;);
+    }
+    private File getPreferencesDir() {//sharepreference文件的目录/data/data/{包名}/shared_prefs
+        synchronized (mSync) {
+            if (mPreferencesDir == null) {
+                mPreferencesDir = new File(getDataDirFile(), &quot;shared_prefs&quot;);
+            }
+            return mPreferencesDir;
+        }
+    }
+</code></pre>
+<p>在ContextImpl中存在一个静态的sSharedPrefs，通过它来获取对应应用的prefs，在通过prefs找到对应名称的Sharepreference的引用。在系统中共用一个sSharedPrefs，每个应该在获取sp的时候都会将创建后sp加入到sSharedPrefs中以便后续进行访问。</p>
+<h4 id="2-2-SharepreferenceImpl"><a href="#2-2-SharepreferenceImpl" class="headerlink" title="2.2 SharepreferenceImpl"></a>2.2 SharepreferenceImpl</h4><pre><code>从上面我们可以看到我们要获取的是Sharepreference，但是返回的是SharepreferenceImpl，这就赤裸裸的告诉我们SharepreferenceImpl是Sharepreference接口的实现类，具体代码如下：
+</code></pre><pre><code class="java">
+final class SharedPreferencesImpl implements SharedPreferences {
+    private static final String TAG = &quot;SharedPreferencesImpl&quot;;
+    private static final boolean DEBUG = false;
+
+    // Lock ordering rules:
+    //  - acquire SharedPreferencesImpl.this before EditorImpl.this
+    //  - acquire mWritingToDiskLock before EditorImpl.this
+
+    private final File mFile;
+    private final File mBackupFile;
+    private final int mMode;
+
+    private Map&lt;String, Object&gt; mMap;     // guarded by &#39;this&#39;
+    private int mDiskWritesInFlight = 0;  // guarded by &#39;this&#39;
+    private boolean mLoaded = false;      // guarded by &#39;this&#39;
+    private long mStatTimestamp;          // guarded by &#39;this&#39;
+    private long mStatSize;               // guarded by &#39;this&#39;
+
+    private final Object mWritingToDiskLock = new Object();
+    private static final Object mContent = new Object();
+    private final WeakHashMap&lt;OnSharedPreferenceChangeListener, Object&gt; mListeners =
+            new WeakHashMap&lt;OnSharedPreferenceChangeListener, Object&gt;();
+
+    SharedPreferencesImpl(File file, int mode) {
+        mFile = file;
+        mBackupFile = makeBackupFile(file); //创建临时备份文件，这样写入失败的时候就用这个备份的还原
+        mMode = mode;
+        mLoaded = false;
+        mMap = null;
+        startLoadFromDisk();//异步加载文件内容到内存
+    }
+
+    private void startLoadFromDisk() {
+        synchronized (this) {
+            mLoaded = false;
+        }
+        new Thread(&quot;SharedPreferencesImpl-load&quot;) {
+            public void run() {
+                //由于是多线程加载的时候注意同步处理
+                synchronized (SharedPreferencesImpl.this) {
+                    loadFromDiskLocked();
+                }
+            }
+        }.start();
+    }
+...
+  private static File makeBackupFile(File prefsFile) {
+        return new File(prefsFile.getPath() + &quot;.bak&quot;);
+    }
+...
+}
+</code></pre>
+<p>在获取sp的时候，如果通过sSharedPrefs获取为空就会先创建一个sp，在new SharepreferenceImpl的时候，在构造函数中最后就会异步加载文件到内存，异步开启一个线程后就调用loadFromDiskLocked()函数进行加载：<br>SharepreferenceImpl.java</p>
+<pre><code class="java">
+    private void loadFromDiskLocked() {
+        if (mLoaded) {//加载过了就返回
+            return;
+        }
+        if (mBackupFile.exists()) {//如果存在备份就直接使用备份
+            mFile.delete();
+            mBackupFile.renameTo(mFile);
+        }
+
+        // Debugging
+        if (mFile.exists() &amp;&amp; !mFile.canRead()) {
+            Log.w(TAG, &quot;Attempt to read preferences file &quot; + mFile + &quot; without permission&quot;);
+        }
+
+        Map map = null;
+        StructStat stat = null;
+        try {
+            stat = Os.stat(mFile.getPath());
+            if (mFile.canRead()) {
+                BufferedInputStream str = null;
+                try {
+                    str = new BufferedInputStream(
+                            new FileInputStream(mFile), 16*1024);
+                    map = XmlUtils.readMapXml(str);//利用XmlUtils进行解析
+                } catch (XmlPullParserException e) {
+                    Log.w(TAG, &quot;getSharedPreferences&quot;, e);
+                } catch (FileNotFoundException e) {
+                    Log.w(TAG, &quot;getSharedPreferences&quot;, e);
+                } catch (IOException e) {
+                    Log.w(TAG, &quot;getSharedPreferences&quot;, e);
+                } finally {
+                    IoUtils.closeQuietly(str);
+                }
+            }
+        } catch (ErrnoException e) {
+        }
+        mLoaded = true;
+        if (map != null) {
+            mMap = map;
+            mStatTimestamp = stat.st_mtime;
+            mStatSize = stat.st_size;
+        } else {
+            mMap = new HashMap&lt;String, Object&gt;();
+        }
+        notifyAll();//没加载完前，所有操作（get等）都会等待加载完成，加载完成后通知其他操作可以进行操作了。
+    }
+</code></pre>
+<p>一旦加载完成后，就会notifyAll()，我们先看下get的操作</p>
+<pre><code class="java">
+    public Map&lt;String, ?&gt; getAll() {
+        synchronized (this) {
+            awaitLoadedLocked();
+            //noinspection unchecked
+            return new HashMap&lt;String, Object&gt;(mMap);
+        }
+    }
+
+    @Nullable
+    public String getString(String key, @Nullable String defValue) {
+        synchronized (this) {
+            awaitLoadedLocked();//没有加载就阻塞等待
+            String v = (String)mMap.get(key);//加载完成了就直接去内存中的值，记住是从内存中取。不会再次读取文件总内容。
+            return v != null ? v : defValue;
+        }
+    }
+...
+    private void awaitLoadedLocked() {//这里判断是否已经加载文件到内存了，没有加载就会阻塞等待
+        if (!mLoaded) {
+            // Raise an explicit StrictMode onReadFromDisk for this
+            // thread, since the real read will be in a different
+            // thread and otherwise ignored by StrictMode.
+            BlockGuard.getThreadPolicy().onReadFromDisk();
+        }
+        while (!mLoaded) {
+            try {
+                wait();
+            } catch (InterruptedException unused) {
+            }
+        }
+    }
+</code></pre>
+<p>在get数据时，首先判断文件是否加载到内存，然后就直接读取内存中的值，这里可以看出一旦装载了，那么读取的速度就很快。</p>
+<h4 id="2-3-EditorImpl"><a href="#2-3-EditorImpl" class="headerlink" title="2.3 EditorImpl"></a>2.3 EditorImpl</h4><p>上面SharepreferenceImpl是实现了get操作，真正的写入是Editor接口来完成的，而EditorImpl是具体的实现类。其代码如下：</p>
+<pre><code class="java">    public final class EditorImpl implements Editor {
+        private final Map&lt;String, Object&gt; mModified = Maps.newHashMap();
+        private boolean mClear = false;
+        //从这里可以看出每次存的时候都是先存入内存中的mModified变量中
+        public Editor putString(String key, @Nullable String value) {
+            synchronized (this) {
+                mModified.put(key, value);
+                return this;
+            }
+        }
+        public Editor putStringSet(String key, @Nullable Set&lt;String&gt; values) {
+            synchronized (this) {
+                mModified.put(key,
+                        (values == null) ? null : new HashSet&lt;String&gt;(values));
+                return this;
+            }
+        }
+        public Editor putInt(String key, int value) {
+            synchronized (this) {
+                mModified.put(key, value);
+                return this;
+            }
+        }
+...
+        public Editor remove(String key) {
+            synchronized (this) {
+                mModified.put(key, this);
+                return this;
+            }
+        }
+
+        public Editor clear() {
+            synchronized (this) {
+                mClear = true;
+                return this;
+            }
+        }
+
+        public void apply() {
+            final MemoryCommitResult mcr = commitToMemory();
+            final Runnable awaitCommit = new Runnable() {
+                    public void run() {
+                        try {
+                            mcr.writtenToDiskLatch.await();
+                        } catch (InterruptedException ignored) {
+                        }
+                    }
+                };
+
+            QueuedWork.add(awaitCommit);
+
+            Runnable postWriteRunnable = new Runnable() {
+                    public void run() {
+                        awaitCommit.run();
+                        QueuedWork.remove(awaitCommit);
+                    }
+                };
+
+            SharedPreferencesImpl.this.enqueueDiskWrite(mcr, postWriteRunnable);
+
+            // Okay to notify the listeners before it&#39;s hit disk
+            // because the listeners should always get the same
+            // SharedPreferences instance back, which has the
+            // changes reflected in memory.
+            notifyListeners(mcr);
+        }
+
+    }
+</code></pre>
+<p>首先查看下存入的代码：</p>
+<pre><code>        //从这里可以看出每次存的时候都是先存入内存中的mModified变量中
+        public Editor putString(String key, @Nullable String value) {
+            synchronized (this) {
+                mModified.put(key, value);
+                return this;
+            }
+        }
+</code></pre><p>存入的时候首先获取同步锁，然后将存入的数据放入EditorImpl中的一个mModified变量中，也就是存入的时候并没有放入Sharepreference中，只有在使用了apply或者commit后才真正存入。<br>下面来看看commit操作：</p>
+<pre><code class="java">        public boolean commit() {
+            MemoryCommitResult mcr = commitToMemory();//步骤1
+            SharedPreferencesImpl.this.enqueueDiskWrite(
+                mcr, null /* sync write on this thread okay */);//步骤2
+            try {
+                mcr.writtenToDiskLatch.await();//等待写入完成
+            } catch (InterruptedException e) {
+                return false;
+            }
+            notifyListeners(mcr);//步骤3
+            return mcr.writeToDiskResult;步骤4
+        }
+</code></pre>
+<p>步骤1：</p>
+<pre><code>        // Returns true if any changes were made 真正存入文件中
+        private MemoryCommitResult commitToMemory() {
+            MemoryCommitResult mcr = new MemoryCommitResult();
+            synchronized (SharedPreferencesImpl.this) {
+                // We optimistically don&#39;t make a deep copy until
+                // a memory commit comes in when we&#39;re already
+                // writing to disk.
+                if (mDiskWritesInFlight &gt; 0) {
+                    // We can&#39;t modify our mMap as a currently
+                    // in-flight write owns it.  Clone it before
+                    // modifying it.
+                    // noinspection unchecked
+                    mMap = new HashMap&lt;String, Object&gt;(mMap);
+                }
+                mcr.mapToWriteToDisk = mMap;
+                mDiskWritesInFlight++;
+
+                boolean hasListeners = mListeners.size() &gt; 0;
+                if (hasListeners) {
+                    mcr.keysModified = new ArrayList&lt;String&gt;();
+                    mcr.listeners =
+                            new HashSet&lt;OnSharedPreferenceChangeListener&gt;(mListeners.keySet());
+                }
+
+                synchronized (this) {
+                    if (mClear) {
+                        if (!mMap.isEmpty()) {
+                            mcr.changesMade = true;
+                            mMap.clear();
+                        }
+                        mClear = false;
+                    }
+
+                    for (Map.Entry&lt;String, Object&gt; e : mModified.entrySet()) {
+                        String k = e.getKey();
+                        Object v = e.getValue();
+                        // &quot;this&quot; is the magic value for a removal mutation. In addition,
+                        // setting a value to &quot;null&quot; for a given key is specified to be
+                        // equivalent to calling remove on that key.
+                        //删除一些需要删除的数据
+                        if (v == this || v == null) {
+                            if (!mMap.containsKey(k)) {
+                                continue;
+                            }
+                            mMap.remove(k);
+                        } else {
+                            if (mMap.containsKey(k)) {
+                                Object existingValue = mMap.get(k);
+                                if (existingValue != null &amp;&amp; existingValue.equals(v)) {
+                                    continue;
+                                }
+                            }
+                            //将变化的数据放入SharepreferenceImpl的mMap中
+                            mMap.put(k, v);
+                        }
+
+                        mcr.changesMade = true;
+                        if (hasListeners) {
+                            mcr.keysModified.add(k);
+                        }
+                    }
+                    //变化的数据都加入了mMap后就可以清除mModified内容了。
+                    mModified.clear();
+                }
+            }
+            //返回封装mMap的MemoryCommitResult数据
+            return mcr;
+        }
+</code></pre><p>步骤2：</p>
+<pre><code>private void enqueueDiskWrite(final MemoryCommitResult mcr,
+                                  final Runnable postWriteRunnable) {
+        final Runnable writeToDiskRunnable = new Runnable() {
+                public void run() {
+                    synchronized (mWritingToDiskLock) {
+                        writeToFile(mcr);
+                    }
+                    synchronized (SharedPreferencesImpl.this) {
+                        mDiskWritesInFlight--;
+                    }
+                    if (postWriteRunnable != null) {
+                        postWriteRunnable.run();
+                    }
+                }
+            };
+
+      final boolean isFromSyncCommit = (postWriteRunnable == null);//如果postWriteRunnable为null就是同步
+
+        // Typical #commit() path with fewer allocations, doing a write on
+        // the current thread.
+        if (isFromSyncCommit) {//同步就直接运行写入数据writeToDiskRunnable
+            boolean wasEmpty = false;
+            synchronized (SharedPreferencesImpl.this) {
+                wasEmpty = mDiskWritesInFlight == 1;
+            }
+            if (wasEmpty) {
+                writeToDiskRunnable.run();
+                return;
+            }
+        }
+
+        QueuedWork.singleThreadExecutor().execute(writeToDiskRunnable);
+    }
+
+// 写入数据
+    private void writeToFile(MemoryCommitResult mcr) {
+        // Rename the current file so it may be used as a backup during the next read
+        if (mFile.exists()) {
+            if (!mcr.changesMade) {
+                // If the file already exists, but no changes were
+                // made to the underlying map, it&#39;s wasteful to
+                // re-write the file.  Return as if we wrote it
+                // out.
+                mcr.setDiskWriteResult(true);
+                return;
+            }
+            if (!mBackupFile.exists()) {
+                if (!mFile.renameTo(mBackupFile)) {
+                    Log.e(TAG, &quot;Couldn&#39;t rename file &quot; + mFile
+                          + &quot; to backup file &quot; + mBackupFile);
+                    mcr.setDiskWriteResult(false);
+                    return;
+                }
+            } else {
+                mFile.delete();
+            }
+        }
+
+        // Attempt to write the file, delete the backup and return true as atomically as
+        // possible.  If any exception occurs, delete the new file; next time we will restore
+        // from the backup.
+        try {
+            FileOutputStream str = createFileOutputStream(mFile);
+            if (str == null) {
+                mcr.setDiskWriteResult(false);
+                return;
+            }
+            XmlUtils.writeMapXml(mcr.mapToWriteToDisk, str);
+            FileUtils.sync(str);
+            str.close();
+            ContextImpl.setFilePermissionsFromMode(mFile.getPath(), mMode, 0);
+            try {
+                final StructStat stat = Os.stat(mFile.getPath());
+                synchronized (this) {
+                    mStatTimestamp = stat.st_mtime;
+                    mStatSize = stat.st_size;
+                }
+            } catch (ErrnoException e) {
+                // Do nothing
+            }
+            // Writing was successful, delete the backup file if there is one.
+            mBackupFile.delete();
+            mcr.setDiskWriteResult(true);
+            return;
+        } catch (XmlPullParserException e) {
+            Log.w(TAG, &quot;writeToFile: Got exception:&quot;, e);
+        } catch (IOException e) {
+            Log.w(TAG, &quot;writeToFile: Got exception:&quot;, e);
+        }
+        // Clean up an unsuccessfully written file
+        if (mFile.exists()) {
+            if (!mFile.delete()) {
+                Log.e(TAG, &quot;Couldn&#39;t clean up partially-written file &quot; + mFile);
+            }
+        }
+        mcr.setDiskWriteResult(false);
+    }
+</code></pre><p>步骤3通知写入数据发生变化</p>
+<pre><code>
+        private void notifyListeners(final MemoryCommitResult mcr) {
+            if (mcr.listeners == null || mcr.keysModified == null ||
+                mcr.keysModified.size() == 0) {
+                return;
+            }
+            if (Looper.myLooper() == Looper.getMainLooper()) {
+                for (int i = mcr.keysModified.size() - 1; i &gt;= 0; i--) {
+                    final String key = mcr.keysModified.get(i);
+                    for (OnSharedPreferenceChangeListener listener : mcr.listeners) {
+                        if (listener != null) {
+                            listener.onSharedPreferenceChanged(SharedPreferencesImpl.this, key);
+                        }
+                    }
+                }
+            } else {
+                // Run this function on the main thread.
+                ActivityThread.sMainThreadHandler.post(new Runnable() {
+                        public void run() {
+                            notifyListeners(mcr);
+                        }
+                    });
+            }
+        }
+</code></pre><p>步骤4返回写入的结果。</p>
+<h5 id="2-3-2-Editor-apply"><a href="#2-3-2-Editor-apply" class="headerlink" title="2.3.2 Editor.apply()"></a>2.3.2 Editor.apply()</h5><p>代码如下：</p>
+<pre><code>public void apply() {
+    //写数据到内存，返回数据结构
+    final MemoryCommitResult mcr = commitToMemory();
+    final Runnable awaitCommit = new Runnable() {
+        public void run() {
+            try {
+                //等待写文件结束
+                mcr.writtenToDiskLatch.await();
+            } catch (InterruptedException ignored) {
+            }
+        }
+    };
+
+    QueuedWork.add(awaitCommit);
+    //一个收尾的Runnable
+    Runnable postWriteRunnable = new Runnable() {
+        public void run() {
+            awaitCommit.run();
+            QueuedWork.remove(awaitCommit);
+        }
+    };
+    //这里postWriteRunnable不为null，所以会在一个新的线程池调运postWriteRunnable的run方法
+    SharedPreferencesImpl.this.enqueueDiskWrite(mcr, postWriteRunnable);
+
+    // Okay to notify the listeners before it&#39;s hit disk
+    // because the listeners should always get the same
+    // SharedPreferences instance back, which has the
+    // changes reflected in memory.
+    //通知变化
+    notifyListeners(mcr);
+}
+</code></pre><p>apply会将写入放入到一个线程池中操作，这不会阻塞调用的线程。其他的都和commit类似。<br>QueuedWork.java</p>
+<pre><code>public class QueuedWork {
+
+    private static final ConcurrentLinkedQueue&lt;Runnable&gt; sPendingWorkFinishers =
+       new ConcurrentLinkedQueue&lt;Runnable&gt;();
+
+    public static void add(Runnable finisher) {
+        sPendingWorkFinishers.add(finisher);
+    }
+
+    public static void remove(Runnable finisher) {
+        sPendingWorkFinishers.remove(finisher);
+    }
+
+    public static void waitToFinish() {
+        Runnable toFinish;
+        while ((toFinish = sPendingWorkFinishers.poll()) != null) {
+            toFinish.run();
+        }
+    }
+
+    public static boolean hasPendingWork() {
+        return !sPendingWorkFinishers.isEmpty();
+    }
+}
+</code></pre><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>apply 与commit的对比</p>
+<p>apply没有返回值, commit有返回值能知道修改是否提交成功<br>apply是将修改提交到内存，再异步提交到磁盘文件; commit是同步的提交到磁盘文件;<br>多并发的提交commit时，需等待正在处理的commit数据更新到磁盘文件后才会继续往下执行，从而降低效率; 而apply只是原子更新到内存，后调用apply函数会直接覆盖前面内存数据，从一定程度上提高很多效率。<br>获取SP与Editor:</p>
+<p>getSharedPreferences()是从ContextImpl.sSharedPrefsCache唯一的SPI对象;<br>edit()每次都是创建新的EditorImpl对象.<br>优化建议:</p>
+<p>强烈建议不要在sp里面存储特别大的key/value, 有助于减少卡顿/anr<br>请不要高频地使用apply, 尽可能地批量提交;commit直接在主线程操作, 更要注意了<br>不要使用MODE_MULTI_PROCESS;<br>高频写操作的key与高频读操作的key可以适当地拆分文件, 由于减少同步锁竞争;<br>不要一上来就执行getSharedPreferences().edit(), 应该分成两大步骤来做, 中间可以执行其他代码.<br>不要连续多次edit(), 应该获取一次获取edit(),然后多次执行putxxx(), 减少内存波动; 经常看到大家喜欢封装方法, 结果就导致这种情况的出现.<br>每次commit时会把全部的数据更新的文件, 所以整个文件是不应该过大的, 影响整体性能;</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="http://gityuan.com/2017/06/18/SharedPreferences/" target="_blank" rel="noopener">Gityuan博客</a><br><a href="http://blog.csdn.net/yanbober/article/details/47866369" target="_blank" rel="noopener">工匠若水</a></p>
+
+    </div>
+
+    <div class="post-footer">   
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="http://blog.csdn.net/hty1053240123?viewmode=contents" target="_blank">天宇240</a>
+            
+        </div>
+        <div>
+            
+        </div>  
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2018/01/17/Android应用内部广播机制详解/" class="pre-post btn btn-default"><i class="fa fa-angle-left fa-fw"></i>上一篇</a>
+    
+    
+        <a href="/2018/01/17/adb常用命令/" class="next-post btn btn-default">下一篇<i class="fa fa-angle-right fa-fw"></i></a>
+    
+</div>
+
+
+    <div id="comments">
+        <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNTA2NC8xMTU5OQ==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+    </div>
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        
+    <div class="widget">    
+        <h3 class="title">搜索</h3>
+        <div id="search-form">
+            <div id="result-mask" class="hide"></div>
+            <div class="search-area">
+                
+                    <input id="search-key" type="search" autocomplete="off" placeholder="搜点什么呢?">
+                    <button type="button" class="search-form-submit" id="search-local">站内搜索</button>
+                
+                
+            </div>
+            <div id="result-wrap" class="hide">
+                <div id="search-result"></div>
+            </div>
+            <div class="hide">
+                <template id="search-tpl">
+                    <div class="item">
+                        <a href="/{path}" title="{title}">
+                            <div class="title">{title}</div>
+                            <div class="content">{content}</div>
+                        </a>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget notification">
+        <h3 class="title">网站公告</h3>
+        <div>
+            <p>公告就是醒目，为了提醒自己多学习，多总结~ <br/>
+好记忆不如烂笔头~ <br/>
+</p>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+      <h3 class="title">社交</h3> 
+        <div class="content social">
+            
+	            <a href="//github.com/huangtianyu" rel="external nofollow" title="Github" target="_blank">
+			    	<i class="git fa fa-git"></i>
+			    </a>
+            
+	            <a href="mailto:1053240123@qq.com" rel="external nofollow" title="邮箱" target="_blank">
+			    	<i class="envelope-o fa fa-envelope-o"></i>
+			    </a>
+            
+	            <a href="https://weibo.com/1804011630/" rel="external nofollow" title="微博" target="_blank">
+			    	<i class="weibo fa fa-weibo"></i>
+			    </a>
+            
+	            <a href="/atom.xml" rel="external nofollow" title="RSS" target="_blank">
+			    	<i class="feed fa fa-feed"></i>
+			    </a>
+            
+        </div>
+    </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">分类</h3>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/"><i class="fa" aria-hidden="true">Android</i></a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/"><i class="fa" aria-hidden="true">Git</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/"><i class="fa" aria-hidden="true">Hexo</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kotlin/"><i class="fa" aria-hidden="true">Kotlin</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/gradle/"><i class="fa" aria-hidden="true">gradle</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/人工智能/"><i class="fa" aria-hidden="true">人工智能</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/"><i class="fa" aria-hidden="true">设计模式</i></a><span class="category-list-count">1</span></li></ul>
+    </div>
+
+
+        
+        
+    <div class="widget">
+      <h3 class="title">归档</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/"><i class="fa" aria-hidden="true">十月 2018</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/"><i class="fa" aria-hidden="true">三月 2018</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/"><i class="fa" aria-hidden="true">二月 2018</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/"><i class="fa" aria-hidden="true">一月 2018</i></a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/"><i class="fa" aria-hidden="true">十二月 2017</i></a><span class="archive-list-count">3</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">标签云</h3>
+    <div class="content tag-cloud">
+        <a href="/tags/Android-DeepLink-源码解析/" style="font-size: 10px;">Android DeepLink 源码解析</a> <a href="/tags/Android-JNI开发/" style="font-size: 15px;">Android JNI开发</a> <a href="/tags/Android-NDK开发，JNI开发/" style="font-size: 20px;">Android NDK开发，JNI开发</a> <a href="/tags/Android学习/" style="font-size: 10px;">Android学习</a> <a href="/tags/Android源码分析/" style="font-size: 10px;">Android源码分析</a> <a href="/tags/AppLinks-DeepLinks/" style="font-size: 10px;">AppLinks, DeepLinks</a> <a href="/tags/Dex类加载/" style="font-size: 10px;">Dex类加载</a> <a href="/tags/Hexo学习/" style="font-size: 10px;">Hexo学习</a> <a href="/tags/Hexo搭建/" style="font-size: 10px;">Hexo搭建</a> <a href="/tags/Kotlin学习/" style="font-size: 15px;">Kotlin学习</a> <a href="/tags/RoboBinding-MVC-MVP/" style="font-size: 10px;">RoboBinding,MVC,MVP</a> <a href="/tags/SharedPreferences-Editor/" style="font-size: 10px;">SharedPreferences Editor</a> <a href="/tags/View-onMeasure/" style="font-size: 10px;">View onMeasure</a> <a href="/tags/ViewPager-Fragment预加载/" style="font-size: 10px;">ViewPager+Fragment预加载</a> <a href="/tags/adb命令/" style="font-size: 10px;">adb命令</a> <a href="/tags/adb查看交互Activity名称/" style="font-size: 10px;">adb查看交互Activity名称</a> <a href="/tags/gradle配置/" style="font-size: 10px;">gradle配置</a> <a href="/tags/onAttachedToWindow和onDetachedFromWindow-源码解析/" style="font-size: 10px;">onAttachedToWindow和onDetachedFromWindow,源码解析</a> <a href="/tags/onSaveInstanceState/" style="font-size: 10px;">onSaveInstanceState</a> <a href="/tags/内存优化/" style="font-size: 10px;">内存优化</a> <a href="/tags/应用内部广播-LocalBroadcastManager/" style="font-size: 10px;">应用内部广播,LocalBroadcastManager</a> <a href="/tags/查看git-bash内容/" style="font-size: 10px;">查看git bash内容</a> <a href="/tags/深度学习-吴恩达/" style="font-size: 10px;">深度学习 吴恩达</a>
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">友链</h3>
+        <div class="content friends-link">
+        
+            <a href="http://blog.csdn.net/hty1053240123?viewmode=contents" class="fa" target="_blank">个人博客</a>
+        
+            <a href="https://www.jianshu.com/u/3c8a983c71dc" class="fa" target="_blank">简书</a>
+        
+        </div>
+    </div>
+
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12"> 
+                <span>Copyright &copy; 2017
+                </span> | 
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> | 
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+	<script src="/js/search.js?rev=@@hash"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+
+    <script type="text/javascript">
+        // highlight
+        //hljs.initHighlightingOnLoad();
+    </script>
+</body>
+</html>

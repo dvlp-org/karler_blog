@@ -24,7 +24,7 @@
     <!--Title-->
 
 
-<title>天宇</title>
+<title>Android NDK开发系列教程4：对类变量进行操作 | 天宇</title>
 
 
     <link rel="alternate" href="/atom.xml" title="天宇" type="application/atom+xml">
@@ -36,6 +36,8 @@
 
 
 
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css?rev=9.12.0">
 
 
 <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css?rev=3.3.4">
@@ -134,318 +136,16 @@ var _hmt = _hmt || [];
     <section class="content-wrap">
         <div class="container">
             <div class="row">
-                <main class="col-md-8 main-content ">
-                    <div class="carousel">
-    <img src="/img/head-img.jpg">
-</div>
-
-
-
-
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
 <article class="post">
-    
-    <div class="post-content">
-        <div class="post-head home-post-head">
-            <h1 class="post-title">
-                <a href="/2018/10/05/Kotlin学习笔记二-常用操作符/">Kotlin学习笔记二--常用操作符</a>
-            </h1>
-            <div class="post-meta">  &bull;
-                <time class="post-date" datetime="" title="">
-                    2018年10月05日
-                </time>
-            </div>
-        </div>
-        <p class="brief">
-            ?操作符表示这个对象可能为空
-//在变量类型后面加上问号表示该变量是可空变量
-var name: String? = &quot;test&quot;
-返回值类型若可能为空则也需加?
-fun parseInt(str: String)...
-        </p> 
-    </div>
-    <footer class="post-footer clearfix">
-        <div class="pull-left tag-list">
-            <div class="post-meta">
-    
-    
-    <span class="categories-meta fa-wrap">
-        <i class="fa fa-folder-open-o"></i>
-        <span>Kotlin</span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-tags"></i>
-        <span class="tags-meta">
+    <div class="post-head">
+        <h1 id="Android NDK开发系列教程4：对类变量进行操作">
             
-            Kotlin学习
+            Android NDK开发系列教程4：对类变量进行操作
             
-        </span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-clock-o"></i>
-        <span class="date-meta">2018/10/05</span>
-    </span>
-
-</div>
-
-        </div>
-
-        <div class="post-permalink"> 
-            <a href="/2018/10/05/Kotlin学习笔记二-常用操作符/" class="btn btn-default">阅读全文</a>
-        </div>
-    </footer>
-</article>
-
-
-<article class="post">
-    
-    <div class="post-content">
-        <div class="post-head home-post-head">
-            <h1 class="post-title">
-                <a href="/2018/10/03/Kotlin学习笔记一-基本语法/">Kotlin学习笔记一</a>
-            </h1>
-            <div class="post-meta">  &bull;
-                <time class="post-date" datetime="" title="">
-                    2018年10月03日
-                </time>
-            </div>
-        </div>
-        <p class="brief">
-            Kotlin简介Kotlin是一门与Swift类似的静态类型JVM语言，由JetBrains设计开发并开源。与Java相比，Kotlin的语法更简洁、更具表达性，而且提供了更多的特性，比如，高阶函数、操作符重载、字符串模板。它与Jav...
-        </p> 
-    </div>
-    <footer class="post-footer clearfix">
-        <div class="pull-left tag-list">
-            <div class="post-meta">
-    
-    
-    <span class="categories-meta fa-wrap">
-        <i class="fa fa-folder-open-o"></i>
-        <span>Kotlin</span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-tags"></i>
-        <span class="tags-meta">
-            
-            Kotlin学习
-            
-        </span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-clock-o"></i>
-        <span class="date-meta">2018/10/03</span>
-    </span>
-
-</div>
-
-        </div>
-
-        <div class="post-permalink"> 
-            <a href="/2018/10/03/Kotlin学习笔记一-基本语法/" class="btn btn-default">阅读全文</a>
-        </div>
-    </footer>
-</article>
-
-
-<article class="post">
-    
-        <div class="post-media">
-            <a href="javascript:">
-                <img class="img-ajax" src="/img/loading.gif"  data-src="//img-blog.csdn.net/20180322123239909?watermark/2/text/Ly9ibG9nLmNzZG4ubmV0L2h0eTEwNTMyNDAxMjM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"   alt="Android中Handler导致内存泄漏的原理分析"> 
-            </a>
-        </div>
-    
-    <div class="post-content">
-        <div class="post-head home-post-head">
-            <h1 class="post-title">
-                <a href="/2018/03/22/Android中Handler导致内存泄漏的原理分析/">Android中Handler导致内存泄漏的原理分析</a>
-            </h1>
-            <div class="post-meta">  &bull;
-                <time class="post-date" datetime="" title="">
-                    2018年03月22日
-                </time>
-            </div>
-        </div>
-        <p class="brief">
-            1. 简介在写Android应用程序时，Handler应该是很常见的一个类。我们一般在使用该类时有采用如下方法：
-// 1.新建一个匿名的Handler内部类，并重新handleMessage
-private Handler mHan...
-        </p> 
-    </div>
-    <footer class="post-footer clearfix">
-        <div class="pull-left tag-list">
-            <div class="post-meta">
-    
-    
-    <span class="categories-meta fa-wrap">
-        <i class="fa fa-folder-open-o"></i>
-        <span>Android</span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-tags"></i>
-        <span class="tags-meta">
-            
-            Android源码分析
-            
-        </span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-clock-o"></i>
-        <span class="date-meta">2018/03/22</span>
-    </span>
-
-</div>
-
-        </div>
-
-        <div class="post-permalink"> 
-            <a href="/2018/03/22/Android中Handler导致内存泄漏的原理分析/" class="btn btn-default">阅读全文</a>
-        </div>
-    </footer>
-</article>
-
-
-<article class="post">
-    
-    <div class="post-content">
-        <div class="post-head home-post-head">
-            <h1 class="post-title">
-                <a href="/2018/03/06/解决ViewPager+Fragment预加载导致未显示界面提前加载数据/">解决ViewPager+Fragment预加载导致未显示界面提前加载数据</a>
-            </h1>
-            <div class="post-meta">  &bull;
-                <time class="post-date" datetime="" title="">
-                    2018年03月06日
-                </time>
-            </div>
-        </div>
-        <p class="brief">
-            1. 简介当我们使用ViewPager+Fragment结构时，由于谷歌在设计ViewPager时会提前加载下一个界面。虽然用户在滑动到下一页时不会感觉卡顿。但这也存在一个问题：当进入Activity时，当前界面和下一个界面均由网络请...
-        </p> 
-    </div>
-    <footer class="post-footer clearfix">
-        <div class="pull-left tag-list">
-            <div class="post-meta">
-    
-    
-    <span class="categories-meta fa-wrap">
-        <i class="fa fa-folder-open-o"></i>
-        <span>Android</span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-tags"></i>
-        <span class="tags-meta">
-            
-            ViewPager+Fragment预加载
-            
-        </span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-clock-o"></i>
-        <span class="date-meta">2018/03/06</span>
-    </span>
-
-</div>
-
-        </div>
-
-        <div class="post-permalink"> 
-            <a href="/2018/03/06/解决ViewPager+Fragment预加载导致未显示界面提前加载数据/" class="btn btn-default">阅读全文</a>
-        </div>
-    </footer>
-</article>
-
-
-<article class="post">
-    
-    <div class="post-content">
-        <div class="post-head home-post-head">
-            <h1 class="post-title">
-                <a href="/2018/02/06/Android-NDK开发系列教程5：局部引用，全局引用，弱全局引用/">Android NDK开发系列教程5：局部引用，全局引用，弱全局引用</a>
-            </h1>
-            <div class="post-meta">  &bull;
-                <time class="post-date" datetime="" title="">
-                    2018年02月06日
-                </time>
-            </div>
-        </div>
-        <p class="brief">
-            1. 简介从Java虚拟机创建的对象当传入到native层时会产生一个引用，在进行垃圾回收时如果有native的引用，改对象同样也不会被回收。在native引用中分局部引用和全局引用。
-1.1 局部引用局部引用又称本地引用，大多数见到...
-        </p> 
-    </div>
-    <footer class="post-footer clearfix">
-        <div class="pull-left tag-list">
-            <div class="post-meta">
-    
-    
-    <span class="categories-meta fa-wrap">
-        <i class="fa fa-folder-open-o"></i>
-        <span>Android</span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-tags"></i>
-        <span class="tags-meta">
-            
-            Android JNI开发
-            
-        </span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-clock-o"></i>
-        <span class="date-meta">2018/02/06</span>
-    </span>
-
-</div>
-
-        </div>
-
-        <div class="post-permalink"> 
-            <a href="/2018/02/06/Android-NDK开发系列教程5：局部引用，全局引用，弱全局引用/" class="btn btn-default">阅读全文</a>
-        </div>
-    </footer>
-</article>
-
-
-<article class="post">
-    
-    <div class="post-content">
-        <div class="post-head home-post-head">
-            <h1 class="post-title">
-                <a href="/2018/02/04/Android-NDK开发系列教程4：对类变量进行操作/">Android NDK开发系列教程4：对类变量进行操作</a>
-            </h1>
-            <div class="post-meta">  &bull;
-                <time class="post-date" datetime="" title="">
-                    2018年02月04日
-                </time>
-            </div>
-        </div>
-        <p class="brief">
-            通常我们也可以直接利用jni来访问和处理类的变量，不一定非要通过Java方法来操作Java类变量。对类变量操作时，类的静态变量和类的实例变量的操作稍微有些不同，下面进行讲解。
-对类的静态变量进行操作类的静态变量属于类，是所有该类实例共...
-        </p> 
-    </div>
-    <footer class="post-footer clearfix">
-        <div class="pull-left tag-list">
-            <div class="post-meta">
+        </h1>
+        <div class="post-meta">
     
     
     <span class="categories-meta fa-wrap">
@@ -471,22 +171,153 @@ private Handler mHan...
 
 </div>
 
-        </div>
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <p>通常我们也可以直接利用jni来访问和处理类的变量，不一定非要通过Java方法来操作Java类变量。对类变量操作时，类的静态变量和类的实例变量的操作稍微有些不同，下面进行讲解。</p>
+<h3 id="对类的静态变量进行操作"><a href="#对类的静态变量进行操作" class="headerlink" title="对类的静态变量进行操作"></a>对类的静态变量进行操作</h3><p>类的静态变量属于类，是所有该类实例共享的。操作该变量时，不需要指定具体的实例是哪个。</p>
+<pre><code>jclass clazz;  
+jfieldID fid;  
+jint num;  
 
-        <div class="post-permalink"> 
-            <a href="/2018/02/04/Android-NDK开发系列教程4：对类变量进行操作/" class="btn btn-default">阅读全文</a>
+//1.获取类的Class引用  
+clazz = env-&gt;FindClass(&quot;zqc/com/example/Person&quot;);  
+if (clazz == NULL) {    // 错误处理  
+return;  
+}  
+
+//2.获取类静态变量num的属性ID  
+fid = env-&gt;GetStaticFieldID( clazz, &quot;num&quot;, &quot;I&quot;);  
+if (fid == NULL) {  
+return;  
+}  
+
+// 3.获取静态变量num的值  
+num = env-&gt;GetStaticIntField(clazz,fid);  
+printf(&quot;In C---&gt;ClassField.num = %d\n&quot;, num);  
+
+// 4.修改静态变量num的值  
+env-&gt;SetStaticIntField(clazz, fid, 80);
+</code></pre><p>主要步骤就是代码里面注释的。</p>
+<h3 id="对类的实例变量进行操作"><a href="#对类的实例变量进行操作" class="headerlink" title="对类的实例变量进行操作"></a>对类的实例变量进行操作</h3><p>代码如下：</p>
+<pre><code>jclass clazz;  
+jfieldID fid;  
+jstring j_str;  
+jstring j_newStr;  
+const char *c_str = NULL;  
+
+// 1.获取类的Class引用,obj是该类的某个实例jobject obj;
+clazz = env-&gt;GetObjectClass(obj);  
+if (clazz == NULL) {  
+return;  
+}  
+
+// 2. 获取类实例变量str的属性ID  
+fid = env-&gt;GetFieldID(clazz,&quot;str&quot;, &quot;Ljava/lang/String;&quot;);  
+if (clazz == NULL) {  
+return;  
+}  
+
+// 3. 获取实例变量str的值  
+j_str = (jstring)env-&gt;GetObjectField(obj,fid);  
+
+// 4. 将unicode编码的java字符串转换成C风格字符串  
+c_str = env-&gt;GetStringUTFChars(j_str,NULL);  
+if (c_str == NULL) {  
+return;  
+}  
+printf(&quot;In C---&gt;ClassField.str = %s\n&quot;, c_str);  
+env-&gt;ReleaseStringUTFChars(j_str, c_str);  
+
+// 5. 修改实例变量str的值  
+j_newStr = env-&gt;NewStringUTF(&quot;This is C String&quot;);  
+if (j_newStr == NULL) {  
+return;  
+}  
+
+env-&gt;SetObjectField(obj, fid, j_newStr);  
+
+// 6.删除局部引用  
+env-&gt;DeleteLocalRef(clazz);  
+env-&gt;DeleteLocalRef(j_str);  
+env-&gt;DeleteLocalRef(j_newStr);
+</code></pre><p>JNI开发也有JNI开发的套路，按照上面套路来，即可修改类的实例变量。操作过程也很好理解，我们在native操作的时候都需要借助JNI提供的函数获取相应的引用。利用引用去进行操作。由于JNI函数是直接操作JVM中的数据结构，所以即使是private的变量，我们也可以进行修改。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ol>
+<li>由于JNI函数是直接操作JVM中的数据结构，不受Java访问修饰符的限制。即，在本地代码中可以调用JNI函数可以访问Java对象中的非public属性和方法</li>
+<li><p>访问和修改静态变量操作步聚：</p>
+<ol>
+<li><p>调用FindClass函数获取类的Class引用</p>
+</li>
+<li><p>调用GetStaticFieldID函数获取Class引用中某个静态变量ID</p>
+</li>
+<li><p>调用GetStaticXXXField函数获取静态变量的值，需要传入变量所属Class的引用和变量ID</p>
+</li>
+<li><p>调用SetStaticXXXField函数设置静态变量的值，需要传入变量所属Class的引用、变量ID和变量的值</p>
+</li>
+</ol>
+</li>
+<li><p>访问和修改实例变量操作步聚：</p>
+<ol>
+<li><p>调用GetObjectClass函数获取实例对象的Class引用</p>
+</li>
+<li><p>调用GetFieldID函数获取Class引用中某个实例变量的ID</p>
+</li>
+<li><p>调用GetXXXField函数获取变量的值，需要传入实例变量所属对象和变量ID</p>
+</li>
+<li><p>调用SetXXXField函数修改变量的值，需要传入实例变量所属对象、变量ID和变量的值</p>
+</li>
+</ol>
+</li>
+</ol>
+
+    </div>
+
+    <div class="post-footer">   
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="http://blog.csdn.net/hty1053240123?viewmode=contents" target="_blank">天宇240</a>
+            
         </div>
-    </footer>
+        <div>
+            
+        </div>  
+    </div>
 </article>
 
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2018/02/06/Android-NDK开发系列教程5：局部引用，全局引用，弱全局引用/" class="pre-post btn btn-default"><i class="fa fa-angle-left fa-fw"></i>上一篇</a>
+    
+    
+        <a href="/2018/02/02/Android-NDK开发系列教程3：基本方法调用及传参（续）/" class="next-post btn btn-default">下一篇<i class="fa fa-angle-right fa-fw"></i></a>
+    
+</div>
 
 
+    <div id="comments">
+        <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNTA2NC8xMTU5OQ==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
 
-    <nav class="pagination" role="navigation">
-        <div id="page-nav">
-            <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class='fa fa-angle-right'></i></a>
-        </div>
-    </nav>
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+    </div>
+
+
 
 
 

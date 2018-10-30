@@ -24,7 +24,7 @@
     <!--Title-->
 
 
-<title>天宇</title>
+<title>解决ViewPager+Fragment预加载导致未显示界面提前加载数据 | 天宇</title>
 
 
     <link rel="alternate" href="/atom.xml" title="天宇" type="application/atom+xml">
@@ -36,6 +36,8 @@
 
 
 
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css?rev=9.12.0">
 
 
 <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css?rev=3.3.4">
@@ -134,208 +136,16 @@ var _hmt = _hmt || [];
     <section class="content-wrap">
         <div class="container">
             <div class="row">
-                <main class="col-md-8 main-content ">
-                    <div class="carousel">
-    <img src="/img/head-img.jpg">
-</div>
-
-
-
-
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
 <article class="post">
-    
-    <div class="post-content">
-        <div class="post-head home-post-head">
-            <h1 class="post-title">
-                <a href="/2018/10/05/Kotlin学习笔记二-常用操作符/">Kotlin学习笔记二--常用操作符</a>
-            </h1>
-            <div class="post-meta">  &bull;
-                <time class="post-date" datetime="" title="">
-                    2018年10月05日
-                </time>
-            </div>
-        </div>
-        <p class="brief">
-            ?操作符表示这个对象可能为空
-//在变量类型后面加上问号表示该变量是可空变量
-var name: String? = &quot;test&quot;
-返回值类型若可能为空则也需加?
-fun parseInt(str: String)...
-        </p> 
-    </div>
-    <footer class="post-footer clearfix">
-        <div class="pull-left tag-list">
-            <div class="post-meta">
-    
-    
-    <span class="categories-meta fa-wrap">
-        <i class="fa fa-folder-open-o"></i>
-        <span>Kotlin</span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-tags"></i>
-        <span class="tags-meta">
+    <div class="post-head">
+        <h1 id="解决ViewPager+Fragment预加载导致未显示界面提前加载数据">
             
-            Kotlin学习
+            解决ViewPager+Fragment预加载导致未显示界面提前加载数据
             
-        </span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-clock-o"></i>
-        <span class="date-meta">2018/10/05</span>
-    </span>
-
-</div>
-
-        </div>
-
-        <div class="post-permalink"> 
-            <a href="/2018/10/05/Kotlin学习笔记二-常用操作符/" class="btn btn-default">阅读全文</a>
-        </div>
-    </footer>
-</article>
-
-
-<article class="post">
-    
-    <div class="post-content">
-        <div class="post-head home-post-head">
-            <h1 class="post-title">
-                <a href="/2018/10/03/Kotlin学习笔记一-基本语法/">Kotlin学习笔记一</a>
-            </h1>
-            <div class="post-meta">  &bull;
-                <time class="post-date" datetime="" title="">
-                    2018年10月03日
-                </time>
-            </div>
-        </div>
-        <p class="brief">
-            Kotlin简介Kotlin是一门与Swift类似的静态类型JVM语言，由JetBrains设计开发并开源。与Java相比，Kotlin的语法更简洁、更具表达性，而且提供了更多的特性，比如，高阶函数、操作符重载、字符串模板。它与Jav...
-        </p> 
-    </div>
-    <footer class="post-footer clearfix">
-        <div class="pull-left tag-list">
-            <div class="post-meta">
-    
-    
-    <span class="categories-meta fa-wrap">
-        <i class="fa fa-folder-open-o"></i>
-        <span>Kotlin</span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-tags"></i>
-        <span class="tags-meta">
-            
-            Kotlin学习
-            
-        </span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-clock-o"></i>
-        <span class="date-meta">2018/10/03</span>
-    </span>
-
-</div>
-
-        </div>
-
-        <div class="post-permalink"> 
-            <a href="/2018/10/03/Kotlin学习笔记一-基本语法/" class="btn btn-default">阅读全文</a>
-        </div>
-    </footer>
-</article>
-
-
-<article class="post">
-    
-        <div class="post-media">
-            <a href="javascript:">
-                <img class="img-ajax" src="/img/loading.gif"  data-src="//img-blog.csdn.net/20180322123239909?watermark/2/text/Ly9ibG9nLmNzZG4ubmV0L2h0eTEwNTMyNDAxMjM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"   alt="Android中Handler导致内存泄漏的原理分析"> 
-            </a>
-        </div>
-    
-    <div class="post-content">
-        <div class="post-head home-post-head">
-            <h1 class="post-title">
-                <a href="/2018/03/22/Android中Handler导致内存泄漏的原理分析/">Android中Handler导致内存泄漏的原理分析</a>
-            </h1>
-            <div class="post-meta">  &bull;
-                <time class="post-date" datetime="" title="">
-                    2018年03月22日
-                </time>
-            </div>
-        </div>
-        <p class="brief">
-            1. 简介在写Android应用程序时，Handler应该是很常见的一个类。我们一般在使用该类时有采用如下方法：
-// 1.新建一个匿名的Handler内部类，并重新handleMessage
-private Handler mHan...
-        </p> 
-    </div>
-    <footer class="post-footer clearfix">
-        <div class="pull-left tag-list">
-            <div class="post-meta">
-    
-    
-    <span class="categories-meta fa-wrap">
-        <i class="fa fa-folder-open-o"></i>
-        <span>Android</span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-tags"></i>
-        <span class="tags-meta">
-            
-            Android源码分析
-            
-        </span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-clock-o"></i>
-        <span class="date-meta">2018/03/22</span>
-    </span>
-
-</div>
-
-        </div>
-
-        <div class="post-permalink"> 
-            <a href="/2018/03/22/Android中Handler导致内存泄漏的原理分析/" class="btn btn-default">阅读全文</a>
-        </div>
-    </footer>
-</article>
-
-
-<article class="post">
-    
-    <div class="post-content">
-        <div class="post-head home-post-head">
-            <h1 class="post-title">
-                <a href="/2018/03/06/解决ViewPager+Fragment预加载导致未显示界面提前加载数据/">解决ViewPager+Fragment预加载导致未显示界面提前加载数据</a>
-            </h1>
-            <div class="post-meta">  &bull;
-                <time class="post-date" datetime="" title="">
-                    2018年03月06日
-                </time>
-            </div>
-        </div>
-        <p class="brief">
-            1. 简介当我们使用ViewPager+Fragment结构时，由于谷歌在设计ViewPager时会提前加载下一个界面。虽然用户在滑动到下一页时不会感觉卡顿。但这也存在一个问题：当进入Activity时，当前界面和下一个界面均由网络请...
-        </p> 
-    </div>
-    <footer class="post-footer clearfix">
-        <div class="pull-left tag-list">
-            <div class="post-meta">
+        </h1>
+        <div class="post-meta">
     
     
     <span class="categories-meta fa-wrap">
@@ -361,132 +171,167 @@ private Handler mHan...
 
 </div>
 
-        </div>
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <h3 id="1-简介"><a href="#1-简介" class="headerlink" title="1. 简介"></a>1. 简介</h3><p>当我们使用ViewPager+Fragment结构时，由于谷歌在设计ViewPager时会提前加载下一个界面。虽然用户在滑动到下一页时不会感觉卡顿。但这也存在一个问题：当进入Activity时，当前界面和下一个界面均由网络请求时由于预加载了下一页导致同时有两个网络请求，在大多数情况下不显示的界面是不用联网把数据请求下来的。下面通过Fragment提供的setUserVisibleHint方法来解决该问题。</p>
+<h3 id="2-具体分析"><a href="#2-具体分析" class="headerlink" title="2. 具体分析"></a>2. 具体分析</h3><h4 id="2-1-setUserVisibleHint"><a href="#2-1-setUserVisibleHint" class="headerlink" title="2.1 setUserVisibleHint"></a>2.1 setUserVisibleHint</h4><p>在分析之前先讲下setUserVisibleHint方法，官网对该方法的解释为：<a href="https://developer.android.com/reference/android/app/Fragment.html#setUserVisibleHint%28boolean%29" target="_blank" rel="noopener">setUserVisibleHint</a></p>
+<pre><code>Set a hint to the system about whether this fragment&#39;s UI is currently visible to the user. This hint defaults to true and is persistent across fragment instance state save and restore.
 
-        <div class="post-permalink"> 
-            <a href="/2018/03/06/解决ViewPager+Fragment预加载导致未显示界面提前加载数据/" class="btn btn-default">阅读全文</a>
+An app may set this to false to indicate that the fragment&#39;s UI is scrolled out of visibility or is otherwise not directly visible to the user. This may be used by the system to prioritize operations such as fragment lifecycle updates or loader ordering behavior.
+
+Note: This method may be called outside of the fragment lifecycle and thus has no ordering guarantees with regard to fragment lifecycle method calls.
+
+Note: Prior to Android N there was a platform bug that could cause setUserVisibleHint to bring a fragment up to the started state before its FragmentTransaction had been committed. As some apps relied on this behavior, it is preserved for apps that declare a targetSdkVersion of 23 or lower.
+</code></pre><p>翻一下就是：</p>
+<pre><code>设置一个标志表明当前Fragment界面是否对用户可见的，默认值是true。并且该值保存在Fragment的实例中。
+</code></pre><p>下面的Note就大家自己看了，该方法意思也很简单，设置一个标志来表明当前Fragment是否是可见的。该方法有一个参数，其含义是：</p>
+<pre><code>Parameters:
+isVisibleToUser    boolean: true if this fragment&#39;s UI is currently visible to the user (default), false if it is not.
+回调传来的是true表明当前Fragment是对用户可见的，false表示对用户不可见。
+</code></pre><h4 id="2-2-getUserVisibleHint"><a href="#2-2-getUserVisibleHint" class="headerlink" title="2.2 getUserVisibleHint"></a>2.2 getUserVisibleHint</h4><p>官网解释如下：<a href="https://developer.android.com/reference/android/app/Fragment.html#getUserVisibleHint%28%29" target="_blank" rel="noopener">getUserVisibleHint</a>，也就是返回当前的可见性，代码如下：</p>
+<pre><code>public boolean getUserVisibleHint() {
+        return mUserVisibleHint;
+    }
+</code></pre><p>该方法也就是获取mUserVisibleHint。</p>
+<h4 id="2-3-setUserVisibleHint调用时机"><a href="#2-3-setUserVisibleHint调用时机" class="headerlink" title="2.3 setUserVisibleHint调用时机"></a>2.3 setUserVisibleHint调用时机</h4><p>在FragmentPagerAdapter.java中调用了Fragment的setUserVisibleHint，代码如下：</p>
+<pre><code>
+@Override
+public Object instantiateItem(ViewGroup container, int position) {
+    if (mCurTransaction == null) {
+        mCurTransaction = mFragmentManager.beginTransaction();
+    }
+
+    final long itemId = getItemId(position);
+
+    // Do we already have this fragment?
+    String name = makeFragmentName(container.getId(), itemId);
+    Fragment fragment = mFragmentManager.findFragmentByTag(name);
+    if (fragment != null) {
+        if (DEBUG) Log.v(TAG, &quot;Attaching item #&quot; + itemId + &quot;: f=&quot; + fragment);
+        mCurTransaction.attach(fragment);
+    } else {
+        fragment = getItem(position);
+        if (DEBUG) Log.v(TAG, &quot;Adding item #&quot; + itemId + &quot;: f=&quot; + fragment);
+        mCurTransaction.add(container.getId(), fragment,
+                makeFragmentName(container.getId(), itemId));
+    }
+    if (fragment != mCurrentPrimaryItem) {
+        fragment.setMenuVisibility(false);
+        //从这可以看出如果加载的不是当前的Fragment就会调用setUserVisibleHint并传入false
+        fragment.setUserVisibleHint(false);
+    }
+    return fragment;
+}
+</code></pre><p>还有一处调用为：</p>
+<pre><code>/**
+ * Called to inform the adapter of which item is currently considered to
+ * be the &quot;primary&quot;, that is the one show to the user as the current page.
+ */
+@Override
+public void setPrimaryItem(ViewGroup container, int position, Object object) {
+    Fragment fragment = (Fragment)object;
+    if (fragment != mCurrentPrimaryItem) {
+        if (mCurrentPrimaryItem != null) {
+            mCurrentPrimaryItem.setMenuVisibility(false);
+            //将当前的Fragment的Visibile置为false。
+            mCurrentPrimaryItem.setUserVisibleHint(false);
+        }
+        if (fragment != null) {
+            fragment.setMenuVisibility(true);
+            //这时候也意味着这个fragment要呈现给用户了，传入参数为true
+            fragment.setUserVisibleHint(true);
+        }
+        mCurrentPrimaryItem = fragment;
+    }
+}
+</code></pre><p>以上代码有三处调用，可以看出在初始加载的时候，如果该Fragment不是要显示的Fragment时，在调用setUserVisibleHint的时候传入的就为false，当setPrimaryItem将某个position的Fragment调到前台时，会先把当前正在显示的Fragment的visibility置为false，然后将当前的Fragment的visibility再置为true。</p>
+<h3 id="3-解决方案"><a href="#3-解决方案" class="headerlink" title="3. 解决方案"></a>3. 解决方案</h3><p>预加载Fragment的时候，我们先判断下当前加载的Fragment的visibility是否是true，如果不是true，那么就先不加载，等下次设置setUserVisibleHint的时候再去联网加载。代码如下：<br>BaseFragment.java</p>
+<pre><code>public abstract class BaseFragment extends Fragment {
+    //当前View是否创建了。
+    protected boolean isViewInitiated;
+    //当前数据是否加载了。
+    protected boolean isDataInitiated;
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        prepareFetchData();
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        isViewInitiated = true;
+        prepareFetchData();
+    }
+    //即使预加载了第二页，但是网络请求不会被预加载
+    public abstract void getData();
+
+    public boolean prepareFetchData() {
+        return prepareFetchData(false);
+    }
+
+    public boolean prepareFetchData(boolean forceUpdate) {
+        if (getUserVisibleHint() &amp;&amp; isViewInitiated &amp;&amp; (!isDataInitiated || forceUpdate)) {
+            getData();
+            isDataInitiated = true;
+            return true;
+        }
+        return false;
+    }
+}
+</code></pre><p>在使用的时候，也很方便，直接继承BaseFragment，然后实现getData()函数实现联网请求。</p>
+<h3 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h3><p>解决这个还是比较容易的，方法就是当当前Fragment的visibility为true的时候才去联网请求数据。具体办法也就是利用Fragment给的回调函数setUserVisibileHint，然后获取显示状态。没加载数据则联网加载数据。</p>
+
+    </div>
+
+    <div class="post-footer">   
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="http://blog.csdn.net/hty1053240123?viewmode=contents" target="_blank">天宇240</a>
+            
         </div>
-    </footer>
+        <div>
+            
+        </div>  
+    </div>
 </article>
 
-
-<article class="post">
+<div class="article-nav prev-next-wrap clearfix">
     
-    <div class="post-content">
-        <div class="post-head home-post-head">
-            <h1 class="post-title">
-                <a href="/2018/02/06/Android-NDK开发系列教程5：局部引用，全局引用，弱全局引用/">Android NDK开发系列教程5：局部引用，全局引用，弱全局引用</a>
-            </h1>
-            <div class="post-meta">  &bull;
-                <time class="post-date" datetime="" title="">
-                    2018年02月06日
-                </time>
-            </div>
-        </div>
-        <p class="brief">
-            1. 简介从Java虚拟机创建的对象当传入到native层时会产生一个引用，在进行垃圾回收时如果有native的引用，改对象同样也不会被回收。在native引用中分局部引用和全局引用。
-1.1 局部引用局部引用又称本地引用，大多数见到...
-        </p> 
-    </div>
-    <footer class="post-footer clearfix">
-        <div class="pull-left tag-list">
-            <div class="post-meta">
+        <a href="/2018/03/22/Android中Handler导致内存泄漏的原理分析/" class="pre-post btn btn-default"><i class="fa fa-angle-left fa-fw"></i>上一篇</a>
     
     
-    <span class="categories-meta fa-wrap">
-        <i class="fa fa-folder-open-o"></i>
-        <span>Android</span>
-    </span>
+        <a href="/2018/02/06/Android-NDK开发系列教程5：局部引用，全局引用，弱全局引用/" class="next-post btn btn-default">下一篇<i class="fa fa-angle-right fa-fw"></i></a>
     
-    
-    <span class="fa-wrap">
-        <i class="fa fa-tags"></i>
-        <span class="tags-meta">
-            
-            Android JNI开发
-            
-        </span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-clock-o"></i>
-        <span class="date-meta">2018/02/06</span>
-    </span>
-
 </div>
 
-        </div>
 
-        <div class="post-permalink"> 
-            <a href="/2018/02/06/Android-NDK开发系列教程5：局部引用，全局引用，弱全局引用/" class="btn btn-default">阅读全文</a>
-        </div>
-    </footer>
-</article>
+    <div id="comments">
+        <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNTA2NC8xMTU5OQ==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
 
+       if (typeof LivereTower === 'function') { return; }
 
-<article class="post">
-    
-    <div class="post-content">
-        <div class="post-head home-post-head">
-            <h1 class="post-title">
-                <a href="/2018/02/04/Android-NDK开发系列教程4：对类变量进行操作/">Android NDK开发系列教程4：对类变量进行操作</a>
-            </h1>
-            <div class="post-meta">  &bull;
-                <time class="post-date" datetime="" title="">
-                    2018年02月04日
-                </time>
-            </div>
-        </div>
-        <p class="brief">
-            通常我们也可以直接利用jni来访问和处理类的变量，不一定非要通过Java方法来操作Java类变量。对类变量操作时，类的静态变量和类的实例变量的操作稍微有些不同，下面进行讲解。
-对类的静态变量进行操作类的静态变量属于类，是所有该类实例共...
-        </p> 
-    </div>
-    <footer class="post-footer clearfix">
-        <div class="pull-left tag-list">
-            <div class="post-meta">
-    
-    
-    <span class="categories-meta fa-wrap">
-        <i class="fa fa-folder-open-o"></i>
-        <span>Android</span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-tags"></i>
-        <span class="tags-meta">
-            
-            Android JNI开发
-            
-        </span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-clock-o"></i>
-        <span class="date-meta">2018/02/04</span>
-    </span>
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
 
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用评论功能请激活JavaScript</noscript>
 </div>
-
-        </div>
-
-        <div class="post-permalink"> 
-            <a href="/2018/02/04/Android-NDK开发系列教程4：对类变量进行操作/" class="btn btn-default">阅读全文</a>
-        </div>
-    </footer>
-</article>
+<!-- City版安装代码已完成 -->
+    </div>
 
 
-
-
-    <nav class="pagination" role="navigation">
-        <div id="page-nav">
-            <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class='fa fa-angle-right'></i></a>
-        </div>
-    </nav>
 
 
 

@@ -1,0 +1,738 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://yoursite.com">
+    <!--SEO-->
+
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+
+<title>Kotlin学习笔记一 | 天宇</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="天宇" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico"  type="image/x-icon">
+
+    
+
+
+
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css?rev=9.12.0">
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css?rev=3.3.4">
+<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+    <div class="hide">
+    	<script src="https://s4.cnzz.com/z_stat.php?id=1263868967&web_id=1263868967" language="JavaScript"></script>
+    </div>
+
+
+
+
+
+
+    
+    
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?c3d1d4bce7d4ef1c50d7ef35d759a5b7";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.2.0/styles/github.min.css">
+<script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+<body>
+    <header class="main-header"  style="background-image:url(/img/banner.jpg); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;"  >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title="">
+            <img src="/img/avatar.jpg" alt="logo头像">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                 <img src="/img/branding.png" alt="从未如此简单有趣">  
+             
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only">Toggle navigation</span>
+                    <i class="fa fa-bars"></i>
+                    </span>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation"><a href="/"><i class="fa fa-fw /favicon.ico"></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/前端/"><i class="fa fa-fw /favicon.ico"></i>前端</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/后端/"><i class="fa fa-fw /favicon.ico"></i>后端</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/工具/"><i class="fa fa-fw /favicon.ico"></i>工具</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/资源/"><i class="fa fa-fw /favicon.ico"></i>资源</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/关于/"><i class="fa fa-fw /favicon.ico"></i>关于</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Kotlin学习笔记一">
+            
+            Kotlin学习笔记一
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <span>Kotlin</span>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            Kotlin学习
+            
+        </span>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">2018/10/03</span>
+    </span>
+
+</div>
+
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <h3 id="Kotlin简介"><a href="#Kotlin简介" class="headerlink" title="Kotlin简介"></a>Kotlin简介</h3><p>Kotlin是一门与Swift类似的静态类型JVM语言，由JetBrains设计开发并开源。与Java相比，Kotlin的语法更简洁、更具表达性，而且提供了更多的特性，比如，高阶函数、操作符重载、字符串模板。它与Java高度可互操作，可以同时用在一个项目中。</p>
+<h3 id="下载地址"><a href="#下载地址" class="headerlink" title="下载地址"></a>下载地址</h3><p><a href="http://kotlinlang.org/" target="_blank" rel="noopener">下载地址</a></p>
+<p><a href="https://try.kotlinlang.org" target="_blank" rel="noopener">在线练习平台</a></p>
+<h4 id="1-Kotlin的基本类型"><a href="#1-Kotlin的基本类型" class="headerlink" title="1.Kotlin的基本类型"></a>1.Kotlin的基本类型</h4><p>基本数据类型位数</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Type</th>
+<th style="text-align:center">Bit width</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Double</td>
+<td style="text-align:center">64</td>
+</tr>
+<tr>
+<td style="text-align:center">Float</td>
+<td style="text-align:center">32</td>
+</tr>
+<tr>
+<td style="text-align:center">Long</td>
+<td style="text-align:center">64</td>
+</tr>
+<tr>
+<td style="text-align:center">Int</td>
+<td style="text-align:center">32</td>
+</tr>
+<tr>
+<td style="text-align:center">Short</td>
+<td style="text-align:center">16</td>
+</tr>
+<tr>
+<td style="text-align:center">Byte</td>
+<td style="text-align:center">8</td>
+</tr>
+</tbody>
+</table>
+<p>与Java基本数据类型对比</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Java Type</th>
+<th style="text-align:center">Kotlin Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">byte</td>
+<td style="text-align:center">kotlin.Byte</td>
+</tr>
+<tr>
+<td style="text-align:center">short</td>
+<td style="text-align:center">kotlin.Short</td>
+</tr>
+<tr>
+<td style="text-align:center">int</td>
+<td style="text-align:center">kotlin.Int</td>
+</tr>
+<tr>
+<td style="text-align:center">long</td>
+<td style="text-align:center">kotlin.Long</td>
+</tr>
+<tr>
+<td style="text-align:center">char</td>
+<td style="text-align:center">kotlin.Char</td>
+</tr>
+<tr>
+<td style="text-align:center">float</td>
+<td style="text-align:center">kotlin.Float</td>
+</tr>
+<tr>
+<td style="text-align:center">double</td>
+<td style="text-align:center">kotlin.Double</td>
+</tr>
+<tr>
+<td style="text-align:center">boolean</td>
+<td style="text-align:center">kotlin.Boolean</td>
+</tr>
+</tbody>
+</table>
+<p>复杂类型的对比：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Java Type</th>
+<th style="text-align:center">Kotlin Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">java.lang.Object</td>
+<td style="text-align:center">kotlin.Any!</td>
+</tr>
+<tr>
+<td style="text-align:center">java.lang.Cloneable</td>
+<td style="text-align:center">kotlin.Cloneable!</td>
+</tr>
+<tr>
+<td style="text-align:center">java.lang.Comparable</td>
+<td style="text-align:center">kotlin.Comparable!</td>
+</tr>
+<tr>
+<td style="text-align:center">java.lang.Enum</td>
+<td style="text-align:center">kotlin.Enum!</td>
+</tr>
+<tr>
+<td style="text-align:center">java.lang.Annotation</td>
+<td style="text-align:center">kotlin.Annotation!</td>
+</tr>
+<tr>
+<td style="text-align:center">java.lang.Deprecated</td>
+<td style="text-align:center">kotlin.Deprecated!</td>
+</tr>
+<tr>
+<td style="text-align:center">java.lang.Void</td>
+<td style="text-align:center">kotlin.Nothing!</td>
+</tr>
+<tr>
+<td style="text-align:center">java.lang.CharSequence</td>
+<td style="text-align:center">kotlin.CharSequence!</td>
+</tr>
+<tr>
+<td style="text-align:center">java.lang.String</td>
+<td style="text-align:center">kotlin.String!</td>
+</tr>
+<tr>
+<td style="text-align:center">java.lang.Number</td>
+<td style="text-align:center">kotlin.Number!</td>
+</tr>
+<tr>
+<td style="text-align:center">java.lang.Throwable</td>
+<td style="text-align:center">kotlin.Throwable!</td>
+</tr>
+</tbody>
+</table>
+<p>集合类型的对比：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Java Type</th>
+<th style="text-align:center">Kotlin Type</th>
+<th style="text-align:center">Kotlin mutable type</th>
+<th style="text-align:center">Loaded platform type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Iterator<t></t></td>
+<td style="text-align:center">Iterator<t></t></td>
+<td style="text-align:center">MutableIterator<t></t></td>
+<td style="text-align:center">(Mutable)Iterator<t>!</t></td>
+</tr>
+<tr>
+<td style="text-align:center">Iterable<t></t></td>
+<td style="text-align:center">Iterable<t></t></td>
+<td style="text-align:center">MutableIterable<t></t></td>
+<td style="text-align:center">(Mutable)Iterable<t>!</t></td>
+</tr>
+<tr>
+<td style="text-align:center">Collection<t></t></td>
+<td style="text-align:center">Collection<t></t></td>
+<td style="text-align:center">MutableCollection<t></t></td>
+<td style="text-align:center">(Mutable)Collection<t>!</t></td>
+</tr>
+<tr>
+<td style="text-align:center">Set<t></t></td>
+<td style="text-align:center">Set<t></t></td>
+<td style="text-align:center">MutableSet<t></t></td>
+<td style="text-align:center">(Mutable)Set<t>!</t></td>
+</tr>
+<tr>
+<td style="text-align:center">List<t></t></td>
+<td style="text-align:center">List<t></t></td>
+<td style="text-align:center">MutableList<t></t></td>
+<td style="text-align:center">(Mutable)List<t>!</t></td>
+</tr>
+<tr>
+<td style="text-align:center">ListIterator<t></t></td>
+<td style="text-align:center">ListIterator<t></t></td>
+<td style="text-align:center">MutableListIterator<t></t></td>
+<td style="text-align:center">(Mutable)ListIterator<t>!</t></td>
+</tr>
+<tr>
+<td style="text-align:center">Map<k, v=""></k,></td>
+<td style="text-align:center">Map<k, v=""></k,></td>
+<td style="text-align:center">MutableMap<k, v=""></k,></td>
+<td style="text-align:center">(Mutable)Map<k, v="">!</k,></td>
+</tr>
+<tr>
+<td style="text-align:center">Map.Entry<k, v=""></k,></td>
+<td style="text-align:center">Map.Entry<k, v=""></k,></td>
+<td style="text-align:center">MutableMap.MutableEntry<k, v=""></k,></td>
+<td style="text-align:center">(Mutable)Map.(Mutable)Entry<k, v="">!</k,></td>
+</tr>
+</tbody>
+</table>
+<p>数组类型的映射：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Java Type</th>
+<th style="text-align:center">Kotlin Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">int[]</td>
+<td style="text-align:center">kotlin.IntArray!</td>
+</tr>
+<tr>
+<td style="text-align:center">String[]</td>
+<td style="text-align:center">kotlin.Array&lt;(out) String&gt;!</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2-函数的使用"><a href="#2-函数的使用" class="headerlink" title="2.函数的使用"></a>2.函数的使用</h4><p>定义函数使用fun关键字</p>
+<pre><code>fun sub(a: Int, b: Int): Int {
+    return a - b
+}
+</code></pre><p>上面定义一个名为sub的函数，该函数有两个Int类型参数，有一个Int型的返回值，在Kotlin中，一句代码结束可以不用加分号(;)结束，加分号也没问题。在Kotlin中可以对函数进行简写如下：</p>
+<pre><code>fun sub(a: Int, b: Int) = a - b;
+</code></pre><p>上面fun未显示的给出返回值则Kotlin会自动推测出返回值类型。</p>
+<pre><code>fun prin(a: Int, b: Int): Unit {//没有返回值可以显示的用Unit表示返回
+    println(a - b) 
+}
+
+fun prin(a: Int, b: Int) {//也可以不写出返回值
+    println(a - b)
+}
+</code></pre><h4 id="3-定义常亮和变量"><a href="#3-定义常亮和变量" class="headerlink" title="3. 定义常亮和变量"></a>3. 定义常亮和变量</h4><p>在Kotlin中使用val声明一个常量（只读属性），而使用var声明一个变量。</p>
+<pre><code>fun mytest() {
+    //使用val关键字声明的常量，和Java中static final一致，声明时需要赋值
+    val a: Int = 1 //定义时指明常量类型
+    val b = 2 //自动推测类型
+    val c: Int //声明一个未赋值的常量时，必须指明类型
+    // a = 3  //常量值不可修改
+
+     //使用var关键字声明一个变量，变量的值可以修改    var year: Int = 2016 //显式指定变量的类型    var month = 5 //自动推断变量类型    var day: Int //声明一个不初始化的变量，必须显式指定类型    month = 6 //变量值可以被修改
+}
+</code></pre><h4 id="4-注释"><a href="#4-注释" class="headerlink" title="4. 注释"></a>4. 注释</h4><pre><code>fun comments() {
+//    注释一行代码
+//    var s = &quot;hello world&quot;
+    /*注释一段代码
+    var a = 8
+    a++
+    a--*/
+}
+</code></pre><h4 id="5-条件表达式"><a href="#5-条件表达式" class="headerlink" title="5. 条件表达式"></a>5. 条件表达式</h4><pre><code>//正常写法
+fun max(a: Int, b: Int): Int {
+    if (a &gt; b) 
+        return a
+    else 
+        return b
+}
+
+//在kotlin中可以简写为：
+fun max1(a: Int, b: Int) = if (a &gt; b) a else b
+</code></pre><h4 id="6-可空类型"><a href="#6-可空类型" class="headerlink" title="6. 可空类型"></a>6. 可空类型</h4><p>在声明变量时在变量类型后加一个问好?表示该变量是可空变量，其值可以为空，在调用时需注意非空判断</p>
+<pre><code>var name: String? = &quot;mytest&quot;
+name = null
+var sex: String = &quot;male&quot;
+//sex = null //这句会报错，因为sex是不可空类型
+</code></pre><p>返回值也可以为可空类型</p>
+<pre><code>fun mytest(s: String): Int? {
+    if (s == null) {
+        return null
+    }
+    return Integer.parseInt(s)
+}
+</code></pre><h4 id="7-类型检查和自动类型转换"><a href="#7-类型检查和自动类型转换" class="headerlink" title="7. 类型检查和自动类型转换"></a>7. 类型检查和自动类型转换</h4><p>在Kotlin中使用is进行类型检查，在检查后不需要显示转换，可直接按检查的类型使用</p>
+<pre><code>fun getStringLength(n: Any): Int?{
+    if (n is String) {
+        return n.length
+    }
+    return null
+}
+</code></pre><h4 id="8-循环"><a href="#8-循环" class="headerlink" title="8. 循环"></a>8. 循环</h4><pre><code>//for循环
+fun myfor() {
+    var arr = listOf(1,2,3,4)
+    for (i in arr.indices) {//索引方式
+        println(arr[i])
+    }
+    for (num in arr) {//直接使用list中对象
+        println(num)
+    }
+}
+
+fun mywhile() {
+    var i = 0
+    while (i &lt; 10) {
+        println (&quot;$i&quot;)
+        i++
+    }
+    i = 0
+    do {
+        println(i)
+    } while (i &lt; 10)
+}
+</code></pre><h4 id="9-when表达式"><a href="#9-when表达式" class="headerlink" title="9. when表达式"></a>9. when表达式</h4><p>when类似Java中的switch，是一个多分支选择的表达式</p>
+<pre><code>fun main(args: Array&lt;String&gt;) {
+    testCase(&quot;hello world&quot;)
+}
+
+fun testCase(obj: Any) {
+    when(obj) {
+        is String -&gt; {
+            print(&quot;this is string&quot;)
+        }
+        is Int -&gt; {
+            print(&quot;this is integer&quot;)
+        }
+        else -&gt; {
+            print(&quot;unkown value&quot;)
+        }
+    }
+}
+</code></pre><h4 id="10-ranges的使用"><a href="#10-ranges的使用" class="headerlink" title="10. ranges的使用"></a>10. ranges的使用</h4><p>(1) 使用in操作符检查一个数是否在某个范围内，!in表示是否不在某个范围内</p>
+<pre><code>/*
+判断分数是否大于等于90，小于等于100
+ */
+fun isGood(score: Int) {
+    if(score in 90..100) //ranges是闭区间
+        println(&quot;very good&quot;)
+    else
+        println(&quot;not so good&quot;)
+}
+</code></pre><p>(2) 检查索引是否越界</p>
+<pre><code>/*
+检查index是否在数组arr的索引范围内
+ */
+fun checkIndex(index: Int, arr: Array&lt;Int&gt;) {
+    if(index in 0..arr.lastIndex) //arr.lastIndex返回的是数组的最后一位的下标
+        println(&quot;index in bounds&quot;)
+    else
+        println(&quot;index out of bounds&quot;)
+}
+</code></pre><p>(3) 遍历一个范围</p>
+<pre><code>for (i in 1..5) {
+    println(i)
+}
+
+//也可以使用in遍历一个集合
+fun test(arr: Array&lt;String&gt;) {
+    for (str in arr) {
+        println(str)
+    }
+}
+</code></pre><p>这些都是Kotlin的一些基本语法知识，对于入门Kotlin来说需要学的还有很多，Kotlin在简化代码方面做 了很多努力，现在Google官方也宣布Android官方支持的语言是Kotlin，所以未来Kotlin肯定会有很好的发展。</p>
+
+    </div>
+
+    <div class="post-footer">   
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="http://blog.csdn.net/hty1053240123?viewmode=contents" target="_blank">天宇240</a>
+            
+        </div>
+        <div>
+            
+        </div>  
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2018/10/05/Kotlin学习笔记二-常用操作符/" class="pre-post btn btn-default"><i class="fa fa-angle-left fa-fw"></i>上一篇</a>
+    
+    
+        <a href="/2018/03/22/Android中Handler导致内存泄漏的原理分析/" class="next-post btn btn-default">下一篇<i class="fa fa-angle-right fa-fw"></i></a>
+    
+</div>
+
+
+    <div id="comments">
+        <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNTA2NC8xMTU5OQ==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+    </div>
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        
+    <div class="widget">    
+        <h3 class="title">搜索</h3>
+        <div id="search-form">
+            <div id="result-mask" class="hide"></div>
+            <div class="search-area">
+                
+                    <input id="search-key" type="search" autocomplete="off" placeholder="搜点什么呢?">
+                    <button type="button" class="search-form-submit" id="search-local">站内搜索</button>
+                
+                
+            </div>
+            <div id="result-wrap" class="hide">
+                <div id="search-result"></div>
+            </div>
+            <div class="hide">
+                <template id="search-tpl">
+                    <div class="item">
+                        <a href="/{path}" title="{title}">
+                            <div class="title">{title}</div>
+                            <div class="content">{content}</div>
+                        </a>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget notification">
+        <h3 class="title">网站公告</h3>
+        <div>
+            <p>公告就是醒目，为了提醒自己多学习，多总结~ <br/>
+好记忆不如烂笔头~ <br/>
+</p>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+      <h3 class="title">社交</h3> 
+        <div class="content social">
+            
+	            <a href="//github.com/huangtianyu" rel="external nofollow" title="Github" target="_blank">
+			    	<i class="git fa fa-git"></i>
+			    </a>
+            
+	            <a href="mailto:1053240123@qq.com" rel="external nofollow" title="邮箱" target="_blank">
+			    	<i class="envelope-o fa fa-envelope-o"></i>
+			    </a>
+            
+	            <a href="https://weibo.com/1804011630/" rel="external nofollow" title="微博" target="_blank">
+			    	<i class="weibo fa fa-weibo"></i>
+			    </a>
+            
+	            <a href="/atom.xml" rel="external nofollow" title="RSS" target="_blank">
+			    	<i class="feed fa fa-feed"></i>
+			    </a>
+            
+        </div>
+    </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">分类</h3>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/"><i class="fa" aria-hidden="true">Android</i></a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/"><i class="fa" aria-hidden="true">Git</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/"><i class="fa" aria-hidden="true">Hexo</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kotlin/"><i class="fa" aria-hidden="true">Kotlin</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/gradle/"><i class="fa" aria-hidden="true">gradle</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/人工智能/"><i class="fa" aria-hidden="true">人工智能</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/"><i class="fa" aria-hidden="true">设计模式</i></a><span class="category-list-count">1</span></li></ul>
+    </div>
+
+
+        
+        
+    <div class="widget">
+      <h3 class="title">归档</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/"><i class="fa" aria-hidden="true">十月 2018</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/"><i class="fa" aria-hidden="true">三月 2018</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/"><i class="fa" aria-hidden="true">二月 2018</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/"><i class="fa" aria-hidden="true">一月 2018</i></a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/"><i class="fa" aria-hidden="true">十二月 2017</i></a><span class="archive-list-count">3</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">标签云</h3>
+    <div class="content tag-cloud">
+        <a href="/tags/Android-DeepLink-源码解析/" style="font-size: 10px;">Android DeepLink 源码解析</a> <a href="/tags/Android-JNI开发/" style="font-size: 15px;">Android JNI开发</a> <a href="/tags/Android-NDK开发，JNI开发/" style="font-size: 20px;">Android NDK开发，JNI开发</a> <a href="/tags/Android学习/" style="font-size: 10px;">Android学习</a> <a href="/tags/Android源码分析/" style="font-size: 10px;">Android源码分析</a> <a href="/tags/AppLinks-DeepLinks/" style="font-size: 10px;">AppLinks, DeepLinks</a> <a href="/tags/Dex类加载/" style="font-size: 10px;">Dex类加载</a> <a href="/tags/Hexo学习/" style="font-size: 10px;">Hexo学习</a> <a href="/tags/Hexo搭建/" style="font-size: 10px;">Hexo搭建</a> <a href="/tags/Kotlin学习/" style="font-size: 15px;">Kotlin学习</a> <a href="/tags/RoboBinding-MVC-MVP/" style="font-size: 10px;">RoboBinding,MVC,MVP</a> <a href="/tags/SharedPreferences-Editor/" style="font-size: 10px;">SharedPreferences Editor</a> <a href="/tags/View-onMeasure/" style="font-size: 10px;">View onMeasure</a> <a href="/tags/ViewPager-Fragment预加载/" style="font-size: 10px;">ViewPager+Fragment预加载</a> <a href="/tags/adb命令/" style="font-size: 10px;">adb命令</a> <a href="/tags/adb查看交互Activity名称/" style="font-size: 10px;">adb查看交互Activity名称</a> <a href="/tags/gradle配置/" style="font-size: 10px;">gradle配置</a> <a href="/tags/onAttachedToWindow和onDetachedFromWindow-源码解析/" style="font-size: 10px;">onAttachedToWindow和onDetachedFromWindow,源码解析</a> <a href="/tags/onSaveInstanceState/" style="font-size: 10px;">onSaveInstanceState</a> <a href="/tags/内存优化/" style="font-size: 10px;">内存优化</a> <a href="/tags/应用内部广播-LocalBroadcastManager/" style="font-size: 10px;">应用内部广播,LocalBroadcastManager</a> <a href="/tags/查看git-bash内容/" style="font-size: 10px;">查看git bash内容</a> <a href="/tags/深度学习-吴恩达/" style="font-size: 10px;">深度学习 吴恩达</a>
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">友链</h3>
+        <div class="content friends-link">
+        
+            <a href="http://blog.csdn.net/hty1053240123?viewmode=contents" class="fa" target="_blank">个人博客</a>
+        
+            <a href="https://www.jianshu.com/u/3c8a983c71dc" class="fa" target="_blank">简书</a>
+        
+        </div>
+    </div>
+
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12"> 
+                <span>Copyright &copy; 2017
+                </span> | 
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> | 
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+	<script src="/js/search.js?rev=@@hash"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+
+    <script type="text/javascript">
+        // highlight
+        //hljs.initHighlightingOnLoad();
+    </script>
+</body>
+</html>

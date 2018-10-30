@@ -24,7 +24,7 @@
     <!--Title-->
 
 
-<title>天宇</title>
+<title>adb常用命令 | 天宇</title>
 
 
     <link rel="alternate" href="/atom.xml" title="天宇" type="application/atom+xml">
@@ -36,6 +36,8 @@
 
 
 
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css?rev=9.12.0">
 
 
 <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css?rev=3.3.4">
@@ -134,154 +136,16 @@ var _hmt = _hmt || [];
     <section class="content-wrap">
         <div class="container">
             <div class="row">
-                <main class="col-md-8 main-content ">
-                    <div class="carousel">
-    <img src="/img/head-img.jpg">
-</div>
-
-
-
-
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
 <article class="post">
-    
-    <div class="post-content">
-        <div class="post-head home-post-head">
-            <h1 class="post-title">
-                <a href="/2018/10/05/Kotlin学习笔记二-常用操作符/">Kotlin学习笔记二--常用操作符</a>
-            </h1>
-            <div class="post-meta">  &bull;
-                <time class="post-date" datetime="" title="">
-                    2018年10月05日
-                </time>
-            </div>
-        </div>
-        <p class="brief">
-            ?操作符表示这个对象可能为空
-//在变量类型后面加上问号表示该变量是可空变量
-var name: String? = &quot;test&quot;
-返回值类型若可能为空则也需加?
-fun parseInt(str: String)...
-        </p> 
-    </div>
-    <footer class="post-footer clearfix">
-        <div class="pull-left tag-list">
-            <div class="post-meta">
-    
-    
-    <span class="categories-meta fa-wrap">
-        <i class="fa fa-folder-open-o"></i>
-        <span>Kotlin</span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-tags"></i>
-        <span class="tags-meta">
+    <div class="post-head">
+        <h1 id="adb常用命令">
             
-            Kotlin学习
+            adb常用命令
             
-        </span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-clock-o"></i>
-        <span class="date-meta">2018/10/05</span>
-    </span>
-
-</div>
-
-        </div>
-
-        <div class="post-permalink"> 
-            <a href="/2018/10/05/Kotlin学习笔记二-常用操作符/" class="btn btn-default">阅读全文</a>
-        </div>
-    </footer>
-</article>
-
-
-<article class="post">
-    
-    <div class="post-content">
-        <div class="post-head home-post-head">
-            <h1 class="post-title">
-                <a href="/2018/10/03/Kotlin学习笔记一-基本语法/">Kotlin学习笔记一</a>
-            </h1>
-            <div class="post-meta">  &bull;
-                <time class="post-date" datetime="" title="">
-                    2018年10月03日
-                </time>
-            </div>
-        </div>
-        <p class="brief">
-            Kotlin简介Kotlin是一门与Swift类似的静态类型JVM语言，由JetBrains设计开发并开源。与Java相比，Kotlin的语法更简洁、更具表达性，而且提供了更多的特性，比如，高阶函数、操作符重载、字符串模板。它与Jav...
-        </p> 
-    </div>
-    <footer class="post-footer clearfix">
-        <div class="pull-left tag-list">
-            <div class="post-meta">
-    
-    
-    <span class="categories-meta fa-wrap">
-        <i class="fa fa-folder-open-o"></i>
-        <span>Kotlin</span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-tags"></i>
-        <span class="tags-meta">
-            
-            Kotlin学习
-            
-        </span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-clock-o"></i>
-        <span class="date-meta">2018/10/03</span>
-    </span>
-
-</div>
-
-        </div>
-
-        <div class="post-permalink"> 
-            <a href="/2018/10/03/Kotlin学习笔记一-基本语法/" class="btn btn-default">阅读全文</a>
-        </div>
-    </footer>
-</article>
-
-
-<article class="post">
-    
-        <div class="post-media">
-            <a href="javascript:">
-                <img class="img-ajax" src="/img/loading.gif"  data-src="//img-blog.csdn.net/20180322123239909?watermark/2/text/Ly9ibG9nLmNzZG4ubmV0L2h0eTEwNTMyNDAxMjM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"   alt="Android中Handler导致内存泄漏的原理分析"> 
-            </a>
-        </div>
-    
-    <div class="post-content">
-        <div class="post-head home-post-head">
-            <h1 class="post-title">
-                <a href="/2018/03/22/Android中Handler导致内存泄漏的原理分析/">Android中Handler导致内存泄漏的原理分析</a>
-            </h1>
-            <div class="post-meta">  &bull;
-                <time class="post-date" datetime="" title="">
-                    2018年03月22日
-                </time>
-            </div>
-        </div>
-        <p class="brief">
-            1. 简介在写Android应用程序时，Handler应该是很常见的一个类。我们一般在使用该类时有采用如下方法：
-// 1.新建一个匿名的Handler内部类，并重新handleMessage
-private Handler mHan...
-        </p> 
-    </div>
-    <footer class="post-footer clearfix">
-        <div class="pull-left tag-list">
-            <div class="post-meta">
+        </h1>
+        <div class="post-meta">
     
     
     <span class="categories-meta fa-wrap">
@@ -294,7 +158,7 @@ private Handler mHan...
         <i class="fa fa-tags"></i>
         <span class="tags-meta">
             
-            Android源码分析
+            adb命令
             
         </span>
     </span>
@@ -302,191 +166,236 @@ private Handler mHan...
     
     <span class="fa-wrap">
         <i class="fa fa-clock-o"></i>
-        <span class="date-meta">2018/03/22</span>
+        <span class="date-meta">2018/01/17</span>
     </span>
 
 </div>
 
-        </div>
-
-        <div class="post-permalink"> 
-            <a href="/2018/03/22/Android中Handler导致内存泄漏的原理分析/" class="btn btn-default">阅读全文</a>
-        </div>
-    </footer>
-</article>
-
-
-<article class="post">
-    
-    <div class="post-content">
-        <div class="post-head home-post-head">
-            <h1 class="post-title">
-                <a href="/2018/03/06/解决ViewPager+Fragment预加载导致未显示界面提前加载数据/">解决ViewPager+Fragment预加载导致未显示界面提前加载数据</a>
-            </h1>
-            <div class="post-meta">  &bull;
-                <time class="post-date" datetime="" title="">
-                    2018年03月06日
-                </time>
-            </div>
-        </div>
-        <p class="brief">
-            1. 简介当我们使用ViewPager+Fragment结构时，由于谷歌在设计ViewPager时会提前加载下一个界面。虽然用户在滑动到下一页时不会感觉卡顿。但这也存在一个问题：当进入Activity时，当前界面和下一个界面均由网络请...
-        </p> 
+            
+            
     </div>
-    <footer class="post-footer clearfix">
-        <div class="pull-left tag-list">
-            <div class="post-meta">
     
-    
-    <span class="categories-meta fa-wrap">
-        <i class="fa fa-folder-open-o"></i>
-        <span>Android</span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-tags"></i>
-        <span class="tags-meta">
-            
-            ViewPager+Fragment预加载
-            
-        </span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-clock-o"></i>
-        <span class="date-meta">2018/03/06</span>
-    </span>
+    <div class="post-body post-content">
+        <h3 id="adb简介"><a href="#adb简介" class="headerlink" title="adb简介"></a>adb简介</h3><p>adb全称Android Debug Bridge，意为安卓调试桥接，即常用于Android手机调试的工具。adb提供了一系列命令可以操作手机，比如安装卸载软件，运行shell命令等等。adb工作方式是采用监听Socket TCP5554等端口的方式让IDE和Qemu通讯。</p>
+<h3 id="常用的adb命令"><a href="#常用的adb命令" class="headerlink" title="常用的adb命令"></a>常用的adb命令</h3><ol>
+<li>取得当前连接电脑的设备的状态<pre><code>adb devices
+</code></pre></li>
+<li>安装卸载软件<pre><code>adb install  &lt;-r&gt; 文件.apk  //-r表示替换掉原来的apk
+adb uninstall &lt;-k&gt; {package} //packageName表示应用包名 -k表示保留配置和缓存
+</code></pre></li>
+<li>获取设备的序列号<pre><code>adb get-serialno //获取设备序列号
+</code></pre></li>
+<li>访问手机SQLit数据库（手机内部需有sqilte3命令支持）<pre><code>adb shell
+sqlite3 {数据库文件名}
+</code></pre></li>
+<li>从电脑上发送文件到手机端<pre><code>adb push {文件路径} {手机端路径}  //文件表示要发送文件的全路径（当前路径下只需写上文件名 {手机端路径}表示拷贝到手机上的路径，/sdcard/表示sd卡根路径
+</code></pre></li>
+<li>从手机端拉取文件到电脑端<pre><code>adb pull {手机端路径} {保存到电脑端路径}
+</code></pre></li>
+<li>查看bug报告<pre><code>adb bugreport  //Android7.0及以后支持该功能
+</code></pre></li>
+<li>获取手机中的第三方包名<pre><code>adb shell pm list packages -3
+</code></pre></li>
+<li>查看当前正在交互的程序<pre><code>adb shell dumpsys activity | grep &quot;Running activities&quot; -A 7
+</code></pre></li>
+<li>获取包名所在路径<pre><code>adb shell pm path {package}
+</code></pre></li>
+<li>Monkey命令<br>全模块：<pre><code>adb shell &quot;monkey --ignore-crashes --ignore-timeouts --throttle 500 --ignore-security-exceptions --monitor-native-crashes --ignore-native-crashes 10000 &gt; sdcard/monkey.txt&quot;
+</code></pre>单模块<pre><code>adb shell monkey -p com.android.contacts --ignore-crashes --ignore-timeouts --ignore-security-exceptions --monitor-native-crashes --ignore-native-crashes --throttle 500 -v 10000 &gt; sdcard/monkey.txt&quot;
+</code></pre></li>
+<li>强行停止monkey<pre><code>adb shell
+ps | grep monkey
+kill monkey对应的pid
+</code></pre></li>
+<li>列出所有可以dump的选项<pre><code>adb shell dumpsys -l
+</code></pre></li>
+<li>查看内存信息<pre><code>adb shell dumpsys meminfo
+</code></pre></li>
+<li>列出dumpsys能提供的所有服务列表<pre><code>adb shell dumpsys service list //得到该列表后，就可以在dumpsys后面加上service的名称来查看指定service的信息了
+</code></pre></li>
+<li>查看ActvityManagerService 所有信息<pre><code>adb shell dumpsys activity
+</code></pre></li>
+<li>查看Activity组件信息<pre><code>adb shell dumpsys activity activities
+</code></pre></li>
+<li>查看Service组件信息<pre><code>adb shell dumpsys activity services
+</code></pre></li>
+<li>产看ContentProvider组件信息<pre><code>adb shell dumpsys activity providers
+</code></pre></li>
+<li>查看BraodcastReceiver信息<pre><code>adb shell dumpsys activity broadcasts
+</code></pre></li>
+<li>查看Intent信息<pre><code>adb shell dumpsys activity intents
+</code></pre></li>
+<li>查看进程信息<pre><code>adb shell dumpsys activity processes
+</code></pre></li>
+<li>关闭或开启adb服务<pre><code>adb kill-server
+adb start-server
+</code></pre></li>
+<li>显示或导出log信息<pre><code>adb logcat &lt;-s&gt; //在命令行显示log信息 -s表示指定标签tag
+adb logcat &gt; log.txt //将log信息保存到当前目录的log.txt文件中
+</code></pre></li>
+<li>启动Activities<pre><code>adb shell am start -n {包名}/{包名＋类名}（-n 类名,-a action,-d date,-m MIME-TYPE,-c category,-e 扩展数据,等）
+</code></pre></li>
+<li>设置系统属性信息<pre><code>adb shell setprop {key} {value}
+</code></pre></li>
+<li>常用的adb shell命令<pre><code>ps //列出所有进程
+ls //列出当前目录下文件
+df //检查文件系统的磁盘空间占用情况
+cat //查看某个文件
+kill {pid}//杀死某个进程
+cd //进入其他目录
+rm //删除
+rmdir //删除非空文件夹（有文件的文件夹可能不成功）
+</code></pre></li>
+<li>显示WiFi信息<pre><code>adb shell dumpsys wifi
+</code></pre></li>
+<li>模拟用户点击<pre><code>adb shell input tap {x} {x} //例子：adb shell input tap 50 250
+</code></pre></li>
+<li>模拟用户滑动<pre><code>adb shell input swipe {start.x} {start.y} {end.x} {end.y} {time} //例子：adb shell input swipe 50 250 250 250 500 //划屏操作，前四个数为坐标点，后面是滑动的时间（单位毫秒）
+</code></pre></li>
+<li>模拟输入字符串<pre><code>adb shell input text &#39;abc&#39;
+</code></pre></li>
+<li>模拟点击手机自带的功能键：Home，Menu，Back<pre><code>adb shell input keyevent keyCode
+keyCode对应表：
+KEYCODE_UNKNOWN=0;
+KEYCODE_SOFT_LEFT=1;   
+KEYCODE_SOFT_RIGHT=2;   
+KEYCODE_HOME=3;   
+KEYCODE_BACK=4;   
+KEYCODE_CALL=5;   
+KEYCODE_ENDCALL=6;   
+KEYCODE_0=7;   
+KEYCODE_1=8;   
+KEYCODE_2=9;   
+KEYCODE_4=11;   
+KEYCODE_5=12;   
+KEYCODE_6=13;   
+KEYCODE_7=14;   
+KEYCODE_8=15;   
+KEYCODE_9=16;   
+KEYCODE_STAR=17;   
+KEYCODE_POUND=18;   
+KEYCODE_DPAD_UP=19;   
+KEYCODE_DPAD_DOWN=20;   
+KEYCODE_DPAD_LEFT=21;   
+KEYCODE_DPAD_RIGHT=22;   
+KEYCODE_DPAD_CENTER=23;   
+KEYCODE_VOLUME_UP=24;   
+KEYCODE_VOLUME_DOWN=25;   
+KEYCODE_POWER=26;   
+KEYCODE_CAMERA=27;   
+KEYCODE_CLEAR=28;   
+KEYCODE_A=29;   
+KEYCODE_B=30;   
+KEYCODE_C=31;   
+KEYCODE_D=32;   
+KEYCODE_E=33;   
+KEYCODE_F=34;   
+KEYCODE_G=35;   
+KEYCODE_H=36;   
+KEYCODE_I=37;   
+KEYCODE_J=38;   
+KEYCODE_K=39;   
+KEYCODE_L=40;   
+KEYCODE_M=41;   
+KEYCODE_N=42;   
+KEYCODE_O=43;   
+KEYCODE_P=44;   
+KEYCODE_Q=45;   
+KEYCODE_R=46;   
+KEYCODE_S=47;   
+KEYCODE_T=48;   
+KEYCODE_U=49;   
+KEYCODE_V=50;   
+KEYCODE_W=51;   
+KEYCODE_X=52;   
+KEYCODE_Y=53;   
+KEYCODE_Z=54;   
+KEYCODE_COMMA=55;   
+KEYCODE_PERIOD=56;   
+KEYCODE_ALT_LEFT=57;   
+KEYCODE_ALT_RIGHT=58;   
+KEYCODE_SHIFT_LEFT=59;   
+KEYCODE_SHIFT_RIGHT=60;   
+KEYCODE_TAB=61;   
+KEYCODE_SPACE=62;   
+KEYCODE_SYM=63;   
+KEYCODE_EXPLORER=64;   
+KEYCODE_ENVELOPE=65;   
+KEYCODE_ENTER=66;   
+KEYCODE_DEL=67;   
+KEYCODE_GRAVE=68;   
+KEYCODE_MINUS=69;   
+KEYCODE_EQUALS=70;   
+KEYCODE_LEFT_BRACKET=71;   
+KEYCODE_RIGHT_BRACKET=72;   
+KEYCODE_BACKSLASH=73;   
+KEYCODE_SEMICOLON=74;   
+KEYCODE_APOSTROPHE=75;   
+KEYCODE_SLASH=76;   
+KEYCODE_AT=77;   
+KEYCODE_NUM=78;   
+KEYCODE_HEADSETHOOK=79;   
+KEYCODE_FOCUS=80;//*Camera*focus   
+KEYCODE_PLUS=81;   
+KEYCODE_MENU=82;   
+KEYCODE_NOTIFICATION=83;   
+KEYCODE_SEARCH=84;   
+KEYCODE_MEDIA_PLAY_PAUSE=85;   
+KEYCODE_MEDIA_STOP=86;   
+KEYCODE_MEDIA_NEXT=87;   
+KEYCODE_MEDIA_PREVIOUS=88;   
+KEYCODE_MEDIA_REWIND=89;   
+KEYCODE_MEDIA_FAST_FORWARD=90;   
+KEYCODE_MUTE=91;
+</code></pre></li>
+</ol>
 
-</div>
-
-        </div>
-
-        <div class="post-permalink"> 
-            <a href="/2018/03/06/解决ViewPager+Fragment预加载导致未显示界面提前加载数据/" class="btn btn-default">阅读全文</a>
-        </div>
-    </footer>
-</article>
-
-
-<article class="post">
-    
-    <div class="post-content">
-        <div class="post-head home-post-head">
-            <h1 class="post-title">
-                <a href="/2018/02/06/Android-NDK开发系列教程5：局部引用，全局引用，弱全局引用/">Android NDK开发系列教程5：局部引用，全局引用，弱全局引用</a>
-            </h1>
-            <div class="post-meta">  &bull;
-                <time class="post-date" datetime="" title="">
-                    2018年02月06日
-                </time>
-            </div>
-        </div>
-        <p class="brief">
-            1. 简介从Java虚拟机创建的对象当传入到native层时会产生一个引用，在进行垃圾回收时如果有native的引用，改对象同样也不会被回收。在native引用中分局部引用和全局引用。
-1.1 局部引用局部引用又称本地引用，大多数见到...
-        </p> 
     </div>
-    <footer class="post-footer clearfix">
-        <div class="pull-left tag-list">
-            <div class="post-meta">
-    
-    
-    <span class="categories-meta fa-wrap">
-        <i class="fa fa-folder-open-o"></i>
-        <span>Android</span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-tags"></i>
-        <span class="tags-meta">
+
+    <div class="post-footer">   
+        <div>
             
-            Android JNI开发
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="http://blog.csdn.net/hty1053240123?viewmode=contents" target="_blank">天宇240</a>
             
-        </span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-clock-o"></i>
-        <span class="date-meta">2018/02/06</span>
-    </span>
-
-</div>
-
         </div>
-
-        <div class="post-permalink"> 
-            <a href="/2018/02/06/Android-NDK开发系列教程5：局部引用，全局引用，弱全局引用/" class="btn btn-default">阅读全文</a>
-        </div>
-    </footer>
-</article>
-
-
-<article class="post">
-    
-    <div class="post-content">
-        <div class="post-head home-post-head">
-            <h1 class="post-title">
-                <a href="/2018/02/04/Android-NDK开发系列教程4：对类变量进行操作/">Android NDK开发系列教程4：对类变量进行操作</a>
-            </h1>
-            <div class="post-meta">  &bull;
-                <time class="post-date" datetime="" title="">
-                    2018年02月04日
-                </time>
-            </div>
-        </div>
-        <p class="brief">
-            通常我们也可以直接利用jni来访问和处理类的变量，不一定非要通过Java方法来操作Java类变量。对类变量操作时，类的静态变量和类的实例变量的操作稍微有些不同，下面进行讲解。
-对类的静态变量进行操作类的静态变量属于类，是所有该类实例共...
-        </p> 
+        <div>
+            
+        </div>  
     </div>
-    <footer class="post-footer clearfix">
-        <div class="pull-left tag-list">
-            <div class="post-meta">
-    
-    
-    <span class="categories-meta fa-wrap">
-        <i class="fa fa-folder-open-o"></i>
-        <span>Android</span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-tags"></i>
-        <span class="tags-meta">
-            
-            Android JNI开发
-            
-        </span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-clock-o"></i>
-        <span class="date-meta">2018/02/04</span>
-    </span>
-
-</div>
-
-        </div>
-
-        <div class="post-permalink"> 
-            <a href="/2018/02/04/Android-NDK开发系列教程4：对类变量进行操作/" class="btn btn-default">阅读全文</a>
-        </div>
-    </footer>
 </article>
 
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2018/01/17/SharedPreferences源码详解/" class="pre-post btn btn-default"><i class="fa fa-angle-left fa-fw"></i>上一篇</a>
+    
+    
+        <a href="/2018/01/09/onAttachedToWindow和onDetachedFromWindow调用时机源码解析/" class="next-post btn btn-default">下一篇<i class="fa fa-angle-right fa-fw"></i></a>
+    
+</div>
 
 
+    <div id="comments">
+        <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNTA2NC8xMTU5OQ==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
 
-    <nav class="pagination" role="navigation">
-        <div id="page-nav">
-            <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class='fa fa-angle-right'></i></a>
-        </div>
-    </nav>
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+    </div>
+
+
 
 
 

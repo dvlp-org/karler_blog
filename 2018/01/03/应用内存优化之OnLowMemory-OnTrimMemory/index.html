@@ -1,0 +1,550 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://yoursite.com">
+    <!--SEO-->
+
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+
+<title>应用内存优化之OnLowMemory&amp;OnTrimMemory | 天宇</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="天宇" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico"  type="image/x-icon">
+
+    
+
+
+
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css?rev=9.12.0">
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css?rev=3.3.4">
+<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+    <div class="hide">
+    	<script src="https://s4.cnzz.com/z_stat.php?id=1263868967&web_id=1263868967" language="JavaScript"></script>
+    </div>
+
+
+
+
+
+
+    
+    
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?c3d1d4bce7d4ef1c50d7ef35d759a5b7";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.2.0/styles/github.min.css">
+<script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+<body>
+    <header class="main-header"  style="background-image:url(/img/banner.jpg); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;"  >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title="">
+            <img src="/img/avatar.jpg" alt="logo头像">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                 <img src="/img/branding.png" alt="从未如此简单有趣">  
+             
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only">Toggle navigation</span>
+                    <i class="fa fa-bars"></i>
+                    </span>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation"><a href="/"><i class="fa fa-fw /favicon.ico"></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/前端/"><i class="fa fa-fw /favicon.ico"></i>前端</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/后端/"><i class="fa fa-fw /favicon.ico"></i>后端</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/工具/"><i class="fa fa-fw /favicon.ico"></i>工具</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/资源/"><i class="fa fa-fw /favicon.ico"></i>资源</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/关于/"><i class="fa fa-fw /favicon.ico"></i>关于</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="应用内存优化之OnLowMemory&amp;OnTrimMemory">
+            
+            应用内存优化之OnLowMemory&amp;OnTrimMemory
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <span>Android</span>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            内存优化
+            
+        </span>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">2018/01/03</span>
+    </span>
+
+</div>
+
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <h3 id="1-应用内存onLowMemory-amp-onTrimMemory优化"><a href="#1-应用内存onLowMemory-amp-onTrimMemory优化" class="headerlink" title="1.应用内存onLowMemory&amp; onTrimMemory优化"></a>1.应用内存onLowMemory&amp; onTrimMemory优化</h3><p>onLowMemory&amp; onTrimMemory简介：<br>OnLowMemory是Android提供的API，在系统内存不足，所有后台程序（优先级为background的进程，不是指后台运行的进程）都被杀死时，系统会调用OnLowMemory。<br>OnTrimMemory是Android 4.0之后提供的API，系统会根据不同的内存状态来回调。根据不同的内存状态，来响应不同的内存释放策略。</p>
+<h4 id="1-1-onLowMemory-amp-onTrimMemory优化，需要释放什么资源？"><a href="#1-1-onLowMemory-amp-onTrimMemory优化，需要释放什么资源？" class="headerlink" title="1.1 onLowMemory&amp; onTrimMemory优化，需要释放什么资源？"></a>1.1 onLowMemory&amp; onTrimMemory优化，需要释放什么资源？</h4><p>在内存紧张的时候，会回调OnLowMemory/OnTrimMemory，需要在回调方法中编写释放资源的代码。<br>可以在资源紧张的时候，释放UI 使用的资源资：Bitmap、数组、控件资源。</p>
+<h4 id="1-2-OnLowMemory"><a href="#1-2-OnLowMemory" class="headerlink" title="1.2 OnLowMemory"></a>1.2 OnLowMemory</h4><p>OnLowMemory是Android提供的API，在系统内存不足，所有后台程序（优先级为background的进程，不是指后台运行的进程）都被杀死时，系统会调用OnLowMemory。系统提供的回调有：<br>Application.onLowMemory()<br>Activity.OnLowMemory()<br>Fragement.OnLowMemory()<br>Service.OnLowMemory()<br>ContentProvider.OnLowMemory()</p>
+<p>除了上述系统提供的API，还可以自己实现ComponentCallbacks，通过API注册，这样也能得到OnLowMemory回调。例如：</p>
+<pre><code class="java"> public static class MyCallback implements ComponentCallbacks {
+   @Override
+   public void onConfigurationChanged(Configuration arg) {
+   }
+   @Override
+   public void onLowMemory() {
+   //do release operation
+   }
+</code></pre>
+<p>然后，通过Context.registerComponentCallbacks ()在合适的时候注册回调就可以了。通过这种自定义的方法，可以在很多地方注册回调，而不需要局限于系统提供的组件。<br>onLowMemory 当后台程序已经终止资源还匮乏时会调用这个方法。好的应用程序一般会在这个方法里面释放一些不必要的资源来应付当后台程序已经终止，前台应用程序内存还不够时的情况。</p>
+<h4 id="1-3-OnTrimMemory"><a href="#1-3-OnTrimMemory" class="headerlink" title="1.3 OnTrimMemory"></a>1.3 OnTrimMemory</h4><p>OnTrimMemory是Android 4.0之后提供的API，系统会根据不同的内存状态来回调。系统提供的回调有：<br>Application.onTrimMemory()<br>Activity.onTrimMemory()<br>Fragement.OnTrimMemory()<br>Service.onTrimMemory()<br>ContentProvider.OnTrimMemory()<br>OnTrimMemory的参数是一个int数值，代表不同的内存状态：<br>TRIM_MEMORY_COMPLETE：内存不足，并且该进程在后台进程列表最后一个，马上就要被清理<br>TRIM_MEMORY_MODERATE：内存不足，并且该进程在后台进程列表的中部。<br>TRIM_MEMORY_BACKGROUND：内存不足，并且该进程是后台进程。<br>TRIM_MEMORY_UI_HIDDEN：内存不足，并且该进程的UI已经不可见了。<br>以上4个是4.0增加<br>TRIM_MEMORY_RUNNING_CRITICAL：内存不足(后台进程不足3个)，并且该进程优先级比较高，需要清理内存<br>TRIM_MEMORY_RUNNING_LOW：内存不足(后台进程不足5个)，并且该进程优先级比较高，需要清理内存<br>TRIM_MEMORY_RUNNING_MODERATE：内存不足(后台进程超过5个)，并且该进程优先级比较高，需要清理内存<br>以上3个是4.1增加<br>系统也提供了一个ComponentCallbacks2，通过Context.registerComponentCallbacks()注册后，就会被系统回调到。</p>
+<h4 id="1-4-OnLowMemory和OnTrimMemory的比较"><a href="#1-4-OnLowMemory和OnTrimMemory的比较" class="headerlink" title="1.4 OnLowMemory和OnTrimMemory的比较"></a>1.4 OnLowMemory和OnTrimMemory的比较</h4><p>1，OnLowMemory被回调时，已经没有后台进程；而onTrimMemory被回调时，还有后台进程。<br>2，OnLowMemory是在最后一个后台进程被杀时调用，一般情况是low memory killer 杀进程后触发；而OnTrimMemory的触发更频繁，每次计算进程优先级时，只要满足条件，都会触发。<br>3，通过一键清理后，OnLowMemory不会被触发，而OnTrimMemory会被触发一次。</p>
+<p>使用举例：</p>
+<pre><code class="java"> @Override
+ public void onTrimMemory(int level) {
+ Log.e(TAG, &quot; onTrimMemory ... level:&quot; + level); 
+ }
+ @Override
+ public void onLowMemory() { 
+ Log.e(TAG, &quot; onLowMemory ... &quot;); 
+ }
+</code></pre>
+<h3 id="2-系统回调优化"><a href="#2-系统回调优化" class="headerlink" title="2.系统回调优化"></a>2.系统回调优化</h3><h4 id="2-1-回调原理："><a href="#2-1-回调原理：" class="headerlink" title="2.1 回调原理："></a>2.1 回调原理：</h4><p>在Application、 Activity、Fragement、Service、ContentProvider中都可以重写回调方法，对OnLowMemory/OnTrimMemory进行回调，在回调方法中实现资源释放的实现。<br>以Activity为例，在Activity源码中能够看到对于onTrimMemory的定义，因此在回调的时候重写方法即可。</p>
+<pre><code class="java"> public void onTrimMemory(int level) {
+ if (DEBUG_LIFECYCLE) Slog.v(TAG, &quot;onTrimMemory &quot; + this + &quot;: &quot; + level);
+ 　　mCalled = true;
+ 　　mFragments.dispatchTrimMemory(level);
+}
+</code></pre>
+<p>2.2 释放资源：<br>在onTrimMemory释放资源，释放图片、数组、缓存等资源。</p>
+<pre><code class="java"> @Override
+ public void onTrimMemory(int level) {
+ // TODO Auto-generated method stub
+ DLog.d(&quot; onTrimMemory ... level:&quot; + level);
+
+ switch(level)
+
+  {
+  case TRIM_MEMORY_UI_HIDDEN: 
+ //释放资源
+ /*编写释放资源代码*/
+ }
+
+ break;
+ }
+ super.onTrimMemory(level);
+ }
+</code></pre>
+<p>下面是释放Bitmap的示例代码片段：</p>
+<pre><code class="java">1 // 先判断是否已经回收
+2 if(bitmap != null &amp;&amp; !bitmap.isRecycled()){ 
+3 // 回收并且置为null
+4 bitmap.recycle(); 
+5 bitmap = null; 
+6 } 
+7 System.gc();
+复制代码
+list占用方法：
+list.clear();然后在置空。
+</code></pre>
+<h3 id="3-实现ComponentCallbacks"><a href="#3-实现ComponentCallbacks" class="headerlink" title="3.实现ComponentCallbacks"></a>3.实现ComponentCallbacks</h3><p>OnLowMemory除了上述系统提供的API，还可以自己实现ComponentCallbacks，通过API注册，这样也能得到OnLowMemory回调。例如：</p>
+<pre><code class="java"> public static class ViewComponentCallbacks implements ComponentCallbacks {
+ @Override
+  public void onConfigurationChanged(Configuration arg) {
+  }
+
+  @Override
+  public void onLowMemory() {
+  //do release operation
+  }
+ }
+</code></pre>
+<p>注册自定义的回调类：</p>
+<p> ViewComponentCallbacks callBacks =new ViewComponentCallbacks();<br> this.registerComponentCallbacks( callBacks );<br>回调之后，即可进行重写：</p>
+<pre><code class="java"> @Override
+ public void onLowMemory() {
+ // TODO Auto-generated method stub
+ //释放资源的方法
+ super.onLowMemory();
+ }
+</code></pre>
+<p>Android onTrimMemory方法的一些疑惑？<br>当你的app进程正在被cached时，你可能会接受到从onTrimMemory()中返回的下面的值之一:</p>
+<p>TRIM_MEMORY_BACKGROUND: 系统正运行于低内存状态并且你的进程正处于LRU缓存名单中最不容易杀掉的位置。尽管你的app进程并不是处于被杀掉的高危险状态，系统可能已经开始杀掉LRU缓存中的其他进程了。你应该释放那些容易恢复的资源，以便于你的进程可以保留下来，这样当用户回退到你的app的时候才能够迅速恢复。<br>TRIM_MEMORY_MODERATE: 系统正运行于低内存状态并且你的进程已经已经接近LRU名单的中部位置。如果系统开始变得更加内存紧张，你的进程是有可能被杀死的。<br>TRIM_MEMORY_COMPLETE: 系统正运行与低内存的状态并且你的进程正处于LRU名单中最容易被杀掉的位置。你应该释放任何不影响你的app恢复状态的资源。<br>这个地方讲的进程正在被cache 是什么意思呢？是指我的进程 还没有结束 正在内存中 但是因为没有执行任何操作 不占有cpu的意思吗？<br>此外当我们监听onTrimMemory回调方法的时候，假设我的缓存里最大的部分就是bitmap，请问就直接把bitmap从内存里抹去就可以了么？ 那如果这么做，在进程重新被加载到前台来的时候，我怎么迅速恢复这些bitmap资源？</p>
+<h3 id="答疑"><a href="#答疑" class="headerlink" title="答疑"></a>答疑</h3><h4 id="答疑1："><a href="#答疑1：" class="headerlink" title="答疑1："></a>答疑1：</h4><p>android进程回收主要涉及两个组件：ActivityManagerService（Ams）和lowmemorykiller。当手机内存不足时，lowmemorykiller就要开始杀进程了。但是lowmemorykiller呢只知道进程占用的内存大小，不知道进程对用户的重要性。Ams则负责管理android四大组件，当然知道进程的重要性了，所以呢还需要与Ams充分交换意见。</p>
+<p>当app状态发生改变时，比如退到后台时，ams会对app的进程计算出一个值，即Oomadj（ams#computeOomAdjLocked），然后把这个值传给linux内核，lowmemorykiller呢就可以拿到这个值了，lowmemorykiller则就有了所有app进程的Oomadj值，即进程对用户的重要程度。当手机内存不足时，lowmemorykiller就有了足够的信息决定干掉哪个进程了。那，lowmemorykiller决定干掉哪个进程呢？这个要根据手机还有多少空闲内存，比如还有16MB空闲内存，如下lowmemorykiller.c</p>
+<pre><code class="java">static short lowmem_adj[6] = {
+0,
+1,
+6,
+12,
+};
+static int lowmem_adj_size = 4;
+static int lowmem_minfree[6] = {
+3 * 512,    /* 6MB */
+2 * 1024,    /* 8MB */
+4 * 1024,    /* 16MB */
+16 * 1024,    /* 64MB */
+};
+</code></pre>
+<p>16MB在lowmem_minfree第三个位置，取lowmem_adj第三个位置即6，ok所有Oomadj大于6的进程就被选中了。而lowmemorykiller不是把这些选中的进程都干掉，而是先干掉oomAdj最大而且占用内存最大的进程。如下lowmemorykiller.c#lowmem_scan：</p>
+<pre><code class="java">for_each_process(tsk) {  
+...
+oom_score_adj = p-&gt;signal-&gt;oom_score_adj;
+if (oom_score_adj &lt; min_score_adj) {
+task_unlock(p);
+continue;
+}
+tasksize = get_mm_rss(p-&gt;mm);
+task_unlock(p);
+if (tasksize &lt;= 0)
+continue;
+if (selected) {
+if (oom_score_adj &lt; selected_oom_score_adj)
+continue;
+if (oom_score_adj == selected_oom_score_adj &amp;&amp;
+tasksize &lt;= selected_tasksize)
+continue;
+}
+selected = p;
+selected_tasksize = tasksize;
+selected_oom_score_adj = oom_score_adj;
+}
+</code></pre>
+<p>总之一句话：进程对用户越不重要（Oomadj值就越大），占用内存越大，进程就越容易被干掉。</p>
+<p>应对策略：</p>
+<p>1 ams计算出一个危险的Oomadj值会调用onTrimMemory通知app，此时app应该把不重要的内存释放掉，只要比友商app占用的内存小被lowmemorykiller干掉的概率就小。</p>
+<p>2 当然我们也可以先把忧伤的app干掉。。。帮用户释放内存（开玩笑啦）</p>
+<p>3 如果我们的app能预置到手机中，并且manifest设置为persistence（Oomadj=0），或者coreserver则不必担心被lowmemorykiller干掉了。不过还有可能被linux层的oomkiller干掉的。当然这也是某些手机预置一堆app导致越用越慢的一个原因，所以我们尽量把这些预置app卸载掉。</p>
+<h4 id="答疑2："><a href="#答疑2：" class="headerlink" title="答疑2："></a>答疑2：</h4><p>理解进程和组件之间的关系</p>
+<p>一般来说，你的App在启动的时候，系统都会为你的APP创建一个进程。</p>
+<p>比如我有一个App，其包名为com.performance.liferecord</p>
+<p>当这个App启动的时候，我们可以通过ps命令来看其对应的进程 信息：</p>
+<p>结果如下：</p>
+<p>USER PID PPID VSIZE RSS WCHAN PC NAME</p>
+<p>可以看到系统为这个进程分配的PD是32452，那么 PPID是什么呐？</p>
+<p>使用PS命令来看：adb shell ps | grep 379</p>
+<p>可以看到PPID的NAME是zygote64，也就是说32452这个进程是从Android的zygote64这个进程fork过来的。</p>
+<p>那么 组件又是怎么回事呐？我们常说四大组件，Activity、Service、Broadcast、ContentProvider。这些个组件都是依附于一个进程来运行的，一个进程可以有多个Activity、Service等，也可以一个组件都没有。</p>
+<p>Cache状态</p>
+<p>当你的应用程序到了后台之后，会进入Cached状态，这时候进程还存在，但是组件是否存在就不一定了。</p>
+<p>不过一般我们认为，当你按Back键回到桌面之后，如果Activity没有被释放，那么我们认为了内容泄漏，这个有兴趣可以自己看看。</p>
+<p>以上面我提到的com.performance.liferecord这个应用为例子，当我启动这个应用之后，我们可以使用命令adb shell dumpsys meminfo来查看整个系统的状态，此时com.performance.liferecord这个进程状态为Foreground:</p>
+<p>Foreground意味着此时你的进程处于前台进程，你的程序的界面可以被用户看到。此时我们使用adb shell dumpsys meminfo com.preformance.liferecord来看这个进程的状态：</p>
+<p>可以看到Activity的数量为1（因为我只起了一个Activity）</p>
+<p>当我们点击Back键的时候，我们可以使用命令adb shell dumpsys meminfo来查看 整个系统的状态，此时com.performance.liferecord这个进程状态为Cached:</p>
+<p>Cached状态标识你的应用进程变成了后台进程，位于LRU list里面。</p>
+<p>此时我们使用adb shell dumpsys meminfo com.performance.liferecord来看这个进程的状态：</p>
+<p>Activity的数量妥妥变成0了，说明没有内存泄漏。此时你的进程里面，是没有任何组件的。当然也不占用cpu的资源，但是会点内存（例子中我们可以看到占用了20706kb）的内存。</p>
+<p>将后台进程放到Cached列表里而不是直接杀掉，其好处就是下一次这个进程的某个组件（最常见的就是Activity）启动的时候，不需要再创建新的进程 ，速度杠杠的（比如就应用的热启动）。</p>
+<p>onTrimMemory</p>
+<p>此外当我们监听onTrimMemory回调方法的时候，假设我的缓存里最大的部分就是bitmap，请问就直接把bitmap从内存里抹去就可以了么？ 那如果这么做，在进程重新被加载到前台来的时候，我怎么迅速恢复这些bitmap资源？</p>
+<p>如答疑1所述：</p>
+<p>对于 图片，一般采用三层缓存机制，即内存、文件、网络、释放内存后从文件中读取就好</p>
+<p>一般的图片加载库都会提供内存/文件的缓存，即使内存中的Bitmap清除掉了，下一次从文件中读取也会很快的。</p>
+<p>至少onTrimMemory的优点，比如你的应用Cache了20MB的Bitmap没有清除，当手机内存不足的时候，如果你没有及时释放 这些内存，那么 很可能你的进程 就被系统给杀掉了，这会你的Bitmap当然也就没了。用户下次启动你的应用的时候，我曹这货又被杀了，这手机系统有毛病吧？</p>
+<p>是吧。。。做系统的还得背这个锅！</p>
+<p>关于onTrimMemory的使用，可以参考博客<a href="http://androidperformance.com/2015/07/20/Android-Performance-Memory-onTrimMemory.html" target="_blank" rel="noopener">http://androidperformance.com/2015/07/20/Android-Performance-Memory-onTrimMemory.html</a></p>
+
+    </div>
+
+    <div class="post-footer">   
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="http://blog.csdn.net/hty1053240123?viewmode=contents" target="_blank">天宇240</a>
+            
+        </div>
+        <div>
+            
+        </div>  
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2018/01/03/自定义控件View之onMeasure调用时机源码分析/" class="pre-post btn btn-default"><i class="fa fa-angle-left fa-fw"></i>上一篇</a>
+    
+    
+        <a href="/2018/01/03/RoboBinding-MVVM-架构介绍/" class="next-post btn btn-default">下一篇<i class="fa fa-angle-right fa-fw"></i></a>
+    
+</div>
+
+
+    <div id="comments">
+        <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNTA2NC8xMTU5OQ==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+    </div>
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        
+    <div class="widget">    
+        <h3 class="title">搜索</h3>
+        <div id="search-form">
+            <div id="result-mask" class="hide"></div>
+            <div class="search-area">
+                
+                    <input id="search-key" type="search" autocomplete="off" placeholder="搜点什么呢?">
+                    <button type="button" class="search-form-submit" id="search-local">站内搜索</button>
+                
+                
+            </div>
+            <div id="result-wrap" class="hide">
+                <div id="search-result"></div>
+            </div>
+            <div class="hide">
+                <template id="search-tpl">
+                    <div class="item">
+                        <a href="/{path}" title="{title}">
+                            <div class="title">{title}</div>
+                            <div class="content">{content}</div>
+                        </a>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget notification">
+        <h3 class="title">网站公告</h3>
+        <div>
+            <p>公告就是醒目，为了提醒自己多学习，多总结~ <br/>
+好记忆不如烂笔头~ <br/>
+</p>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+      <h3 class="title">社交</h3> 
+        <div class="content social">
+            
+	            <a href="//github.com/huangtianyu" rel="external nofollow" title="Github" target="_blank">
+			    	<i class="git fa fa-git"></i>
+			    </a>
+            
+	            <a href="mailto:1053240123@qq.com" rel="external nofollow" title="邮箱" target="_blank">
+			    	<i class="envelope-o fa fa-envelope-o"></i>
+			    </a>
+            
+	            <a href="https://weibo.com/1804011630/" rel="external nofollow" title="微博" target="_blank">
+			    	<i class="weibo fa fa-weibo"></i>
+			    </a>
+            
+	            <a href="/atom.xml" rel="external nofollow" title="RSS" target="_blank">
+			    	<i class="feed fa fa-feed"></i>
+			    </a>
+            
+        </div>
+    </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">分类</h3>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/"><i class="fa" aria-hidden="true">Android</i></a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/"><i class="fa" aria-hidden="true">Git</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/"><i class="fa" aria-hidden="true">Hexo</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kotlin/"><i class="fa" aria-hidden="true">Kotlin</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/gradle/"><i class="fa" aria-hidden="true">gradle</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/人工智能/"><i class="fa" aria-hidden="true">人工智能</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/"><i class="fa" aria-hidden="true">设计模式</i></a><span class="category-list-count">1</span></li></ul>
+    </div>
+
+
+        
+        
+    <div class="widget">
+      <h3 class="title">归档</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/"><i class="fa" aria-hidden="true">十月 2018</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/"><i class="fa" aria-hidden="true">三月 2018</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/"><i class="fa" aria-hidden="true">二月 2018</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/"><i class="fa" aria-hidden="true">一月 2018</i></a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/"><i class="fa" aria-hidden="true">十二月 2017</i></a><span class="archive-list-count">3</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">标签云</h3>
+    <div class="content tag-cloud">
+        <a href="/tags/Android-DeepLink-源码解析/" style="font-size: 10px;">Android DeepLink 源码解析</a> <a href="/tags/Android-JNI开发/" style="font-size: 15px;">Android JNI开发</a> <a href="/tags/Android-NDK开发，JNI开发/" style="font-size: 20px;">Android NDK开发，JNI开发</a> <a href="/tags/Android学习/" style="font-size: 10px;">Android学习</a> <a href="/tags/Android源码分析/" style="font-size: 10px;">Android源码分析</a> <a href="/tags/AppLinks-DeepLinks/" style="font-size: 10px;">AppLinks, DeepLinks</a> <a href="/tags/Dex类加载/" style="font-size: 10px;">Dex类加载</a> <a href="/tags/Hexo学习/" style="font-size: 10px;">Hexo学习</a> <a href="/tags/Hexo搭建/" style="font-size: 10px;">Hexo搭建</a> <a href="/tags/Kotlin学习/" style="font-size: 15px;">Kotlin学习</a> <a href="/tags/RoboBinding-MVC-MVP/" style="font-size: 10px;">RoboBinding,MVC,MVP</a> <a href="/tags/SharedPreferences-Editor/" style="font-size: 10px;">SharedPreferences Editor</a> <a href="/tags/View-onMeasure/" style="font-size: 10px;">View onMeasure</a> <a href="/tags/ViewPager-Fragment预加载/" style="font-size: 10px;">ViewPager+Fragment预加载</a> <a href="/tags/adb命令/" style="font-size: 10px;">adb命令</a> <a href="/tags/adb查看交互Activity名称/" style="font-size: 10px;">adb查看交互Activity名称</a> <a href="/tags/gradle配置/" style="font-size: 10px;">gradle配置</a> <a href="/tags/onAttachedToWindow和onDetachedFromWindow-源码解析/" style="font-size: 10px;">onAttachedToWindow和onDetachedFromWindow,源码解析</a> <a href="/tags/onSaveInstanceState/" style="font-size: 10px;">onSaveInstanceState</a> <a href="/tags/内存优化/" style="font-size: 10px;">内存优化</a> <a href="/tags/应用内部广播-LocalBroadcastManager/" style="font-size: 10px;">应用内部广播,LocalBroadcastManager</a> <a href="/tags/查看git-bash内容/" style="font-size: 10px;">查看git bash内容</a> <a href="/tags/深度学习-吴恩达/" style="font-size: 10px;">深度学习 吴恩达</a>
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">友链</h3>
+        <div class="content friends-link">
+        
+            <a href="http://blog.csdn.net/hty1053240123?viewmode=contents" class="fa" target="_blank">个人博客</a>
+        
+            <a href="https://www.jianshu.com/u/3c8a983c71dc" class="fa" target="_blank">简书</a>
+        
+        </div>
+    </div>
+
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12"> 
+                <span>Copyright &copy; 2017
+                </span> | 
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> | 
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+	<script src="/js/search.js?rev=@@hash"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+
+    <script type="text/javascript">
+        // highlight
+        //hljs.initHighlightingOnLoad();
+    </script>
+</body>
+</html>

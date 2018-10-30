@@ -1,0 +1,548 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://yoursite.com">
+    <!--SEO-->
+
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+
+<title>DeepLink用法及原理解析 | 天宇</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="天宇" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico"  type="image/x-icon">
+
+    
+
+
+
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css?rev=9.12.0">
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css?rev=3.3.4">
+<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+    <div class="hide">
+    	<script src="https://s4.cnzz.com/z_stat.php?id=1263868967&web_id=1263868967" language="JavaScript"></script>
+    </div>
+
+
+
+
+
+
+    
+    
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?c3d1d4bce7d4ef1c50d7ef35d759a5b7";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.2.0/styles/github.min.css">
+<script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+<body>
+    <header class="main-header"  style="background-image:url(/img/banner.jpg); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;"  >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title="">
+            <img src="/img/avatar.jpg" alt="logo头像">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                 <img src="/img/branding.png" alt="从未如此简单有趣">  
+             
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only">Toggle navigation</span>
+                    <i class="fa fa-bars"></i>
+                    </span>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation"><a href="/"><i class="fa fa-fw /favicon.ico"></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/前端/"><i class="fa fa-fw /favicon.ico"></i>前端</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/后端/"><i class="fa fa-fw /favicon.ico"></i>后端</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/工具/"><i class="fa fa-fw /favicon.ico"></i>工具</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/资源/"><i class="fa fa-fw /favicon.ico"></i>资源</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/关于/"><i class="fa fa-fw /favicon.ico"></i>关于</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="DeepLink用法及原理解析">
+            
+            DeepLink用法及原理解析
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <span>Android</span>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            Android DeepLink 源码解析
+            
+        </span>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">2018/01/18</span>
+    </span>
+
+</div>
+
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <h3 id="1-简介"><a href="#1-简介" class="headerlink" title="1. 简介"></a>1. 简介</h3><p><a href="https://developer.android.com/training/app-links/deep-linking.html" target="_blank" rel="noopener">DeepLink</a>官网上有这样的解释：</p>
+<pre><code>When a clicked link or programmatic request invokes a web URI intent, the Android system tries each of the following actions, in sequential order, until the request succeeds:
+
+1.  Open the user&#39;s preferred app that can handle the URI, if one is designated.
+2.  Open the only available app that can handle the URI.
+3.  Allow the user to select an app from a dialog.
+
+Follow the steps below to create and test links to your content. You can also use the [App Links Assistant](https://developer.android.com/studio/write/app-link-indexing.html) in Android Studio to add Android App Links
+</code></pre><p>翻译后的意思就是：<br>当单击链接或编程请求调用Web URI意图时，Android系统按顺序依次尝试以下每一个操作，直到请求成功为止：</p>
+<ol>
+<li>打开用户首选的应用程序，它可以处理URI，如果指定的话。</li>
+<li>打开可以处理URI的惟一可用应用程序。</li>
+<li>允许用户从对话框中选择应用程序。</li>
+</ol>
+<p>意思也就是用户可以自己写一串字符串，系统会对该字符串进行解析，然后调起注册过相应scheme的应用，如果有多个注册了，那么就会弹出对话框让用户选择。</p>
+<h3 id="2-用法"><a href="#2-用法" class="headerlink" title="2. 用法"></a>2. 用法</h3><p>Google官方给了一个样例：<a href="https://github.com/google/search-samples" target="_blank" rel="noopener">search-samples</a><br>以下根据Android官方的<a href="https://developer.android.com/training/app-links/deep-linking.html#adding-filters" target="_blank" rel="noopener">deep-linking</a>的样例来说明如何使用。</p>
+<pre><code>&lt;activity
+    android:name=&quot;com.example.android.GizmosActivity&quot;
+    android:label=&quot;@string/title_gizmos&quot; &gt;
+    &lt;intent-filter android:label=&quot;@string/filter_view_http_gizmos&quot;&gt;
+        &lt;action android:name=&quot;android.intent.action.VIEW&quot; /&gt;
+        &lt;category android:name=&quot;android.intent.category.DEFAULT&quot; /&gt;
+        &lt;category android:name=&quot;android.intent.category.BROWSABLE&quot; /&gt;
+        &lt;!-- Accepts URIs that begin with &quot;http://www.example.com/gizmos” --&gt;
+        &lt;data android:scheme=&quot;http&quot;
+              android:host=&quot;www.example.com&quot;
+              android:pathPrefix=&quot;/gizmos&quot; /&gt;
+        &lt;!-- note that the leading &quot;/&quot; is required for pathPrefix--&gt;
+    &lt;/intent-filter&gt;
+    &lt;intent-filter android:label=&quot;@string/filter_view_example_gizmos&quot;&gt;
+        &lt;action android:name=&quot;android.intent.action.VIEW&quot; /&gt;
+        &lt;category android:name=&quot;android.intent.category.DEFAULT&quot; /&gt;
+        &lt;category android:name=&quot;android.intent.category.BROWSABLE&quot; /&gt;
+        &lt;!-- Accepts URIs that begin with &quot;example://gizmos” --&gt;
+        &lt;data android:scheme=&quot;example&quot;
+              android:host=&quot;gizmos&quot; /&gt;
+    &lt;/intent-filter&gt;
+&lt;/activity&gt;
+</code></pre><p>在上面有两个<intent-filter ..="">这两个<intent-filter ..="">只是在<data ..="">上有所区别，但是官方仍然建议我们分开写。比如：</data></intent-filter></intent-filter></p>
+<pre><code class="xml">&lt;intent-filter&gt;
+  ...
+  &lt;data android:scheme=&quot;https&quot; android:host=&quot;www.example.com&quot; /&gt;
+  &lt;data android:scheme=&quot;app&quot; android:host=&quot;open.my.app&quot; /&gt;
+&lt;/intent-filter&gt;
+</code></pre>
+<p>上面在同一个<intent-filter ..="">里面写的两个<data ..="">，他们除了组合<a href="https://www.example.com和app://open.my.app外app://www.example.com和" target="_blank" rel="noopener">https://www.example.com和app://open.my.app外app://www.example.com和</a> <a href="https://open.my.app也是满足上面的" target="_blank" rel="noopener">https://open.my.app也是满足上面的</a><intent-filter ..="">的。而分开写的时候，不存在上面的问题。<br>当你添加了上面的<intent-filter..>当你的Activity上面时，其他App，就可以通过一个intent去调起你的应用，官方这样说到：<br> Once you’ve added intent filters with URIs for activity content to your app manifest, Android is able to route any <a href="https://developer.android.com/reference/android/content/Intent.html" target="_blank" rel="noopener">Intent</a> that has matching URIs to your app at runtime.<br>当注册了<intent-filter..>后，便可以在Activity的中获取其他应用传过来的intent值，具体调用如下：</intent-filter..></intent-filter..></intent-filter></data></intent-filter></p>
+<pre><code>@Override
+public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.main);
+
+    Intent intent = getIntent();
+    String action = intent.getAction();
+    Uri data = intent.getData();
+}
+</code></pre><p>getIntent可以在Activity的生命周期的任何时段进行获取，不过一般别人应用要调你应用，肯定都是希望进入你的应用某个界面，或实现某个功能。其他应用会把该传的信息都传给你，最好的解析地方肯定是onCreate（或onStart但onStart还是会晚一些）。对于这个官方给了以下建议：</p>
+<pre><code>*   The deep link should take users directly to the content, without any prompts, interstitial pages, or logins. Make sure that users can see the app content even if they never previously opened the application. It is okay to prompt users on subsequent interactions or when they open the app from the Launcher. This is the same principle as the [first click free](https://support.google.com/webmasters/answer/74536?hl=en) experience for web sites.
+*   Follow the design guidance described in [Navigation with Back and Up](https://developer.android.com/design/patterns/navigation.html) so that your app matches users&#39; expectations for backward navigation after they enter your app through a deep link
+</code></pre><p>意思就是：</p>
+<ol>
+<li>打开应用后应该直接到内容，不要有任何提示，间接的页面，或登录。确保用户可以看到应用程序的内容，即使他们以前从未打开过应用程序。可以在随后的交互中提示用户，或者在启动程序中打开应用程序。这与网站第一次点击免费体验的原理是相同的。</li>
+<li>遵循导航与后退和向上描述的设计指南，使您的应用程序与用户通过向后链接进入您的应用程序的深度导航的期望相符。</li>
+</ol>
+<p>实现上面代码后就可以进行测试了。在测试时可以使用adb的shell命令进行测试，语法格式如下：</p>
+<pre><code>$ adb shell am start
+        -W -a android.intent.action.VIEW
+        -d &lt;URI&gt; &lt;PACKAGE&gt;
+</code></pre><p>例如我们上面的例子就可以采用如下方式进行打开：</p>
+<pre><code>$ adb shell am start
+        -W -a android.intent.action.VIEW
+        -d &quot;example://gizmos&quot; com.example.android
+</code></pre><p>上面的intent也可以通过浏览器里面的网页进行设置，现在浏览器都会解析这个intent然后调起对应的应用，即可以直接在网页中调起应用。</p>
+<p>DeepLink使得开发网站和自己的App能很好的相互交互。而且一个intent字符串也好发送，比如你想推广你的App，你就可以把这个intent发给广告商，然后点击的时候就把这个intent给手机浏览器，通过浏览器调起你自己的应用。这个最好的应用还在搜索上，在搜索的时候，当用户搜到对应内容的时候，现在一般都是跳网站。但是如果有DeepLink，那么就可以直接通过DeepLink的intent直接跳转到你自己的App，这既方便了用户，也方便了开发者。</p>
+<h3 id="3-DeepLink原理分析"><a href="#3-DeepLink原理分析" class="headerlink" title="3. DeepLink原理分析"></a>3. DeepLink原理分析</h3><h4 id="3-1-DeepLinkDispatch框架"><a href="#3-1-DeepLinkDispatch框架" class="headerlink" title="3.1 DeepLinkDispatch框架"></a>3.1 DeepLinkDispatch框架</h4><p><a href="https://github.com/airbnb/DeepLinkDispatch" target="_blank" rel="noopener">DeepLinkDispatch</a>是Airbnb推出的一个以注解形式来实现dispatch跳转的框架。这个它的简单介绍<a href="https://github.com/airbnb/DeepLinkDispatch/blob/master/README.md" target="_blank" rel="noopener">README.md</a>。</p>
+<h4 id="3-2-Dispatch框架使用例子"><a href="#3-2-Dispatch框架使用例子" class="headerlink" title="3.2 Dispatch框架使用例子"></a>3.2 Dispatch框架使用例子</h4><pre><code>@DeepLink(&quot;foo://example.com/deepLink/{id}&quot;)
+public class MainActivity extends Activity {
+  @Override protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    Intent intent = getIntent();
+    if (intent.getBooleanExtra(DeepLink.IS_DEEP_LINK, false)) {
+      Bundle parameters = intent.getExtras();
+      String idString = parameters.getString(&quot;id&quot;);
+      // Do something with idString
+    }
+  }
+}
+</code></pre><p>多个<intent-filter..>的注解</intent-filter..></p>
+<pre><code>
+//多filter的注解
+@DeepLink({&quot;foo://example.com/deepLink/{id}&quot;, &quot;foo://example.com/anotherDeepLink&quot;})
+public class MainActivity extends Activity {
+  @Override protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    Intent intent = getIntent();
+    if (intent.getBooleanExtra(DeepLink.IS_DEEP_LINK, false)) {
+      Bundle parameters = intent.getExtras();
+      String idString = parameters.getString(&quot;id&quot;);
+      // Do something with idString
+    }
+  }
+}
+</code></pre><p>某个方法的注解：</p>
+<pre><code>@DeepLink(&quot;foo://example.com/methodDeepLink/{param1}&quot;)
+public static Intent intentForDeepLinkMethod(Context context, Bundle extras) {
+  Uri.Builder uri = Uri.parse(extras.getString(DeepLink.URI)).buildUpon();
+  return new Intent(context, MainActivity.class)
+      .setData(uri.appendQueryParameter(&quot;bar&quot;, &quot;baz&quot;).build())
+      .setAction(ACTION_DEEP_LINK_METHOD);
+}
+</code></pre><p>上面的注解相当于DeepLink中在manifest中的Activity标签下注册的<intent-filter..>，在DeepLinkDispatch中还可以注册一个广播接收者来接收分发的DeepLink字符串。</intent-filter..></p>
+<pre><code>public class DeepLinkReceiver extends BroadcastReceiver {
+  private static final String TAG = &quot;DeepLinkReceiver&quot;;
+
+  @Override public void onReceive(Context context, Intent intent) {
+    String deepLinkUri = intent.getStringExtra(DeepLinkHandler.EXTRA_URI);
+    if (intent.getBooleanExtra(DeepLinkHandler.EXTRA_SUCCESSFUL, false)) {
+      Log.i(TAG, &quot;Success deep linking: &quot; + deepLinkUri);
+    } else {
+      String errorMessage = intent.getStringExtra(DeepLinkHandler.EXTRA_ERROR_MESSAGE);
+      Log.e(TAG, &quot;Error deep linking: &quot; + deepLinkUri + &quot; with error message +&quot; + errorMessage);
+    }
+  }
+}
+
+public class YourApplication extends Application {
+  @Override public void onCreate() {
+    super.onCreate();
+    IntentFilter intentFilter = new IntentFilter(DeepLinkHandler.ACTION);
+
+//使用应用内广播注册的，不用担心其他应用收到
+LocalBroadcastManager.getInstance(this).registerReceiver(new DeepLinkReceiver(), intentFilter);
+  }
+}
+</code></pre><p>下面就来分析下它的原理。</p>
+<h4 id="3-3-源码剖析"><a href="#3-3-源码剖析" class="headerlink" title="3.3 源码剖析"></a>3.3 源码剖析</h4><h5 id="3-3-1-根据注解生成对应class文件"><a href="#3-3-1-根据注解生成对应class文件" class="headerlink" title="3.3.1 根据注解生成对应class文件"></a>3.3.1 根据注解生成对应class文件</h5><p>在AS点击build后即可生成对应的class文件，主要的文件有以下几个：<br><img src="http://upload-images.jianshu.io/upload_images/7170430-e37d53735359d7a6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="class.png"><br>在DeepLinkDispatch框架中主要是通过DeepLinkDelegate代理来处理传来的Uri，在DeepLinkDelegate中主要是dispatchFrom这个方法来处理Uri。代码如下：<br><img src="http://upload-images.jianshu.io/upload_images/7170430-529f9c694ffff441.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="DeepLinkResult.png"></p>
+<ol>
+<li>收下根据getIntent.getData()即可获取到对应的uri。</li>
+<li><p>然后通过DeepLinkLoader.load()来加载注册的uri。代码如下<br><img src="http://upload-images.jianshu.io/upload_images/7170430-d0a721dddf62777d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="load.png"></p>
+</li>
+<li><p>调用loader.parseUri去解析Uri，解析完成后返回的是DeepLinkEntry来供我们使用。</p>
+</li>
+<li><p>解析Uri中的key-value对，代码仍然在dispatchFrom中。<br><img src="http://upload-images.jianshu.io/upload_images/7170430-bde2577d977326c4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="parseUri.png"></p>
+</li>
+</ol>
+<p>其中DeepLinkUri.getParameters代码如下：<br><img src="http://upload-images.jianshu.io/upload_images/7170430-6ce444ecbe3230d7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="getParameters.png"></p>
+<p>然后调用了该类的parseParameters获取patterns集合。<br><img src="http://upload-images.jianshu.io/upload_images/7170430-db42ed45c5c28d6a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="parseParameters.png"></p>
+<p>从DeepLink的intent中获取的就是key，具体跳转的内容就是value。</p>
+<ol>
+<li>DeepLinkUri.queryParameterNames<br>通过queryParameterNames就把真实的Uri解析成对应的注解了，之后就会进行分发逻辑了。</li>
+<li>具体分发逻辑<br><img src="http://upload-images.jianshu.io/upload_images/7170430-96ae9b6d76b7a703.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="dispatch.png"><br><img src="http://upload-images.jianshu.io/upload_images/7170430-e312d85d0fccc231.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="dispatch1.png"><br>6.1 首先生成Intent对象<br>6.2 setAction和data，通过以上将action和data放入Intent中。<br>6.3 处理Bundle。<br>6.4 调用callingActivity。<br>6.5 startActivity<br>6.6 createResultAndNotify</li>
+</ol>
+<p>通过以上步骤就完成了DeepLink调起应用页面的操作了，具体代码稍后再贴。</p>
+<h3 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h3><ol>
+<li>DeepLink实现了网页直接和App直接跳转。之前手机上的每个App都相当于一个个孤岛，没有办法和广泛的网站实现直接的跳转。现在比如你在浏览微博的时候看到某个App上面有精彩的内容，你就可以直接点击链接跳转到App里面（甚至可以判断如果按照了App就进入App里面，如果不安装那么就进入应用市场的该App下载界面），这样的交互很方便，很好的将App连接到了整个网络世界，以后有个浏览器就能随意的跳转。</li>
+<li>DeepLink完全可以在搜索中使用，目前的搜索都是搜到了内容还是调网页。以后如果开发者把自己的DeepLink链接提交给搜索公司，那么在搜索到对应的结果的时候就可以直接点击搜到的结果跳转到自己的App了。这个还能应用到广告上去。推广自己的App就更容易了。</li>
+<li>DeepLink使得大企业的众多App之间相互拉活，相互跳转。假如某公司有个超级App，那么想推广自己的其他App就可以使用DeepLink在开启自己某个子页面的时候，把这个子页面交给其他App进行处理。这样就拉活了自己的其他App了。</li>
+<li>在DeepLink的基础上，Google又新出了一个AppLinks，AppLinks就是你自己的网站和你自己的App相互关联了。比如用户在短信中点击了你的网站，那么就可以直接跳转到你的App，而不会出现选择对话框。Google官方是这样说的：<br>```<br>Android App Links are a special type of deep link that allow your website URLs to immediately open the<br>corresponding content in your Android app (without requiring the user to select the app).</li>
+</ol>
+<p>To add Android App Links to your app, define intent filters that open your app content using HTTP URLs (as<br> described in [Create Deep Links to App Content]), and verify that you own both your app and the website URLs (as described in this guide). If the<br>system successfully verifies that you own the URLs, the system automatically routes those URL intents to your app.<br>```<br>创建你自己的AppLinks，可以参考如下<a href="https://developer.android.com/training/app-links/deep-linking.html" target="_blank" rel="noopener">Create Deep Links to App Content</a>。后续我会专门写篇文章介绍下AppLinks及其用法。</p>
+
+    </div>
+
+    <div class="post-footer">   
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="http://blog.csdn.net/hty1053240123?viewmode=contents" target="_blank">天宇240</a>
+            
+        </div>
+        <div>
+            
+        </div>  
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2018/01/18/AppLinks使用详解/" class="pre-post btn btn-default"><i class="fa fa-angle-left fa-fw"></i>上一篇</a>
+    
+    
+        <a href="/2018/01/17/Android应用内部广播机制详解/" class="next-post btn btn-default">下一篇<i class="fa fa-angle-right fa-fw"></i></a>
+    
+</div>
+
+
+    <div id="comments">
+        <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNTA2NC8xMTU5OQ==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+    </div>
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        
+    <div class="widget">    
+        <h3 class="title">搜索</h3>
+        <div id="search-form">
+            <div id="result-mask" class="hide"></div>
+            <div class="search-area">
+                
+                    <input id="search-key" type="search" autocomplete="off" placeholder="搜点什么呢?">
+                    <button type="button" class="search-form-submit" id="search-local">站内搜索</button>
+                
+                
+            </div>
+            <div id="result-wrap" class="hide">
+                <div id="search-result"></div>
+            </div>
+            <div class="hide">
+                <template id="search-tpl">
+                    <div class="item">
+                        <a href="/{path}" title="{title}">
+                            <div class="title">{title}</div>
+                            <div class="content">{content}</div>
+                        </a>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget notification">
+        <h3 class="title">网站公告</h3>
+        <div>
+            <p>公告就是醒目，为了提醒自己多学习，多总结~ <br/>
+好记忆不如烂笔头~ <br/>
+</p>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+      <h3 class="title">社交</h3> 
+        <div class="content social">
+            
+	            <a href="//github.com/huangtianyu" rel="external nofollow" title="Github" target="_blank">
+			    	<i class="git fa fa-git"></i>
+			    </a>
+            
+	            <a href="mailto:1053240123@qq.com" rel="external nofollow" title="邮箱" target="_blank">
+			    	<i class="envelope-o fa fa-envelope-o"></i>
+			    </a>
+            
+	            <a href="https://weibo.com/1804011630/" rel="external nofollow" title="微博" target="_blank">
+			    	<i class="weibo fa fa-weibo"></i>
+			    </a>
+            
+	            <a href="/atom.xml" rel="external nofollow" title="RSS" target="_blank">
+			    	<i class="feed fa fa-feed"></i>
+			    </a>
+            
+        </div>
+    </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">分类</h3>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/"><i class="fa" aria-hidden="true">Android</i></a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/"><i class="fa" aria-hidden="true">Git</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/"><i class="fa" aria-hidden="true">Hexo</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kotlin/"><i class="fa" aria-hidden="true">Kotlin</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/gradle/"><i class="fa" aria-hidden="true">gradle</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/人工智能/"><i class="fa" aria-hidden="true">人工智能</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/"><i class="fa" aria-hidden="true">设计模式</i></a><span class="category-list-count">1</span></li></ul>
+    </div>
+
+
+        
+        
+    <div class="widget">
+      <h3 class="title">归档</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/"><i class="fa" aria-hidden="true">十月 2018</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/"><i class="fa" aria-hidden="true">三月 2018</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/"><i class="fa" aria-hidden="true">二月 2018</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/"><i class="fa" aria-hidden="true">一月 2018</i></a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/"><i class="fa" aria-hidden="true">十二月 2017</i></a><span class="archive-list-count">3</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">标签云</h3>
+    <div class="content tag-cloud">
+        <a href="/tags/Android-DeepLink-源码解析/" style="font-size: 10px;">Android DeepLink 源码解析</a> <a href="/tags/Android-JNI开发/" style="font-size: 15px;">Android JNI开发</a> <a href="/tags/Android-NDK开发，JNI开发/" style="font-size: 20px;">Android NDK开发，JNI开发</a> <a href="/tags/Android学习/" style="font-size: 10px;">Android学习</a> <a href="/tags/Android源码分析/" style="font-size: 10px;">Android源码分析</a> <a href="/tags/AppLinks-DeepLinks/" style="font-size: 10px;">AppLinks, DeepLinks</a> <a href="/tags/Dex类加载/" style="font-size: 10px;">Dex类加载</a> <a href="/tags/Hexo学习/" style="font-size: 10px;">Hexo学习</a> <a href="/tags/Hexo搭建/" style="font-size: 10px;">Hexo搭建</a> <a href="/tags/Kotlin学习/" style="font-size: 15px;">Kotlin学习</a> <a href="/tags/RoboBinding-MVC-MVP/" style="font-size: 10px;">RoboBinding,MVC,MVP</a> <a href="/tags/SharedPreferences-Editor/" style="font-size: 10px;">SharedPreferences Editor</a> <a href="/tags/View-onMeasure/" style="font-size: 10px;">View onMeasure</a> <a href="/tags/ViewPager-Fragment预加载/" style="font-size: 10px;">ViewPager+Fragment预加载</a> <a href="/tags/adb命令/" style="font-size: 10px;">adb命令</a> <a href="/tags/adb查看交互Activity名称/" style="font-size: 10px;">adb查看交互Activity名称</a> <a href="/tags/gradle配置/" style="font-size: 10px;">gradle配置</a> <a href="/tags/onAttachedToWindow和onDetachedFromWindow-源码解析/" style="font-size: 10px;">onAttachedToWindow和onDetachedFromWindow,源码解析</a> <a href="/tags/onSaveInstanceState/" style="font-size: 10px;">onSaveInstanceState</a> <a href="/tags/内存优化/" style="font-size: 10px;">内存优化</a> <a href="/tags/应用内部广播-LocalBroadcastManager/" style="font-size: 10px;">应用内部广播,LocalBroadcastManager</a> <a href="/tags/查看git-bash内容/" style="font-size: 10px;">查看git bash内容</a> <a href="/tags/深度学习-吴恩达/" style="font-size: 10px;">深度学习 吴恩达</a>
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">友链</h3>
+        <div class="content friends-link">
+        
+            <a href="http://blog.csdn.net/hty1053240123?viewmode=contents" class="fa" target="_blank">个人博客</a>
+        
+            <a href="https://www.jianshu.com/u/3c8a983c71dc" class="fa" target="_blank">简书</a>
+        
+        </div>
+    </div>
+
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12"> 
+                <span>Copyright &copy; 2017
+                </span> | 
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> | 
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+	<script src="/js/search.js?rev=@@hash"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+
+    <script type="text/javascript">
+        // highlight
+        //hljs.initHighlightingOnLoad();
+    </script>
+</body>
+</html>

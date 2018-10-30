@@ -24,7 +24,7 @@
     <!--Title-->
 
 
-<title>天宇</title>
+<title>hexo常用命令 | 天宇</title>
 
 
     <link rel="alternate" href="/atom.xml" title="天宇" type="application/atom+xml">
@@ -36,6 +36,8 @@
 
 
 
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css?rev=9.12.0">
 
 
 <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css?rev=3.3.4">
@@ -134,43 +136,21 @@ var _hmt = _hmt || [];
     <section class="content-wrap">
         <div class="container">
             <div class="row">
-                <main class="col-md-8 main-content ">
-                    <div class="carousel">
-    <img src="/img/head-img.jpg">
-</div>
-
-
-
-
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
 <article class="post">
-    
-    <div class="post-content">
-        <div class="post-head home-post-head">
-            <h1 class="post-title">
-                <a href="/2018/10/05/Kotlin学习笔记二-常用操作符/">Kotlin学习笔记二--常用操作符</a>
-            </h1>
-            <div class="post-meta">  &bull;
-                <time class="post-date" datetime="" title="">
-                    2018年10月05日
-                </time>
-            </div>
-        </div>
-        <p class="brief">
-            ?操作符表示这个对象可能为空
-//在变量类型后面加上问号表示该变量是可空变量
-var name: String? = &quot;test&quot;
-返回值类型若可能为空则也需加?
-fun parseInt(str: String)...
-        </p> 
-    </div>
-    <footer class="post-footer clearfix">
-        <div class="pull-left tag-list">
-            <div class="post-meta">
+    <div class="post-head">
+        <h1 id="hexo常用命令">
+            
+            hexo常用命令
+            
+        </h1>
+        <div class="post-meta">
     
     
     <span class="categories-meta fa-wrap">
         <i class="fa fa-folder-open-o"></i>
-        <span>Kotlin</span>
+        <span>Hexo</span>
     </span>
     
     
@@ -178,7 +158,7 @@ fun parseInt(str: String)...
         <i class="fa fa-tags"></i>
         <span class="tags-meta">
             
-            Kotlin学习
+            Hexo学习
             
         </span>
     </span>
@@ -186,307 +166,237 @@ fun parseInt(str: String)...
     
     <span class="fa-wrap">
         <i class="fa fa-clock-o"></i>
-        <span class="date-meta">2018/10/05</span>
+        <span class="date-meta">2017/12/27</span>
     </span>
 
 </div>
 
-        </div>
-
-        <div class="post-permalink"> 
-            <a href="/2018/10/05/Kotlin学习笔记二-常用操作符/" class="btn btn-default">阅读全文</a>
-        </div>
-    </footer>
-</article>
-
-
-<article class="post">
-    
-    <div class="post-content">
-        <div class="post-head home-post-head">
-            <h1 class="post-title">
-                <a href="/2018/10/03/Kotlin学习笔记一-基本语法/">Kotlin学习笔记一</a>
-            </h1>
-            <div class="post-meta">  &bull;
-                <time class="post-date" datetime="" title="">
-                    2018年10月03日
-                </time>
-            </div>
-        </div>
-        <p class="brief">
-            Kotlin简介Kotlin是一门与Swift类似的静态类型JVM语言，由JetBrains设计开发并开源。与Java相比，Kotlin的语法更简洁、更具表达性，而且提供了更多的特性，比如，高阶函数、操作符重载、字符串模板。它与Jav...
-        </p> 
+            
+            
     </div>
-    <footer class="post-footer clearfix">
-        <div class="pull-left tag-list">
-            <div class="post-meta">
     
-    
-    <span class="categories-meta fa-wrap">
-        <i class="fa fa-folder-open-o"></i>
-        <span>Kotlin</span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-tags"></i>
-        <span class="tags-meta">
-            
-            Kotlin学习
-            
-        </span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-clock-o"></i>
-        <span class="date-meta">2018/10/03</span>
-    </span>
+    <div class="post-body post-content">
+        <h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><pre><code>npm install hexo -g #安装  
+npm update hexo -g #升级  
+hexo init #初始化
+</code></pre><h4 id="简写"><a href="#简写" class="headerlink" title="简写"></a>简写</h4><pre><code>hexo n &quot;我的博客&quot; == hexo new &quot;我的博客&quot; #新建文章
+hexo p == hexo publish
+hexo g == hexo generate#生成
+hexo s == hexo server #启动服务预览
+hexo d == hexo deploy#部署
+</code></pre><h4 id="服务器"><a href="#服务器" class="headerlink" title="服务器"></a>服务器</h4><pre><code>hexo server #Hexo 会监视文件变动并自动更新，您无须重启服务器。
+hexo server -s #静态模式
+hexo server -p 5000 #更改端口
+hexo server -i 192.168.1.1 #自定义 IP
 
-</div>
+hexo clean #清除缓存 网页正常情况下可以忽略此条命令
+hexo g #生成静态网页
+hexo d #开始部署
+</code></pre><h4 id="监视文件变动"><a href="#监视文件变动" class="headerlink" title="监视文件变动"></a>监视文件变动</h4><pre><code>hexo generate #使用 Hexo 生成静态文件快速而且简单
+hexo generate --watch #监视文件变动
+</code></pre><h4 id="完成后部署"><a href="#完成后部署" class="headerlink" title="完成后部署"></a>完成后部署</h4><pre><code>两个命令的作用是相同的
+hexo generate --deploy
+hexo deploy --generate
 
-        </div>
+hexo deploy -g
+hexo server -g
+</code></pre><h4 id="草稿"><a href="#草稿" class="headerlink" title="草稿"></a>草稿</h4><pre><code>hexo publish [layout] &lt;title&gt;
+</code></pre><h4 id="模版"><a href="#模版" class="headerlink" title="模版"></a>模版</h4><pre><code>hexo new &quot;postName&quot; #新建文章
+hexo new page &quot;pageName&quot; #新建页面
+hexo generate #生成静态页面至public目录
+hexo server #开启预览访问端口（默认端口4000，&#39;ctrl + c&#39;关闭server）
+hexo deploy #将.deploy目录部署到GitHub
 
-        <div class="post-permalink"> 
-            <a href="/2018/10/03/Kotlin学习笔记一-基本语法/" class="btn btn-default">阅读全文</a>
-        </div>
-    </footer>
-</article>
+hexo new [layout] &lt;title&gt;
+hexo new photo &quot;My Gallery&quot;
+hexo new &quot;Hello World&quot; --lang tw
+</code></pre><table>
+<thead>
+<tr>
+<th>变量</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>layout</td>
+<td style="text-align:center">布局</td>
+</tr>
+<tr>
+<td>title</td>
+<td style="text-align:center">标题</td>
+</tr>
+<tr>
+<td>date</td>
+<td style="text-align:center">文件建立日期</td>
+</tr>
+</tbody>
+</table>
+<pre><code>title:使用Hexo搭建个人博客
+layout: post
+date: 2014-03-03 19:07:43
+comments: true
+categories: Blog
+tags: [Hexo]
+keywords: Hexo, Blog
+description: 生命在于折腾，又把博客折腾到Hexo了。给Hexo点赞。
+</code></pre><h4 id="模版（Scaffold）"><a href="#模版（Scaffold）" class="headerlink" title="模版（Scaffold）"></a>模版（Scaffold）</h4><pre><code>hexo new photo &quot;My Gallery&quot;
+</code></pre><table>
+<thead>
+<tr>
+<th>变量</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>layout</td>
+<td style="text-align:center">布局</td>
+</tr>
+<tr>
+<td>title</td>
+<td style="text-align:center">标题</td>
+</tr>
+<tr>
+<td>date</td>
+<td style="text-align:center">文件建立日期</td>
+</tr>
+</tbody>
+</table>
+<h4 id="设置文章摘要"><a href="#设置文章摘要" class="headerlink" title="设置文章摘要"></a>设置文章摘要</h4><p>以上是文章摘要 <a id="more"></a> 以下是余下全文 </p>
+<h4 id="写作"><a href="#写作" class="headerlink" title="写作"></a>写作</h4><pre><code>hexo new page &lt;title&gt;
+hexo new post &lt;title&gt;
+</code></pre><table>
+<thead>
+<tr>
+<th>变量</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>:title</td>
+<td style="text-align:center">标题</td>
+</tr>
+<tr>
+<td>:year</td>
+<td style="text-align:center">建立的年份（4 位数）</td>
+</tr>
+<tr>
+<td>:month</td>
+<td style="text-align:center">建立的月份（2 位数）</td>
+</tr>
+<tr>
+<td>:i_month</td>
+<td style="text-align:center">建立的月份（去掉开头的零）</td>
+</tr>
+<tr>
+<td>:day</td>
+<td style="text-align:center">建立的日期（2 位数）</td>
+</tr>
+<tr>
+<td>:i_day</td>
+<td style="text-align:center">建立的日期（去掉开头的零）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="推送到服务器上"><a href="#推送到服务器上" class="headerlink" title="推送到服务器上"></a>推送到服务器上</h4><pre><code>hexo n #写文章
+hexo g #生成
+hexo d #部署 #可与hexo g合并为 hexo d -g
+</code></pre><h4 id="报错"><a href="#报错" class="headerlink" title="报错"></a>报错</h4><p>1.找不到git部署<br>ERROR Deployer not found: git<br>解决方法</p>
+<p>npm install hexo-deployer-git –save</p>
+<p>2.部署类型设置git<br>hexo 3.0 部署类型不再是github，_config.yml 中修改</p>
+<h1 id="Deployment"><a href="#Deployment" class="headerlink" title="Deployment"></a>Deployment</h1><h2 id="Docs-http-hexo-io-docs-deployment-html"><a href="#Docs-http-hexo-io-docs-deployment-html" class="headerlink" title="Docs: http://hexo.io/docs/deployment.html"></a>Docs: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="noopener">http://hexo.io/docs/deployment.html</a></h2><p>deploy:<br>  type: git<br>  repository: git@<strong><em>.github.com:</em></strong>/<em>*</em>.github.io.git<br>  branch: master</p>
+<ol>
+<li>xcodebuild<br>xcode-select: error: tool ‘xcodebuild’ requires Xcode, but active developer directory ‘/Library/Developer/CommandLineTools’ is a command line tools instance</li>
+</ol>
+<p>npm install bcrypt</p>
+<ol>
+<li>RSS不显示<br>安装RSS插件</li>
+</ol>
+<p>npm install hexo-generator-feed –save</p>
+<h4 id="开启RSS功能"><a href="#开启RSS功能" class="headerlink" title="开启RSS功能"></a>开启RSS功能</h4><p>编辑hexo/_config.yml，添加如下代码：</p>
+<p>rss: /atom.xml #rss地址  默认即可</p>
+<h4 id="开启评论"><a href="#开启评论" class="headerlink" title="开启评论"></a>开启评论</h4><ol>
+<li><p>我使用多说代替自带的评论，在多说 网站注册 &gt; 后台管理 &gt; 添加新站点 &gt; 工具 === 复制通用代码 里面有 short_name</p>
+<ul>
+<li>在根目录 _config.yml 添加一行 disqus_shortname: jslite 是在多说注册时产生的</li>
+<li>复制到 themes\landscape\layout_partial\article.ejs<br>把<pre><code>&lt;% if (!index &amp;&amp; post.comments &amp;&amp; config.disqus_shortname){ %&gt;
+&lt;section id=&quot;comments&quot;&gt;
+&lt;div id=&quot;disqus_thread&quot;&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href=&quot;//disqus.com/?ref_noscript&quot;&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;/div&gt;
+&lt;/section&gt;
+&lt;% } %&gt;
+</code></pre>改为<pre><code>&lt;% if (!index &amp;&amp; post.comments &amp;&amp; config.disqus_shortname){ %&gt;
+&lt;section id=&quot;comments&quot;&gt;
+&lt;!-- 多说评论框 start --&gt;
+&lt;div class=&quot;ds-thread&quot; data-thread-key=&quot;&lt;%= post.layout %&gt;-&lt;%= post.slug %&gt;&quot; data-title=&quot;&lt;%= post.title %&gt;&quot; data-url=&quot;&lt;%= page.permalink %&gt;&quot;&gt;&lt;/div&gt;
+&lt;!-- 多说评论框 end --&gt;
+&lt;!-- 多说公共JS代码 start (一个网页只需插入一次) --&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+var duoshuoQuery = {short_name:&#39;&lt;%= config.disqus_shortname %&gt;&#39;};
+(function() {
+  var ds = document.createElement(&#39;script&#39;);
+  ds.type = &#39;text/javascript&#39;;ds.async = true;
+  ds.src = (document.location.protocol == &#39;https:&#39; ? &#39;https:&#39; : &#39;http:&#39;) + &#39;//static.duoshuo.com/embed.js&#39;;
+  ds.charset = &#39;UTF-8&#39;;
+  (document.getElementsByTagName(&#39;head&#39;)[0] 
+   || document.getElementsByTagName(&#39;body&#39;)[0]).appendChild(ds);
+})();
+&lt;/script&gt;
+&lt;!-- 多说公共JS代码 end --&gt;
+&lt;/section&gt;
+&lt;% } %&gt;
+</code></pre></li>
+</ul>
+</li>
+</ol>
 
-
-<article class="post">
-    
-        <div class="post-media">
-            <a href="javascript:">
-                <img class="img-ajax" src="/img/loading.gif"  data-src="//img-blog.csdn.net/20180322123239909?watermark/2/text/Ly9ibG9nLmNzZG4ubmV0L2h0eTEwNTMyNDAxMjM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"   alt="Android中Handler导致内存泄漏的原理分析"> 
-            </a>
-        </div>
-    
-    <div class="post-content">
-        <div class="post-head home-post-head">
-            <h1 class="post-title">
-                <a href="/2018/03/22/Android中Handler导致内存泄漏的原理分析/">Android中Handler导致内存泄漏的原理分析</a>
-            </h1>
-            <div class="post-meta">  &bull;
-                <time class="post-date" datetime="" title="">
-                    2018年03月22日
-                </time>
-            </div>
-        </div>
-        <p class="brief">
-            1. 简介在写Android应用程序时，Handler应该是很常见的一个类。我们一般在使用该类时有采用如下方法：
-// 1.新建一个匿名的Handler内部类，并重新handleMessage
-private Handler mHan...
-        </p> 
     </div>
-    <footer class="post-footer clearfix">
-        <div class="pull-left tag-list">
-            <div class="post-meta">
-    
-    
-    <span class="categories-meta fa-wrap">
-        <i class="fa fa-folder-open-o"></i>
-        <span>Android</span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-tags"></i>
-        <span class="tags-meta">
+
+    <div class="post-footer">   
+        <div>
             
-            Android源码分析
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="http://blog.csdn.net/hty1053240123?viewmode=contents" target="_blank">天宇240</a>
             
-        </span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-clock-o"></i>
-        <span class="date-meta">2018/03/22</span>
-    </span>
-
-</div>
-
         </div>
-
-        <div class="post-permalink"> 
-            <a href="/2018/03/22/Android中Handler导致内存泄漏的原理分析/" class="btn btn-default">阅读全文</a>
-        </div>
-    </footer>
-</article>
-
-
-<article class="post">
-    
-    <div class="post-content">
-        <div class="post-head home-post-head">
-            <h1 class="post-title">
-                <a href="/2018/03/06/解决ViewPager+Fragment预加载导致未显示界面提前加载数据/">解决ViewPager+Fragment预加载导致未显示界面提前加载数据</a>
-            </h1>
-            <div class="post-meta">  &bull;
-                <time class="post-date" datetime="" title="">
-                    2018年03月06日
-                </time>
-            </div>
-        </div>
-        <p class="brief">
-            1. 简介当我们使用ViewPager+Fragment结构时，由于谷歌在设计ViewPager时会提前加载下一个界面。虽然用户在滑动到下一页时不会感觉卡顿。但这也存在一个问题：当进入Activity时，当前界面和下一个界面均由网络请...
-        </p> 
+        <div>
+            
+        </div>  
     </div>
-    <footer class="post-footer clearfix">
-        <div class="pull-left tag-list">
-            <div class="post-meta">
-    
-    
-    <span class="categories-meta fa-wrap">
-        <i class="fa fa-folder-open-o"></i>
-        <span>Android</span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-tags"></i>
-        <span class="tags-meta">
-            
-            ViewPager+Fragment预加载
-            
-        </span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-clock-o"></i>
-        <span class="date-meta">2018/03/06</span>
-    </span>
-
-</div>
-
-        </div>
-
-        <div class="post-permalink"> 
-            <a href="/2018/03/06/解决ViewPager+Fragment预加载导致未显示界面提前加载数据/" class="btn btn-default">阅读全文</a>
-        </div>
-    </footer>
 </article>
 
-
-<article class="post">
+<div class="article-nav prev-next-wrap clearfix">
     
-    <div class="post-content">
-        <div class="post-head home-post-head">
-            <h1 class="post-title">
-                <a href="/2018/02/06/Android-NDK开发系列教程5：局部引用，全局引用，弱全局引用/">Android NDK开发系列教程5：局部引用，全局引用，弱全局引用</a>
-            </h1>
-            <div class="post-meta">  &bull;
-                <time class="post-date" datetime="" title="">
-                    2018年02月06日
-                </time>
-            </div>
-        </div>
-        <p class="brief">
-            1. 简介从Java虚拟机创建的对象当传入到native层时会产生一个引用，在进行垃圾回收时如果有native的引用，改对象同样也不会被回收。在native引用中分局部引用和全局引用。
-1.1 局部引用局部引用又称本地引用，大多数见到...
-        </p> 
+        <a href="/2017/12/27/Hexo-GitHub搭建个人博客/" class="pre-post btn btn-default"><i class="fa fa-angle-left fa-fw"></i>上一篇</a>
+    
+    
+</div>
+
+
+    <div id="comments">
+        <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNTA2NC8xMTU5OQ==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
     </div>
-    <footer class="post-footer clearfix">
-        <div class="pull-left tag-list">
-            <div class="post-meta">
-    
-    
-    <span class="categories-meta fa-wrap">
-        <i class="fa fa-folder-open-o"></i>
-        <span>Android</span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-tags"></i>
-        <span class="tags-meta">
-            
-            Android JNI开发
-            
-        </span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-clock-o"></i>
-        <span class="date-meta">2018/02/06</span>
-    </span>
-
-</div>
-
-        </div>
-
-        <div class="post-permalink"> 
-            <a href="/2018/02/06/Android-NDK开发系列教程5：局部引用，全局引用，弱全局引用/" class="btn btn-default">阅读全文</a>
-        </div>
-    </footer>
-</article>
 
 
-<article class="post">
-    
-    <div class="post-content">
-        <div class="post-head home-post-head">
-            <h1 class="post-title">
-                <a href="/2018/02/04/Android-NDK开发系列教程4：对类变量进行操作/">Android NDK开发系列教程4：对类变量进行操作</a>
-            </h1>
-            <div class="post-meta">  &bull;
-                <time class="post-date" datetime="" title="">
-                    2018年02月04日
-                </time>
-            </div>
-        </div>
-        <p class="brief">
-            通常我们也可以直接利用jni来访问和处理类的变量，不一定非要通过Java方法来操作Java类变量。对类变量操作时，类的静态变量和类的实例变量的操作稍微有些不同，下面进行讲解。
-对类的静态变量进行操作类的静态变量属于类，是所有该类实例共...
-        </p> 
-    </div>
-    <footer class="post-footer clearfix">
-        <div class="pull-left tag-list">
-            <div class="post-meta">
-    
-    
-    <span class="categories-meta fa-wrap">
-        <i class="fa fa-folder-open-o"></i>
-        <span>Android</span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-tags"></i>
-        <span class="tags-meta">
-            
-            Android JNI开发
-            
-        </span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-clock-o"></i>
-        <span class="date-meta">2018/02/04</span>
-    </span>
-
-</div>
-
-        </div>
-
-        <div class="post-permalink"> 
-            <a href="/2018/02/04/Android-NDK开发系列教程4：对类变量进行操作/" class="btn btn-default">阅读全文</a>
-        </div>
-    </footer>
-</article>
-
-
-
-
-    <nav class="pagination" role="navigation">
-        <div id="page-nav">
-            <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class='fa fa-angle-right'></i></a>
-        </div>
-    </nav>
 
 
 

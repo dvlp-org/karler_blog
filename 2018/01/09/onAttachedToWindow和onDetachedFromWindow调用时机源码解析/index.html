@@ -1,0 +1,1326 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://yoursite.com">
+    <!--SEO-->
+
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+
+<title>onAttachedToWindow和onDetachedFromWindow调用时机源码解析 | 天宇</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="天宇" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico"  type="image/x-icon">
+
+    
+
+
+
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css?rev=9.12.0">
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css?rev=3.3.4">
+<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+    <div class="hide">
+    	<script src="https://s4.cnzz.com/z_stat.php?id=1263868967&web_id=1263868967" language="JavaScript"></script>
+    </div>
+
+
+
+
+
+
+    
+    
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?c3d1d4bce7d4ef1c50d7ef35d759a5b7";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.2.0/styles/github.min.css">
+<script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+<body>
+    <header class="main-header"  style="background-image:url(/img/banner.jpg); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;"  >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title="">
+            <img src="/img/avatar.jpg" alt="logo头像">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                 <img src="/img/branding.png" alt="从未如此简单有趣">  
+             
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only">Toggle navigation</span>
+                    <i class="fa fa-bars"></i>
+                    </span>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation"><a href="/"><i class="fa fa-fw /favicon.ico"></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/前端/"><i class="fa fa-fw /favicon.ico"></i>前端</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/后端/"><i class="fa fa-fw /favicon.ico"></i>后端</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/工具/"><i class="fa fa-fw /favicon.ico"></i>工具</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/资源/"><i class="fa fa-fw /favicon.ico"></i>资源</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/关于/"><i class="fa fa-fw /favicon.ico"></i>关于</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="onAttachedToWindow和onDetachedFromWindow调用时机源码解析">
+            
+            onAttachedToWindow和onDetachedFromWindow调用时机源码解析
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <span>Android</span>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            onAttachedToWindow和onDetachedFromWindow,源码解析
+            
+        </span>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">2018/01/09</span>
+    </span>
+
+</div>
+
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <h3 id="1-示例"><a href="#1-示例" class="headerlink" title="1.示例"></a>1.示例</h3><p>先上测试代码：<br>MyView.java</p>
+<pre><code class="java">public class MyView extends TextView {  
+    public MyView(Context context) {  
+        super(context);  
+    }  
+
+    public MyView(Context context, AttributeSet attrs) {  
+        super(context, attrs);  
+        Log.e(&quot;test&quot;,&quot;view constructor&quot;);  
+    }  
+
+    @Override  
+    protected void onAttachedToWindow() {  
+        super.onAttachedToWindow();  
+        Log.e(&quot;test&quot;, &quot;onAttachedToWindow&quot;);  
+    }  
+
+    @Override  
+    protected void onDetachedFromWindow() {  
+        super.onDetachedFromWindow();  
+        Log.e(&quot;test&quot;, &quot;onDetachedFromWindow&quot;);  
+    }  
+}
+</code></pre>
+<p>MainActivity.java</p>
+<pre><code class="java">public class MainActivity extends AppCompatActivity {  
+
+    @Override  
+    protected void onCreate(Bundle savedInstanceState) {  
+        super.onCreate(savedInstanceState);  
+        Log.e(&quot;test&quot;, &quot;before setContextView&quot;);  
+        setContentView(R.layout.activity_main);  
+        Log.e(&quot;test&quot;, &quot;after setContextView&quot;);  
+    }  
+
+    @Override  
+    protected void onResume() {  
+        super.onResume();  
+        Log.e(&quot;test&quot;, &quot;onResume&quot;);  
+    }  
+
+    @Override  
+    protected void onDestroy() {  
+        super.onDestroy();  
+        Log.e(&quot;test&quot;, &quot;onDestroy&quot;);  
+    }  
+}
+</code></pre>
+<p> 运行后输出的Log如下：<br> <img src="http://img.blog.csdn.net/20170801103513570?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvaHR5MTA1MzI0MDEyMw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="运行后Log"><br>点击返回键退出后，输出的Log如下：<br><img src="http://img.blog.csdn.net/20170801103610947?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvaHR5MTA1MzI0MDEyMw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="点击返回后Log"></p>
+<p>根据Log的onAttachedToWindow和onDetachedFromWindow的输出情况一目了然。</p>
+<h3 id="2-源码分析"><a href="#2-源码分析" class="headerlink" title="2.源码分析"></a>2.源码分析</h3><p>下面通过源码分析下，他两的调用时机到底在哪。</p>
+<p>首先看下onAttachedToWindow的调用时机，在Android源码中onResume调用前会先调用了ActivityThread中的handleResumeActivity，下面是相应的代码：</p>
+<p>ActivityThread.java</p>
+<pre><code class="java">final void handleResumeActivity(IBinder token,  
+            boolean clearHide, boolean isForward, boolean reallyResume) {  
+        // If we are getting ready to gc after going to the background, well  
+        // we are back active so skip it.  
+        unscheduleGcIdler();  
+        mSomeActivitiesChanged = true;  
+
+        // TODO Push resumeArgs into the activity for consideration  
+        ActivityClientRecord r = performResumeActivity(token, clearHide);  
+
+        if (r != null) {  
+            final Activity a = r.activity;  
+
+            if (localLOGV) Slog.v(  
+                TAG, &quot;Resume &quot; + r + &quot; started activity: &quot; +  
+                a.mStartedActivity + &quot;, hideForNow: &quot; + r.hideForNow  
+                + &quot;, finished: &quot; + a.mFinished);  
+
+            final int forwardBit = isForward ?  
+                    WindowManager.LayoutParams.SOFT_INPUT_IS_FORWARD_NAVIGATION : 0;  
+
+            // If the window hasn&#39;t yet been added to the window manager,  
+            // and this guy didn&#39;t finish itself or start another activity,  
+            // then go ahead and add the window.  
+            boolean willBeVisible = !a.mStartedActivity;  
+            if (!willBeVisible) {  
+                try {  
+                    willBeVisible = ActivityManagerNative.getDefault().willActivityBeVisible(  
+                            a.getActivityToken());  
+                } catch (RemoteException e) {  
+                }  
+            }  
+            if (r.window == null &amp;&amp; !a.mFinished &amp;&amp; willBeVisible) {  
+                r.window = r.activity.getWindow();  
+                View decor = r.window.getDecorView();  
+                decor.setVisibility(View.INVISIBLE);  
+                ViewManager wm = a.getWindowManager();  
+                WindowManager.LayoutParams l = r.window.getAttributes();  
+                a.mDecor = decor;  
+                l.type = WindowManager.LayoutParams.TYPE_BASE_APPLICATION;  
+                l.softInputMode |= forwardBit;  
+                if (a.mVisibleFromClient) {  
+                    a.mWindowAdded = true;  
+                    wm.addView(decor, l);//这里调用了ViewManager中的addView方法。  
+                }  
+
+            // If the window has already been added, but during resume  
+            // we started another activity, then don&#39;t yet make the  
+            // window visible.  
+            } else if (!willBeVisible) {  
+                if (localLOGV) Slog.v(  
+                    TAG, &quot;Launch &quot; + r + &quot; mStartedActivity set&quot;);  
+                r.hideForNow = true;  
+            }  
+
+            // Get rid of anything left hanging around.  
+            cleanUpPendingRemoveWindows(r);  
+
+            // The window is now visible if it has been added, we are not  
+            // simply finishing, and we are not starting another activity.  
+            if (!r.activity.mFinished &amp;&amp; willBeVisible  
+                    &amp;&amp; r.activity.mDecor != null &amp;&amp; !r.hideForNow) {  
+                if (r.newConfig != null) {  
+                    r.tmpConfig.setTo(r.newConfig);  
+                    if (r.overrideConfig != null) {  
+                        r.tmpConfig.updateFrom(r.overrideConfig);  
+                    }  
+                    if (DEBUG_CONFIGURATION) Slog.v(TAG, &quot;Resuming activity &quot;  
+                            + r.activityInfo.name + &quot; with newConfig &quot; + r.tmpConfig);  
+                    performConfigurationChanged(r.activity, r.tmpConfig);  
+                    freeTextLayoutCachesIfNeeded(r.activity.mCurrentConfig.diff(r.tmpConfig));  
+                    r.newConfig = null;  
+                }  
+                if (localLOGV) Slog.v(TAG, &quot;Resuming &quot; + r + &quot; with isForward=&quot;  
+                        + isForward);  
+                WindowManager.LayoutParams l = r.window.getAttributes();  
+                if ((l.softInputMode  
+                        &amp; WindowManager.LayoutParams.SOFT_INPUT_IS_FORWARD_NAVIGATION)  
+                        != forwardBit) {  
+                    l.softInputMode = (l.softInputMode  
+                            &amp; (~WindowManager.LayoutParams.SOFT_INPUT_IS_FORWARD_NAVIGATION))  
+                            | forwardBit;  
+                    if (r.activity.mVisibleFromClient) {  
+                        ViewManager wm = a.getWindowManager();  
+                        View decor = r.window.getDecorView();  
+                        wm.updateViewLayout(decor, l);  
+                    }  
+                }  
+                r.activity.mVisibleFromServer = true;  
+                mNumVisibleActivities++;  
+                if (r.activity.mVisibleFromClient) {  
+                    r.activity.makeVisible();  
+                }  
+            }  
+            ....  
+    }
+</code></pre>
+<p>看代码中的wm.addView(devor,l);通过该方法将View添加到Window当中（在当前Window也就是Activity，不过Window也可以是Dialog或Toast），而wm是ViewManager类型的，查看对应代码是：</p>
+<pre><code class="java">/** Interface to let you add and remove child views to an Activity. To get an instance 
+  * of this class, call {@link android.content.Context#getSystemService(java.lang.String) Context.getSystemService()}. 
+  */  
+public interface ViewManager  
+{  
+    /** 
+     * Assign the passed LayoutParams to the passed View and add the view to the window. 
+     * &lt;p&gt;Throws {@link android.view.WindowManager.BadTokenException} for certain programming 
+     * errors, such as adding a second view to a window without removing the first view. 
+     * &lt;p&gt;Throws {@link android.view.WindowManager.InvalidDisplayException} if the window is on a 
+     * secondary {@link Display} and the specified display can&#39;t be found 
+     * (see {@link android.app.Presentation}). 
+     * @param view The view to be added to this window. 
+     * @param params The LayoutParams to assign to view. 
+     */  
+    public void addView(View view, ViewGroup.LayoutParams params);  
+    public void updateViewLayout(View view, ViewGroup.LayoutParams params);  
+    public void removeView(View view);  
+}
+</code></pre>
+<p> 该类是一个接口，在他下面还有一个WindowManager继承于ViewManager，而真正的实现代码在WindowManagerImpl类中，代码如下：<br>WindowManagerImpl.java</p>
+<pre><code class="java">/* 
+* @see WindowManager 
+* @see WindowManagerGlobal 
+* @hide 
+*/  
+ublic final class WindowManagerImpl implements WindowManager {  
+   private final WindowManagerGlobal mGlobal = WindowManagerGlobal.getInstance();  
+   private final Display mDisplay;  
+   private final Window mParentWindow;  
+
+   private IBinder mDefaultToken;  
+
+   public WindowManagerImpl(Display display) {  
+       this(display, null);  
+   }  
+
+   private WindowManagerImpl(Display display, Window parentWindow) {  
+       mDisplay = display;  
+       mParentWindow = parentWindow;  
+   }  
+
+   public WindowManagerImpl createLocalWindowManager(Window parentWindow) {  
+       return new WindowManagerImpl(mDisplay, parentWindow);  
+   }  
+
+   public WindowManagerImpl createPresentationWindowManager(Display display) {  
+       return new WindowManagerImpl(display, mParentWindow);  
+   }  
+
+   /** 
+    * Sets the window token to assign when none is specified by the client or 
+    * available from the parent window. 
+    * 
+    * @param token The default token to assign. 
+    */  
+   public void setDefaultToken(IBinder token) {  
+       mDefaultToken = token;  
+   }  
+
+   @Override  
+   public void addView(@NonNull View view, @NonNull ViewGroup.LayoutParams params) {  
+       applyDefaultToken(params);  
+       mGlobal.addView(view, params, mDisplay, mParentWindow);  
+   }  
+
+   @Override  
+   public void updateViewLayout(@NonNull View view, @NonNull ViewGroup.LayoutParams params) {  
+       applyDefaultToken(params);  
+       mGlobal.updateViewLayout(view, params);  
+   }  
+
+   private void applyDefaultToken(@NonNull ViewGroup.LayoutParams params) {  
+       // Only use the default token if we don&#39;t have a parent window.  
+       if (mDefaultToken != null &amp;&amp; mParentWindow == null) {  
+           if (!(params instanceof WindowManager.LayoutParams)) {  
+               throw new IllegalArgumentException(&quot;Params must be WindowManager.LayoutParams&quot;);  
+           }  
+
+           // Only use the default token if we don&#39;t already have a token.  
+           final WindowManager.LayoutParams wparams = (WindowManager.LayoutParams) params;  
+           if (wparams.token == null) {  
+               wparams.token = mDefaultToken;  
+           }  
+       }  
+   }  
+
+   @Override  
+   public void removeView(View view) {  
+       mGlobal.removeView(view, false);  
+   }  
+
+   @Override  
+   public void removeViewImmediate(View view) {  
+       mGlobal.removeView(view, true);  
+   }  
+
+   @Override  
+   public Display getDefaultDisplay() {  
+       return mDisplay;  
+   }
+</code></pre>
+<p>从中可以看到addView又调用了 WindowManagerGlobal.java类中的addView，下面看看WindowManagerGlobal.java类的源码：<br>WindowManagerGlobal.java</p>
+<pre><code class="java">public void addView(View view, ViewGroup.LayoutParams params,  
+        Display display, Window parentWindow) {  
+    if (view == null) {  
+        throw new IllegalArgumentException(&quot;view must not be null&quot;);  
+    }  
+    if (display == null) {  
+        throw new IllegalArgumentException(&quot;display must not be null&quot;);  
+    }  
+    if (!(params instanceof WindowManager.LayoutParams)) {  
+        throw new IllegalArgumentException(&quot;Params must be WindowManager.LayoutParams&quot;);  
+    }  
+
+    final WindowManager.LayoutParams wparams = (WindowManager.LayoutParams) params;  
+    if (parentWindow != null) {  
+        parentWindow.adjustLayoutParamsForSubWindow(wparams);  
+    } else {  
+        // If there&#39;s no parent, then hardware acceleration for this view is  
+        // set from the application&#39;s hardware acceleration setting.  
+        final Context context = view.getContext();  
+        if (context != null  
+                &amp;&amp; (context.getApplicationInfo().flags  
+                        &amp; ApplicationInfo.FLAG_HARDWARE_ACCELERATED) != 0) {  
+            wparams.flags |= WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED;  
+        }  
+    }  
+
+    ViewRootImpl root;  
+    View panelParentView = null;  
+
+    synchronized (mLock) {  
+        // Start watching for system property changes.  
+        if (mSystemPropertyUpdater == null) {  
+            mSystemPropertyUpdater = new Runnable() {  
+                @Override public void run() {  
+                    synchronized (mLock) {  
+                        for (int i = mRoots.size() - 1; i &gt;= 0; --i) {  
+                            mRoots.get(i).loadSystemProperties();  
+                        }  
+                    }  
+                }  
+            };  
+            SystemProperties.addChangeCallback(mSystemPropertyUpdater);  
+        }  
+
+        int index = findViewLocked(view, false);  
+        if (index &gt;= 0) {  
+            if (mDyingViews.contains(view)) {  
+                // Don&#39;t wait for MSG_DIE to make it&#39;s way through root&#39;s queue.  
+                mRoots.get(index).doDie();  
+            } else {  
+                throw new IllegalStateException(&quot;View &quot; + view  
+                        + &quot; has already been added to the window manager.&quot;);  
+            }  
+            // The previous removeView() had not completed executing. Now it has.  
+        }  
+
+        // If this is a panel window, then find the window it is being  
+        // attached to for future reference.  
+        if (wparams.type &gt;= WindowManager.LayoutParams.FIRST_SUB_WINDOW &amp;&amp;  
+                wparams.type &lt;= WindowManager.LayoutParams.LAST_SUB_WINDOW) {  
+            final int count = mViews.size();  
+            for (int i = 0; i &lt; count; i++) {  
+                if (mRoots.get(i).mWindow.asBinder() == wparams.token) {  
+                    panelParentView = mViews.get(i);  
+                }  
+            }  
+        }  
+
+        root = new ViewRootImpl(view.getContext(), display);  
+
+        view.setLayoutParams(wparams);  
+
+        mViews.add(view);  
+        mRoots.add(root);  
+        mParams.add(wparams);  
+    }  
+
+    // do this last because it fires off messages to start doing things  
+    try {  
+        root.setView(view, wparams, panelParentView);//这里调用ViewRootImpl类中的setView方法，在该方法中触发了&lt;span style=&quot;color: rgb(101, 123, 131); font-family: Menlo, Monaco, Consolas, &#39;Courier New&#39;, monospace; line-height: 20.4px; white-space: pre-wrap; background-color: rgb(246, 246, 246);&quot;&gt;ViewRootImpl.performTraversals()&lt;/span&gt;  
+    } catch (RuntimeException e) {  
+        // BadTokenException or InvalidDisplayException, clean up.  
+        synchronized (mLock) {  
+            final int index = findViewLocked(view, false);  
+            if (index &gt;= 0) {  
+                removeViewLocked(index, true);  
+            }  
+        }  
+        throw e;  
+    }  
+}
+</code></pre>
+<p>在该方法中的root.setView(view,wparams,panelParentView)方法，调用的是ViewRootImpl类中的setView方法，正是该setView方法触发了ViewRootImpl.performTraversals()方法，也就是View绘制的起点，之后会进行measure,layout,draw三个步骤从而完成一个View的显示工作。</p>
+<p>ViewRootImpl.java</p>
+<pre><code class="java">/** 
+ * We have one child 
+ */  
+public void setView(View view, WindowManager.LayoutParams attrs, View panelParentView) {  
+    synchronized (this) {  
+        if (mView == null) {  
+            mView = view;  
+
+            mAttachInfo.mDisplayState = mDisplay.getState();  
+            mDisplayManager.registerDisplayListener(mDisplayListener, mHandler);  
+
+            ...  
+            mSoftInputMode = attrs.softInputMode;  
+            mWindowAttributesChanged = true;  
+            mWindowAttributesChangesFlag = WindowManager.LayoutParams.EVERYTHING_CHANGED;  
+            mAttachInfo.mRootView = view;  
+            mAttachInfo.mScalingRequired = mTranslator != null;  
+            mAttachInfo.mApplicationScale =  
+                    mTranslator == null ? 1.0f : mTranslator.applicationScale;  
+            if (panelParentView != null) {  
+                mAttachInfo.mPanelParentWindowToken  
+                        = panelParentView.getApplicationWindowToken();  
+            }  
+            mAdded = true;  
+            int res; /* = WindowManagerImpl.ADD_OKAY; */  
+
+            // Schedule the first layout -before- adding to the window  
+            // manager, to make sure we do the relayout before receiving  
+            // any other events from the system.  
+            requestLayout();//这里开始请求view的绘制  
+            if ((mWindowAttributes.inputFeatures  
+                    &amp; WindowManager.LayoutParams.INPUT_FEATURE_NO_INPUT_CHANNEL) == 0) {  
+                mInputChannel = new InputChannel();  
+            }  
+            try {  
+                mOrigWindowType = mWindowAttributes.type;  
+                mAttachInfo.mRecomputeGlobalAttributes = true;  
+                collectViewAttributes();  
+                res = mWindowSession.addToDisplay(mWindow, mSeq, mWindowAttributes,  
+                        getHostVisibility(), mDisplay.getDisplayId(),  
+                        mAttachInfo.mContentInsets, mAttachInfo.mStableInsets,  
+                        mAttachInfo.mOutsets, mInputChannel);  
+            } catch (RemoteException e) {  
+                mAdded = false;  
+                mView = null;  
+                mAttachInfo.mRootView = null;  
+                mInputChannel = null;  
+                mFallbackEventHandler.setView(null);  
+                unscheduleTraversals();  
+                setAccessibilityFocus(null, null);  
+                throw new RuntimeException(&quot;Adding window failed&quot;, e);  
+            } finally {  
+                if (restore) {  
+                    attrs.restore();  
+                }  
+            }  
+            ....  
+        }  
+    }  
+}
+</code></pre>
+<p>在setView的requestLayout方法中开始View的绘制。<br>ViewRootImpl.java</p>
+<pre><code class="java">void scheduleTraversals() {  
+    if (!mTraversalScheduled) {  
+        mTraversalScheduled = true;  
+        mTraversalBarrier = mHandler.getLooper().getQueue().postSyncBarrier();  
+        mChoreographer.postCallback(  
+                Choreographer.CALLBACK_TRAVERSAL, mTraversalRunnable, null);  
+        if (!mUnbufferedInputDispatch) {  
+            scheduleConsumeBatchedInput();  
+        }  
+        notifyRendererOfFramePending();  
+        pokeDrawLockIfNeeded();  
+    }  
+}  
+
+void scheduleTraversals() {  
+    if (!mTraversalScheduled) {  
+        mTraversalScheduled = true;  
+        mTraversalBarrier = mHandler.getLooper().getQueue().postSyncBarrier();  
+        mChoreographer.postCallback(  
+                Choreographer.CALLBACK_TRAVERSAL, mTraversalRunnable, null);  
+        if (!mUnbufferedInputDispatch) {  
+            scheduleConsumeBatchedInput();  
+        }  
+        notifyRendererOfFramePending();  
+        pokeDrawLockIfNeeded();  
+    }  
+}  
+final class TraversalRunnable implements Runnable {  
+    @Override  
+    public void run() {  
+        doTraversal();  
+    }  
+}  
+final TraversalRunnable mTraversalRunnable = new TraversalRunnable();  
+void doTraversal() {  
+    if (mTraversalScheduled) {  
+        mTraversalScheduled = false;  
+        mHandler.getLooper().getQueue().removeSyncBarrier(mTraversalBarrier);  
+
+        if (mProfile) {  
+            Debug.startMethodTracing(&quot;ViewAncestor&quot;);  
+        }  
+
+        performTraversals();  
+
+        if (mProfile) {  
+            Debug.stopMethodTracing();  
+            mProfile = false;  
+        }  
+    }  
+}
+</code></pre>
+<p> 在scheduleTraversals()方法中向mChoreographer中postCallback，而具体的Runable内容在TraversalRunnable类中，该类在run函数中直接执行doTraversal()方法，可以看到在该方法中最终调用了performTraversals()开启View的绘制工作。<br>查看ViewRootImpl.java中的performTraversals()的源码如下：</p>
+<p>ViewRootImpl.java中的performTraversals()方法</p>
+<pre><code class="java">private void performTraversals() {  
+        // cache mView since it is used so much below...  
+        final View host = mView;  
+        ...  
+        if (host == null || !mAdded)  
+            return;  
+
+        mIsInTraversal = true;  
+        mWillDrawSoon = true;  
+        boolean windowSizeMayChange = false;  
+        boolean newSurface = false;  
+        boolean surfaceChanged = false;  
+        WindowManager.LayoutParams lp = mWindowAttributes;  
+
+        int desiredWindowWidth;  
+        int desiredWindowHeight;  
+
+        final int viewVisibility = getHostVisibility();  
+        boolean viewVisibilityChanged = mViewVisibility != viewVisibility  
+                || mNewSurfaceNeeded;  
+
+        WindowManager.LayoutParams params = null;  
+        if (mWindowAttributesChanged) {  
+            mWindowAttributesChanged = false;  
+            surfaceChanged = true;  
+            params = lp;  
+        }  
+        CompatibilityInfo compatibilityInfo = mDisplayAdjustments.getCompatibilityInfo();  
+        if (compatibilityInfo.supportsScreen() == mLastInCompatMode) {  
+            params = lp;  
+            mFullRedrawNeeded = true;  
+            mLayoutRequested = true;  
+            if (mLastInCompatMode) {  
+                params.privateFlags &amp;= ~WindowManager.LayoutParams.PRIVATE_FLAG_COMPATIBLE_WINDOW;  
+                mLastInCompatMode = false;  
+            } else {  
+                params.privateFlags |= WindowManager.LayoutParams.PRIVATE_FLAG_COMPATIBLE_WINDOW;  
+                mLastInCompatMode = true;  
+            }  
+        }  
+
+        mWindowAttributesChangesFlag = 0;  
+
+        Rect frame = mWinFrame;  
+        if (mFirst) {  
+            mFullRedrawNeeded = true;  
+            mLayoutRequested = true;  
+
+            if (lp.type == WindowManager.LayoutParams.TYPE_STATUS_BAR_PANEL  
+                    || lp.type == WindowManager.LayoutParams.TYPE_INPUT_METHOD) {  
+                // NOTE -- system code, won&#39;t try to do compat mode.  
+                Point size = new Point();  
+                mDisplay.getRealSize(size);  
+                desiredWindowWidth = size.x;  
+                desiredWindowHeight = size.y;  
+            } else {  
+                DisplayMetrics packageMetrics =  
+                    mView.getContext().getResources().getDisplayMetrics();  
+                desiredWindowWidth = packageMetrics.widthPixels;  
+                desiredWindowHeight = packageMetrics.heightPixels;  
+            }  
+
+            // We used to use the following condition to choose 32 bits drawing caches:  
+            // PixelFormat.hasAlpha(lp.format) || lp.format == PixelFormat.RGBX_8888  
+            // However, windows are now always 32 bits by default, so choose 32 bits  
+            mAttachInfo.mUse32BitDrawingCache = true;  
+            mAttachInfo.mHasWindowFocus = false;  
+            mAttachInfo.mWindowVisibility = viewVisibility;  
+            mAttachInfo.mRecomputeGlobalAttributes = false;  
+            viewVisibilityChanged = false;  
+            mLastConfiguration.setTo(host.getResources().getConfiguration());  
+            mLastSystemUiVisibility = mAttachInfo.mSystemUiVisibility;  
+            // Set the layout direction if it has not been set before (inherit is the default)  
+            if (mViewLayoutDirectionInitial == View.LAYOUT_DIRECTION_INHERIT) {  
+                host.setLayoutDirection(mLastConfiguration.getLayoutDirection());  
+            }  
+            host.dispatchAttachedToWindow(mAttachInfo, 0);//这里调用了View的dispatchAttachedToWindow，也就是这里回调了onAttachedToWindow方法。  
+            mAttachInfo.mTreeObserver.dispatchOnWindowAttachedChange(true);  
+            dispatchApplyInsets(host);  
+            //Log.i(TAG, &quot;Screen on initialized: &quot; + attachInfo.mKeepScreenOn);  
+
+        } else {  
+            desiredWindowWidth = frame.width();  
+            desiredWindowHeight = frame.height();  
+            if (desiredWindowWidth != mWidth || desiredWindowHeight != mHeight) {  
+                if (DEBUG_ORIENTATION) Log.v(TAG,  
+                        &quot;View &quot; + host + &quot; resized to: &quot; + frame);  
+                mFullRedrawNeeded = true;  
+                mLayoutRequested = true;  
+                windowSizeMayChange = true;  
+            }  
+        }  
+
+        ...  
+    }
+</code></pre>
+<p>在该方法中调用了host.dispatchAttachedToWindow(mAttachInfo, 0);方法。host是上面传下来的DecodView，该类继承与FrameLayout类，也就是ViewGroup的子类，所以先调用的是ViewGroup中的dispatchAttachedToWindow，其代码如下：</p>
+<p>ViewGroup.java</p>
+<pre><code class="java">@Override  
+void dispatchAttachedToWindow(AttachInfo info, int visibility) {  
+    mGroupFlags |= FLAG_PREVENT_DISPATCH_ATTACHED_TO_WINDOW;  
+    super.dispatchAttachedToWindow(info, visibility);//这里先调用父类，也就是View的dispathcAttachedToWindow。  
+    mGroupFlags &amp;= ~FLAG_PREVENT_DISPATCH_ATTACHED_TO_WINDOW;  
+
+    final int count = mChildrenCount;  
+    final View[] children = mChildren;  
+    for (int i = 0; i &lt; count; i++) {  
+        final View child = children[i];  
+        child.dispatchAttachedToWindow(info,  
+                combineVisibility(visibility, child.getVisibility()));//这里调用子View的&lt;span style=&quot;font-family: Arial, Helvetica, sans-serif;&quot;&gt;dispatchAttachedToWindow&lt;/span&gt;  
+    }  
+    final int transientCount = mTransientIndices == null ? 0 : mTransientIndices.size();  
+    for (int i = 0; i &lt; transientCount; ++i) {  
+        View view = mTransientViews.get(i);  
+        view.dispatchAttachedToWindow(info,  
+                combineVisibility(visibility, view.getVisibility()));  
+    }  
+}
+</code></pre>
+<p>下面查看对应的View类中的dispatchAttacToWindow。代码如下：</p>
+<p>View.java</p>
+<pre><code class="java">void dispatchAttachedToWindow(AttachInfo info, int visibility) {  
+        //System.out.println(&quot;Attached! &quot; + this);  
+        mAttachInfo = info;  
+        if (mOverlay != null) {  
+            mOverlay.getOverlayView().dispatchAttachedToWindow(info, visibility);  
+        }  
+        mWindowAttachCount++;  
+        // We will need to evaluate the drawable state at least once.  
+        mPrivateFlags |= PFLAG_DRAWABLE_STATE_DIRTY;  
+        if (mFloatingTreeObserver != null) {  
+            info.mTreeObserver.merge(mFloatingTreeObserver);  
+            mFloatingTreeObserver = null;  
+        }  
+        if ((mPrivateFlags&amp;PFLAG_SCROLL_CONTAINER) != 0) {  
+            mAttachInfo.mScrollContainers.add(this);  
+            mPrivateFlags |= PFLAG_SCROLL_CONTAINER_ADDED;  
+        }  
+        performCollectViewAttributes(mAttachInfo, visibility);  
+        onAttachedToWindow();//快看，快看，在这里！终于找到这个方法调用的位置了  
+        ListenerInfo li = mListenerInfo;  
+        final CopyOnWriteArrayList&lt;OnAttachStateChangeListener&gt; listeners =  
+                li != null ? li.mOnAttachStateChangeListeners : null;  
+        if (listeners != null &amp;&amp; listeners.size() &gt; 0) {  
+            // NOTE: because of the use of CopyOnWriteArrayList, we *must* use an iterator to  
+            // perform the dispatching. The iterator is a safe guard against listeners that  
+            // could mutate the list by calling the various add/remove methods. This prevents  
+            // the array from being modified while we iterate it.  
+            for (OnAttachStateChangeListener listener : listeners) {  
+                listener.onViewAttachedToWindow(this);//  
+            }  
+        }  
+
+        int vis = info.mWindowVisibility;  
+        if (vis != GONE) {  
+            onWindowVisibilityChanged(vis);  
+        }  
+
+        // Send onVisibilityChanged directly instead of dispatchVisibilityChanged.  
+        // As all views in the subtree will already receive dispatchAttachedToWindow  
+        // traversing the subtree again here is not desired.  
+        onVisibilityChanged(this, visibility);  
+
+        if ((mPrivateFlags&amp;PFLAG_DRAWABLE_STATE_DIRTY) != 0) {  
+            // If nobody has evaluated the drawable state yet, then do it now.  
+            refreshDrawableState();  
+        }  
+        needGlobalAttributesUpdate(false);  
+    }
+</code></pre>
+<p> 从上面代码可以看出一个布局的onAttachedToWindow会先调用自己的，然后再调用自己孩子的。而且从View.java的代码中也可以看出onAttachedToWindow和View自身的visibility无关，即使visibility==GONE，该方法也会调用。<br>好，下面来分析下onDetachedFromWindow方法的调用时机。在onDestory调用前会调用ActivityThread.java中的handleDestroyActivity方法，贴出代码：</p>
+<p>ActivityThread.java</p>
+<pre><code class="java">private void handleDestroyActivity(IBinder token, boolean finishing,  
+        int configChanges, boolean getNonConfigInstance) {  
+    ActivityClientRecord r = performDestroyActivity(token, finishing,  
+            configChanges, getNonConfigInstance);  
+    if (r != null) {  
+        cleanUpPendingRemoveWindows(r);  
+        WindowManager wm = r.activity.getWindowManager();  
+        View v = r.activity.mDecor;  
+        if (v != null) {  
+            if (r.activity.mVisibleFromServer) {  
+                mNumVisibleActivities--;  
+            }  
+            IBinder wtoken = v.getWindowToken();  
+            if (r.activity.mWindowAdded) {  
+                if (r.onlyLocalRequest) {  
+                    // Hold off on removing this until the new activity&#39;s  
+                    // window is being added.  
+                    r.mPendingRemoveWindow = v;  
+                    r.mPendingRemoveWindowManager = wm;  
+                } else {  
+                    wm.removeViewImmediate(v);//看这里，看这里  
+                }  
+            }  
+            if (wtoken != null &amp;&amp; r.mPendingRemoveWindow == null) {  
+                WindowManagerGlobal.getInstance().closeAll(wtoken,  
+                        r.activity.getClass().getName(), &quot;Activity&quot;);  
+            }  
+            r.activity.mDecor = null;  
+        }  
+        if (r.mPendingRemoveWindow == null) {  
+            // If we are delaying the removal of the activity window, then  
+            // we can&#39;t clean up all windows here.  Note that we can&#39;t do  
+            // so later either, which means any windows that aren&#39;t closed  
+            // by the app will leak.  Well we try to warning them a lot  
+            // about leaking windows, because that is a bug, so if they are  
+            // using this recreate facility then they get to live with leaks.  
+            WindowManagerGlobal.getInstance().closeAll(token,  
+                    r.activity.getClass().getName(), &quot;Activity&quot;);  
+        }  
+
+        // Mocked out contexts won&#39;t be participating in the normal  
+        // process lifecycle, but if we&#39;re running with a proper  
+        // ApplicationContext we need to have it tear down things  
+        // cleanly.  
+        Context c = r.activity.getBaseContext();  
+        if (c instanceof ContextImpl) {  
+            ((ContextImpl) c).scheduleFinalCleanup(  
+                    r.activity.getClass().getName(), &quot;Activity&quot;);  
+        }  
+    }  
+    if (finishing) {  
+        try {  
+            ActivityManagerNative.getDefault().activityDestroyed(token);  
+        } catch (RemoteException ex) {  
+            // If the system process has died, it&#39;s game over for everyone.  
+        }  
+    }  
+    mSomeActivitiesChanged = true;  
+}
+</code></pre>
+<p> 看代码中的wm.removeViewImmediate方法，还是走到WindowManagerImpl类中的removeViewImmediate，代码如下：<br>WindowManagerImpl.java</p>
+<pre><code class="java">@Override  
+public void removeViewImmediate(View view) {  
+    mGlobal.removeView(view, true);  
+}
+</code></pre>
+<p> 好熟悉啊，还是走到了WindowManagerGlobal类中的removeView，代码如下：<br>WindowManagerGlobal.java</p>
+<pre><code class="java">public void removeView(View view, boolean immediate) {  
+    if (view == null) {  
+        throw new IllegalArgumentException(&quot;view must not be null&quot;);  
+    }  
+
+    synchronized (mLock) {  
+        int index = findViewLocked(view, true);  
+        View curView = mRoots.get(index).getView();  
+        removeViewLocked(index, immediate);  
+        if (curView == view) {  
+            return;  
+        }  
+
+        throw new IllegalStateException(&quot;Calling with view &quot; + view  
+                + &quot; but the ViewAncestor is attached to &quot; + curView);  
+    }  
+}  
+private void removeViewLocked(int index, boolean immediate) {  
+    ViewRootImpl root = mRoots.get(index);  
+    View view = root.getView();  
+
+    if (view != null) {  
+        InputMethodManager imm = InputMethodManager.getInstance();  
+        if (imm != null) {  
+            imm.windowDismissed(mViews.get(index).getWindowToken());  
+        }  
+    }  
+    boolean deferred = root.die(immediate);  
+    if (view != null) {  
+        view.assignParent(null);  
+        if (deferred) {  
+            mDyingViews.add(view);  
+        }  
+    }  
+}
+</code></pre>
+<p> 跟着代码继续走，到了ViewRootImpl类中的die，代码如下：<br>ViewRootImpl.java</p>
+<pre><code class="java">/** 
+     * @param immediate True, do now if not in traversal. False, put on queue and do later. 
+     * @return True, request has been queued. False, request has been completed. 
+     */  
+    boolean die(boolean immediate) {  
+        // Make sure we do execute immediately if we are in the middle of a traversal or the damage  
+        // done by dispatchDetachedFromWindow will cause havoc on return.  
+        if (immediate &amp;&amp; !mIsInTraversal) {  
+            doDie();  
+            return false;  
+        }  
+
+        if (!mIsDrawing) {  
+            destroyHardwareRenderer();  
+        } else {  
+            Log.e(TAG, &quot;Attempting to destroy the window while drawing!\n&quot; +  
+                    &quot;  window=&quot; + this + &quot;, title=&quot; + mWindowAttributes.getTitle());  
+        }  
+        mHandler.sendEmptyMessage(MSG_DIE);  
+        return true;  
+    }  
+
+    void doDie() {  
+        checkThread();  
+        if (LOCAL_LOGV) Log.v(TAG, &quot;DIE in &quot; + this + &quot; of &quot; + mSurface);  
+        synchronized (this) {  
+            if (mRemoved) {  
+                return;  
+            }  
+            mRemoved = true;  
+            if (mAdded) {  
+                dispatchDetachedFromWindow();//看这里，看这里  
+            }  
+
+            if (mAdded &amp;&amp; !mFirst) {  
+                destroyHardwareRenderer();  
+
+                if (mView != null) {  
+                    int viewVisibility = mView.getVisibility();  
+                    boolean viewVisibilityChanged = mViewVisibility != viewVisibility;  
+                    if (mWindowAttributesChanged || viewVisibilityChanged) {  
+                        // If layout params have been changed, first give them  
+                        // to the window manager to make sure it has the correct  
+                        // animation info.  
+                        try {  
+                            if ((relayoutWindow(mWindowAttributes, viewVisibility, false)  
+                                    &amp; WindowManagerGlobal.RELAYOUT_RES_FIRST_TIME) != 0) {  
+                                mWindowSession.finishDrawing(mWindow);  
+                            }  
+                        } catch (RemoteException e) {  
+                        }  
+                    }  
+
+                    mSurface.release();  
+                }  
+            }  
+
+            mAdded = false;  
+        }  
+        WindowManagerGlobal.getInstance().doRemoveView(this);  
+    }
+</code></pre>
+<p> 在doDie里面调用了dispatchDetachedFromWindow()方法，代码如下：<br>ViewRootImpl.java</p>
+<pre><code class="java">void dispatchDetachedFromWindow() {  
+        if (mView != null &amp;&amp; mView.mAttachInfo != null) {  
+            mAttachInfo.mTreeObserver.dispatchOnWindowAttachedChange(false);  
+            mView.dispatchDetachedFromWindow();//看这里，看这里  
+        }  
+
+        mAccessibilityInteractionConnectionManager.ensureNoConnection();  
+        mAccessibilityManager.removeAccessibilityStateChangeListener(  
+                mAccessibilityInteractionConnectionManager);  
+        mAccessibilityManager.removeHighTextContrastStateChangeListener(  
+                mHighContrastTextManager);  
+        removeSendWindowContentChangedCallback();  
+
+        destroyHardwareRenderer();  
+
+        setAccessibilityFocus(null, null);  
+
+        mView.assignParent(null);  
+        mView = null;  
+        mAttachInfo.mRootView = null;  
+
+        mSurface.release();  
+
+        if (mInputQueueCallback != null &amp;&amp; mInputQueue != null) {  
+            mInputQueueCallback.onInputQueueDestroyed(mInputQueue);  
+            mInputQueue.dispose();  
+            mInputQueueCallback = null;  
+            mInputQueue = null;  
+        }  
+        if (mInputEventReceiver != null) {  
+            mInputEventReceiver.dispose();  
+            mInputEventReceiver = null;  
+        }  
+        try {  
+            mWindowSession.remove(mWindow);  
+        } catch (RemoteException e) {  
+        }  
+
+        // Dispose the input channel after removing the window so the Window Manager  
+        // doesn&#39;t interpret the input channel being closed as an abnormal termination.  
+        if (mInputChannel != null) {  
+            mInputChannel.dispose();  
+            mInputChannel = null;  
+        }  
+
+        mDisplayManager.unregisterDisplayListener(mDisplayListener);  
+
+        unscheduleTraversals();  
+    }
+</code></pre>
+<p> 还记着在WindowManagerGlobal里面的root.setView(view, wparams, panelParentView);调用吧，这里的mView.dispatchDetachedFromWindow();这个mView也即是上面传过来的view。也就是先看DecorView即ViewGroup里面的dispatchDetachedFromWindow，代码如下：<br>ViewGroup.java</p>
+<pre><code class="java">@Override  
+void dispatchDetachedFromWindow() {  
+    // If we still have a touch target, we are still in the process of  
+    // dispatching motion events to a child; we need to get rid of that  
+    // child to avoid dispatching events to it after the window is torn  
+    // down. To make sure we keep the child in a consistent state, we  
+    // first send it an ACTION_CANCEL motion event.  
+    cancelAndClearTouchTargets(null);  
+
+    // Similarly, set ACTION_EXIT to all hover targets and clear them.  
+    exitHoverTargets();  
+
+    // In case view is detached while transition is running  
+    mLayoutCalledWhileSuppressed = false;  
+
+    // Tear down our drag tracking  
+    mDragNotifiedChildren = null;  
+    if (mCurrentDrag != null) {  
+        mCurrentDrag.recycle();  
+        mCurrentDrag = null;  
+    }  
+
+    final int count = mChildrenCount;  
+    final View[] children = mChildren;  
+    for (int i = 0; i &lt; count; i++) {  
+        children[i].dispatchDetachedFromWindow();//这里会先调子类的dispatchDetachedFromWindow  
+    }  
+    clearDisappearingChildren();  
+    final int transientCount = mTransientViews == null ? 0 : mTransientIndices.size();  
+    for (int i = 0; i &lt; transientCount; ++i) {  
+        View view = mTransientViews.get(i);  
+        view.dispatchDetachedFromWindow();  
+    }  
+    super.dispatchDetachedFromWindow();//然后这里才调用自己的。  
+}
+</code></pre>
+<p> 这之后又到View的dispatchDetachedFromWindow了，代码如下：<br>View.java</p>
+<pre><code class="java">void dispatchDetachedFromWindow() {  
+        AttachInfo info = mAttachInfo;  
+        if (info != null) {  
+            int vis = info.mWindowVisibility;  
+            if (vis != GONE) {  
+                onWindowVisibilityChanged(GONE);  
+            }  
+        }  
+
+        onDetachedFromWindow();//绕了一大圈，还是找到你了。快看快看，揪出来了。  
+        onDetachedFromWindowInternal();  
+
+        InputMethodManager imm = InputMethodManager.peekInstance();  
+        if (imm != null) {  
+            imm.onViewDetachedFromWindow(this);  
+        }  
+
+        ListenerInfo li = mListenerInfo;  
+        final CopyOnWriteArrayList&lt;OnAttachStateChangeListener&gt; listeners =  
+                li != null ? li.mOnAttachStateChangeListeners : null;  
+        if (listeners != null &amp;&amp; listeners.size() &gt; 0) {  
+            // NOTE: because of the use of CopyOnWriteArrayList, we *must* use an iterator to  
+            // perform the dispatching. The iterator is a safe guard against listeners that  
+            // could mutate the list by calling the various add/remove methods. This prevents  
+            // the array from being modified while we iterate it.  
+            for (OnAttachStateChangeListener listener : listeners) {  
+                listener.onViewDetachedFromWindow(this);  
+            }  
+        }  
+
+        if ((mPrivateFlags &amp; PFLAG_SCROLL_CONTAINER_ADDED) != 0) {  
+            mAttachInfo.mScrollContainers.remove(this);  
+            mPrivateFlags &amp;= ~PFLAG_SCROLL_CONTAINER_ADDED;  
+        }  
+
+        mAttachInfo = null;  
+        if (mOverlay != null) {  
+            mOverlay.getOverlayView().dispatchDetachedFromWindow();  
+        }  
+    }
+</code></pre>
+<p>看代码终于找到了onDetachedFromWindow的调用地方了。<br>这里总结下：</p>
+<p>1.onAttachedToWindow调用顺序：ActivityThread.handleResumeActivity-&gt;WindowManagerImpl.addView-&gt;WindowManagerGlobal.addView-&gt;ViewRootImpl.performTraversals-&gt;ViewGroup.dispatchAttachedToWindow-&gt;View.dispatchAttachedToWindow-&gt;onAttachedToWindow</p>
+<p>2.onDetachedFromWindow调用顺序：ActivityThread.handleDestroyActivity-&gt;WindowManagerImpl.removeViewImmediate-&gt;WindowManagerGlobal.removeView-&gt;ViewRootImpl.die-&gt;ViewRootImpl.doDie-&gt;ViewRootImpl.dispatchDetachedFromWindow-&gt;ViewGroup.dispatchDetachedFromWindow-&gt;View.dispatchDetachedFromWindow-&gt;onDetachedToWindow</p>
+<p>3.onAttachedToWindow和onDetachedFromWindow的调用与visibility无关。</p>
+<p>4.onAttachedToWindow是先调用自己，然后调用儿子View的。onDetachedFromWindow是先调用儿子View的，然后再调用自己的。</p>
+
+    </div>
+
+    <div class="post-footer">   
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="http://blog.csdn.net/hty1053240123?viewmode=contents" target="_blank">天宇240</a>
+            
+        </div>
+        <div>
+            
+        </div>  
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2018/01/17/adb常用命令/" class="pre-post btn btn-default"><i class="fa fa-angle-left fa-fw"></i>上一篇</a>
+    
+    
+        <a href="/2018/01/08/在git命令行下查看git-stash里面文件的内容/" class="next-post btn btn-default">下一篇<i class="fa fa-angle-right fa-fw"></i></a>
+    
+</div>
+
+
+    <div id="comments">
+        <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNTA2NC8xMTU5OQ==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+    </div>
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        
+    <div class="widget">    
+        <h3 class="title">搜索</h3>
+        <div id="search-form">
+            <div id="result-mask" class="hide"></div>
+            <div class="search-area">
+                
+                    <input id="search-key" type="search" autocomplete="off" placeholder="搜点什么呢?">
+                    <button type="button" class="search-form-submit" id="search-local">站内搜索</button>
+                
+                
+            </div>
+            <div id="result-wrap" class="hide">
+                <div id="search-result"></div>
+            </div>
+            <div class="hide">
+                <template id="search-tpl">
+                    <div class="item">
+                        <a href="/{path}" title="{title}">
+                            <div class="title">{title}</div>
+                            <div class="content">{content}</div>
+                        </a>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget notification">
+        <h3 class="title">网站公告</h3>
+        <div>
+            <p>公告就是醒目，为了提醒自己多学习，多总结~ <br/>
+好记忆不如烂笔头~ <br/>
+</p>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+      <h3 class="title">社交</h3> 
+        <div class="content social">
+            
+	            <a href="//github.com/huangtianyu" rel="external nofollow" title="Github" target="_blank">
+			    	<i class="git fa fa-git"></i>
+			    </a>
+            
+	            <a href="mailto:1053240123@qq.com" rel="external nofollow" title="邮箱" target="_blank">
+			    	<i class="envelope-o fa fa-envelope-o"></i>
+			    </a>
+            
+	            <a href="https://weibo.com/1804011630/" rel="external nofollow" title="微博" target="_blank">
+			    	<i class="weibo fa fa-weibo"></i>
+			    </a>
+            
+	            <a href="/atom.xml" rel="external nofollow" title="RSS" target="_blank">
+			    	<i class="feed fa fa-feed"></i>
+			    </a>
+            
+        </div>
+    </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">分类</h3>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/"><i class="fa" aria-hidden="true">Android</i></a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/"><i class="fa" aria-hidden="true">Git</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/"><i class="fa" aria-hidden="true">Hexo</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kotlin/"><i class="fa" aria-hidden="true">Kotlin</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/gradle/"><i class="fa" aria-hidden="true">gradle</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/人工智能/"><i class="fa" aria-hidden="true">人工智能</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/"><i class="fa" aria-hidden="true">设计模式</i></a><span class="category-list-count">1</span></li></ul>
+    </div>
+
+
+        
+        
+    <div class="widget">
+      <h3 class="title">归档</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/"><i class="fa" aria-hidden="true">十月 2018</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/"><i class="fa" aria-hidden="true">三月 2018</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/"><i class="fa" aria-hidden="true">二月 2018</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/"><i class="fa" aria-hidden="true">一月 2018</i></a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/"><i class="fa" aria-hidden="true">十二月 2017</i></a><span class="archive-list-count">3</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">标签云</h3>
+    <div class="content tag-cloud">
+        <a href="/tags/Android-DeepLink-源码解析/" style="font-size: 10px;">Android DeepLink 源码解析</a> <a href="/tags/Android-JNI开发/" style="font-size: 15px;">Android JNI开发</a> <a href="/tags/Android-NDK开发，JNI开发/" style="font-size: 20px;">Android NDK开发，JNI开发</a> <a href="/tags/Android学习/" style="font-size: 10px;">Android学习</a> <a href="/tags/Android源码分析/" style="font-size: 10px;">Android源码分析</a> <a href="/tags/AppLinks-DeepLinks/" style="font-size: 10px;">AppLinks, DeepLinks</a> <a href="/tags/Dex类加载/" style="font-size: 10px;">Dex类加载</a> <a href="/tags/Hexo学习/" style="font-size: 10px;">Hexo学习</a> <a href="/tags/Hexo搭建/" style="font-size: 10px;">Hexo搭建</a> <a href="/tags/Kotlin学习/" style="font-size: 15px;">Kotlin学习</a> <a href="/tags/RoboBinding-MVC-MVP/" style="font-size: 10px;">RoboBinding,MVC,MVP</a> <a href="/tags/SharedPreferences-Editor/" style="font-size: 10px;">SharedPreferences Editor</a> <a href="/tags/View-onMeasure/" style="font-size: 10px;">View onMeasure</a> <a href="/tags/ViewPager-Fragment预加载/" style="font-size: 10px;">ViewPager+Fragment预加载</a> <a href="/tags/adb命令/" style="font-size: 10px;">adb命令</a> <a href="/tags/adb查看交互Activity名称/" style="font-size: 10px;">adb查看交互Activity名称</a> <a href="/tags/gradle配置/" style="font-size: 10px;">gradle配置</a> <a href="/tags/onAttachedToWindow和onDetachedFromWindow-源码解析/" style="font-size: 10px;">onAttachedToWindow和onDetachedFromWindow,源码解析</a> <a href="/tags/onSaveInstanceState/" style="font-size: 10px;">onSaveInstanceState</a> <a href="/tags/内存优化/" style="font-size: 10px;">内存优化</a> <a href="/tags/应用内部广播-LocalBroadcastManager/" style="font-size: 10px;">应用内部广播,LocalBroadcastManager</a> <a href="/tags/查看git-bash内容/" style="font-size: 10px;">查看git bash内容</a> <a href="/tags/深度学习-吴恩达/" style="font-size: 10px;">深度学习 吴恩达</a>
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">友链</h3>
+        <div class="content friends-link">
+        
+            <a href="http://blog.csdn.net/hty1053240123?viewmode=contents" class="fa" target="_blank">个人博客</a>
+        
+            <a href="https://www.jianshu.com/u/3c8a983c71dc" class="fa" target="_blank">简书</a>
+        
+        </div>
+    </div>
+
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12"> 
+                <span>Copyright &copy; 2017
+                </span> | 
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> | 
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+	<script src="/js/search.js?rev=@@hash"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+
+    <script type="text/javascript">
+        // highlight
+        //hljs.initHighlightingOnLoad();
+    </script>
+</body>
+</html>

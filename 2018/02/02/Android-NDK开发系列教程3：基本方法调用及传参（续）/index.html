@@ -1,0 +1,566 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://yoursite.com">
+    <!--SEO-->
+
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+
+<title>Android NDK开发系列教程3：基本方法调用及传参（续） | 天宇</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="天宇" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico"  type="image/x-icon">
+
+    
+
+
+
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css?rev=9.12.0">
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css?rev=3.3.4">
+<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+    <div class="hide">
+    	<script src="https://s4.cnzz.com/z_stat.php?id=1263868967&web_id=1263868967" language="JavaScript"></script>
+    </div>
+
+
+
+
+
+
+    
+    
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?c3d1d4bce7d4ef1c50d7ef35d759a5b7";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.2.0/styles/github.min.css">
+<script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+<body>
+    <header class="main-header"  style="background-image:url(/img/banner.jpg); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;"  >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title="">
+            <img src="/img/avatar.jpg" alt="logo头像">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                 <img src="/img/branding.png" alt="从未如此简单有趣">  
+             
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only">Toggle navigation</span>
+                    <i class="fa fa-bars"></i>
+                    </span>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation"><a href="/"><i class="fa fa-fw /favicon.ico"></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/前端/"><i class="fa fa-fw /favicon.ico"></i>前端</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/后端/"><i class="fa fa-fw /favicon.ico"></i>后端</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/工具/"><i class="fa fa-fw /favicon.ico"></i>工具</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/资源/"><i class="fa fa-fw /favicon.ico"></i>资源</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/关于/"><i class="fa fa-fw /favicon.ico"></i>关于</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Android NDK开发系列教程3：基本方法调用及传参（续）">
+            
+            Android NDK开发系列教程3：基本方法调用及传参（续）
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <span>Android</span>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            Android NDK开发，JNI开发
+            
+        </span>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">2018/02/02</span>
+    </span>
+
+</div>
+
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <p>上一节主要讲解Java向native传参，下面主要讲解从<em>native传相应的数据到java层</em>。<br>接着上一节，下面主要讲解内容如下：</p>
+<ol>
+<li>native向java返回字符串类型</li>
+<li>native向java返回java对象</li>
+<li>native向java返回数组类型</li>
+<li>native向Java返回List对象<br>对于上面的每个都给出对应的例子。<br>本节所有案例代码均已放到GitHub上，欢迎下载：<br><a href="https://github.com/huangtianyu/JNILearnCourse" target="_blank" rel="noopener">https://github.com/huangtianyu/JNILearnCourse</a></li>
+</ol>
+<h4 id="1-native向java返回字符串类型"><a href="#1-native向java返回字符串类型" class="headerlink" title="1. native向java返回字符串类型"></a>1. native向java返回字符串类型</h4><p>传基本数据类型很简单，是什么就传什么就行。传字符串类型也很简单，具体jni代码如下：</p>
+<pre><code>extern &quot;C&quot;
+JNIEXPORT jstring JNICALL
+Java_zqc_com_example_NativeTest_jni2javaMethod1(JNIEnv *env, jobject instance) {
+    //jstring NewStringUTF(const char* bytes),jstring NewString(const jchar* unicodeChars, jsize len)
+    char *returnValue = &quot;你在native做你的操作后，生成char*后，通过env-&gt;NewStringUTF即可返回Java的String类型&quot;;
+    return env-&gt;NewStringUTF(returnValue);
+}
+</code></pre><p>其中最主要用的是以下几个方法：</p>
+<pre><code>    //创建Unicode格式的jstring串
+    jstring NewString(const jchar* unicodeChars, jsize len)
+    { return functions-&gt;NewString(this, unicodeChars, len); }
+    //获取jstring长度
+    jsize GetStringLength(jstring string)
+    { return functions-&gt;GetStringLength(this, string); }
+    //获取jstring对应的字符串，isCopy表示是否拷贝生成副本。
+    //这个函数返回一个指向特定jstring中字符顺序的指针，该指针保持有效直到ReleaseStringChars函数被调用：
+    const jchar* GetStringChars(jstring string, jboolean* isCopy)
+    { return functions-&gt;GetStringChars(this, string, isCopy); }
+    //释放指针
+    void ReleaseStringChars(jstring string, const jchar* chars)
+    { functions-&gt;ReleaseStringChars(this, string, chars); }
+    ////创建UTF-8格式的jstring串
+    jstring NewStringUTF(const char* bytes)
+    { return functions-&gt;NewStringUTF(this, bytes); }
+    //获取utf字符串的长度
+    jsize GetStringUTFLength(jstring string)
+    { return functions-&gt;GetStringUTFLength(this, string); }
+    //同GetStringChars
+    const char* GetStringUTFChars(jstring string, jboolean* isCopy)
+    { return functions-&gt;GetStringUTFChars(this, string, isCopy); }
+    //同ReleaseStringChars
+    void ReleaseStringUTFChars(jstring string, const char* utf)
+    { functions-&gt;ReleaseStringUTFChars(this, string, utf); }
+</code></pre><p>以上是处理字符串常用的一些方法。</p>
+<h4 id="2-native向java返回java对象"><a href="#2-native向java返回java对象" class="headerlink" title="2 native向java返回java对象"></a>2 native向java返回java对象</h4><p>具体看native的代码如下：</p>
+<pre><code>extern &quot;C&quot;
+JNIEXPORT jobject JNICALL
+Java_zqc_com_example_NativeTest_jni2javaMethod2(JNIEnv *env, jobject instance) {
+    jclass pcls = env-&gt;FindClass(&quot;zqc/com/example/Person&quot;);
+    jmethodID constructor = env-&gt;GetMethodID(pcls, &quot;&lt;init&gt;&quot;, &quot;()V&quot;);
+    jmethodID setIdMid = env-&gt;GetMethodID(pcls, &quot;setId&quot;, &quot;(J)V&quot;);
+    jmethodID setNameMid = env-&gt;GetMethodID(pcls, &quot;setName&quot;, &quot;(Ljava/lang/String;)V&quot;);
+    jmethodID setAgeMid = env-&gt;GetMethodID(pcls, &quot;setName&quot;, &quot;(I)V&quot;);
+    jobject person = env-&gt;NewObject(pcls, constructor);
+    env-&gt;CallVoidMethod(person, setIdMid, 100L);
+    env-&gt;CallVoidMethod(person, setNameMid, env-&gt;NewStringUTF(&quot;天宇&quot;));
+    env-&gt;CallVoidMethod(person, setAgeMid, 18);
+    return person;
+}
+</code></pre><p>常用新建Object的方法由以下几个：</p>
+<pre><code>    //将传递给构造函数的所有参数紧跟着放在 methodID 参数的后面。NewObject() 收到这些参数后，将把它们传给所要调用的Java 方法。
+    jobject NewObject(jclass clazz, jmethodID methodID, ...)
+    {
+        va_list args;
+        va_start(args, methodID);
+        jobject result = functions-&gt;NewObjectV(this, clazz, methodID, args);
+        va_end(args);
+        return result;
+    }
+    //将传递给构造函数的所有参数放在 va_list 类型的参数 args 中，该参数紧跟着放在 methodID 参数的后面。NewObject() 收到这些参数后，将把它们传给所要调用的 Java 方法。
+    jobject NewObjectV(jclass clazz, jmethodID methodID, va_list args)
+    { return functions-&gt;NewObjectV(this, clazz, methodID, args); }
+    //将传递给构造函数的所有参数放在jvalues类型的数组args中，该数组紧跟着放在methodID参数的后面。NewObject() 收到数组中的这些参数后，将把它们传给所要调用的 Java 方法。
+    jobject NewObjectA(jclass clazz, jmethodID methodID, jvalue* args)
+    { return functions-&gt;NewObjectA(this, clazz, methodID, args); }
+    //测试对象是否为某个类的实例。
+    jboolean IsInstanceOf(jobject obj, jclass clazz)
+    { return functions-&gt;IsInstanceOf(this, obj, clazz); }
+    //测试两个引用是否引用同一 Java 对象。
+    jboolean IsSameObject(jobject ref1, jobject ref2)
+    { return functions-&gt;IsSameObject(this, ref1, ref2); }
+    //分配新 Java 对象而不调用该对象的任何构造函数。返回该对象的引用。
+    //该方法会抛出：InstantiationException：如果该类为一个接口或抽象类。OutOfMemoryError：如果系统内存不足。
+    jobject AllocObject(jclass clazz)
+    { return functions-&gt;AllocObject(this, clazz); }
+</code></pre><h4 id="3-native向java返回数组类型"><a href="#3-native向java返回数组类型" class="headerlink" title="3 native向java返回数组类型"></a>3 native向java返回数组类型</h4><h5 id="3-1-基本类型数组"><a href="#3-1-基本类型数组" class="headerlink" title="3.1 基本类型数组"></a>3.1 基本类型数组</h5><p>这里直接看native层代码如下：</p>
+<pre><code>extern &quot;C&quot;
+JNIEXPORT jintArray JNICALL
+Java_zqc_com_example_NativeTest_jni2javaMethod3(JNIEnv *env, jobject instance) {
+    int nat[] = {2, 1, 4, 3, 5};
+    jintArray jnat = env-&gt;NewIntArray(5);
+    env-&gt;SetIntArrayRegion(jnat, 0, 5, nat);
+    return jnat;
+}
+</code></pre><p>基本数据类型数组都有相应的env-&gt;NewXXXArray(jsize length);通过该方法可以生成对应的数组。</p>
+<pre><code>jbooleanArray NewBooleanArray(jsize length)
+    { return functions-&gt;NewBooleanArray(this, length); }
+    jbyteArray NewByteArray(jsize length)
+    { return functions-&gt;NewByteArray(this, length); }
+    jcharArray NewCharArray(jsize length)
+    { return functions-&gt;NewCharArray(this, length); }
+    jshortArray NewShortArray(jsize length)
+    { return functions-&gt;NewShortArray(this, length); }
+    jintArray NewIntArray(jsize length)
+    { return functions-&gt;NewIntArray(this, length); }
+    jlongArray NewLongArray(jsize length)
+    { return functions-&gt;NewLongArray(this, length); }
+    jfloatArray NewFloatArray(jsize length)
+    { return functions-&gt;NewFloatArray(this, length); }
+    jdoubleArray NewDoubleArray(jsize length)
+    { return functions-&gt;NewDoubleArray(this, length); }
+</code></pre><p>在生成了对应的数组后，可以通过setXXXArrayRegion(jxxxArray array, jsize start, jsize len,  const jchar* buf)来填充数组</p>
+<pre><code>    void SetBooleanArrayRegion(jbooleanArray array, jsize start, jsize len,
+        const jboolean* buf)
+    { functions-&gt;SetBooleanArrayRegion(this, array, start, len, buf); }
+    void SetByteArrayRegion(jbyteArray array, jsize start, jsize len,
+        const jbyte* buf)
+    { functions-&gt;SetByteArrayRegion(this, array, start, len, buf); }
+    void SetCharArrayRegion(jcharArray array, jsize start, jsize len,
+        const jchar* buf)
+    { functions-&gt;SetCharArrayRegion(this, array, start, len, buf); }
+    void SetShortArrayRegion(jshortArray array, jsize start, jsize len,
+        const jshort* buf)
+    { functions-&gt;SetShortArrayRegion(this, array, start, len, buf); }
+    void SetIntArrayRegion(jintArray array, jsize start, jsize len,
+        const jint* buf)
+    { functions-&gt;SetIntArrayRegion(this, array, start, len, buf); }
+    void SetLongArrayRegion(jlongArray array, jsize start, jsize len,
+        const jlong* buf)
+    { functions-&gt;SetLongArrayRegion(this, array, start, len, buf); }
+    void SetFloatArrayRegion(jfloatArray array, jsize start, jsize len,
+        const jfloat* buf)
+    { functions-&gt;SetFloatArrayRegion(this, array, start, len, buf); }
+    void SetDoubleArrayRegion(jdoubleArray array, jsize start, jsize len,
+        const jdouble* buf)
+    { functions-&gt;SetDoubleArrayRegion(this, array, start, len, buf); }
+</code></pre><h5 id="3-2-对象类型数组"><a href="#3-2-对象类型数组" class="headerlink" title="3.2 对象类型数组"></a>3.2 对象类型数组</h5><p>直接看native代码：</p>
+<pre><code>extern &quot;C&quot;
+JNIEXPORT jobjectArray JNICALL
+Java_zqc_com_example_NativeTest_jni2javaMethod4(JNIEnv *env, jobject instance) {
+    jclass cls = env-&gt;FindClass(&quot;zqc/com/example/Person&quot;);
+    jmethodID cMid = env-&gt;GetMethodID(cls, &quot;&lt;init&gt;&quot;, &quot;()V&quot;);
+    jclass pcls = env-&gt;FindClass(&quot;zqc/com/example/Person&quot;);
+    jmethodID cmid = env-&gt;GetMethodID(pcls, &quot;&lt;init&gt;&quot;, &quot;()V&quot;);
+    jmethodID setNameMid = env-&gt;GetMethodID(pcls, &quot;setName&quot;, &quot;(Ljava/lang/String;)V&quot;);
+    jmethodID setAgeMid = env-&gt;GetMethodID(pcls, &quot;setAge&quot;, &quot;(I)V&quot;);
+    jobject obj = env-&gt;NewObject(pcls, cmid);
+    env-&gt;CallVoidMethod(obj, setNameMid, env-&gt;NewStringUTF(&quot;天宇&quot;));
+
+    int len = 3;
+    jobjectArray joa = env-&gt;NewObjectArray(len, cls, obj);
+    for (int i = 0; i &lt; len; ++i) {
+        jobject tmp = env-&gt;GetObjectArrayElement(joa,i);
+        env-&gt;CallVoidMethod(tmp, setAgeMid, i + 10);
+    }
+    return joa;
+}
+</code></pre><p>其在native生成的方法是<code>   jobjectArray joa = env-&gt;NewObjectArray(len, cls, obj);</code></p>
+<pre><code>//第一个参数表示生成的长度，第二参数表示里面元素的对象类，第三个表示原始初始化时的值。在生成后每个元素都是该值。
+jobjectArray NewObjectArray(jsize length, jclass elementClass,
+        jobject initialElement)
+    { return functions-&gt;NewObjectArray(this, length, elementClass,
+        initialElement); }
+</code></pre><h4 id="4-native向Java返回List对象"><a href="#4-native向Java返回List对象" class="headerlink" title="4 native向Java返回List对象"></a>4 native向Java返回List对象</h4><p>直接看native代码如下：</p>
+<pre><code>extern &quot;C&quot;
+JNIEXPORT jobject JNICALL
+Java_zqc_com_example_NativeTest_jni2javaMethod5(JNIEnv *env, jobject instance) {
+    jclass listCls = env-&gt;FindClass(&quot;java/util/ArrayList&quot;);//获得ArrayList类引用
+    jmethodID  listCon = env-&gt;GetMethodID(listCls, &quot;&lt;init&gt;&quot;, &quot;()V&quot;);//获取构造函数的methodID
+    jmethodID addMid = env-&gt;GetMethodID(listCls,&quot;add&quot;,&quot;(Ljava/lang/Object;)Z&quot;);//获取add函数的methodID
+
+    jobject listObj = env-&gt;NewObject(listCls, listCon);//利用NewObject创建一个ArrayList对象
+    jobject jperon = Java_zqc_com_example_NativeTest_jni2javaMethod2(env, instance);//利用上面方法新建一个Person对象
+    env-&gt;CallBooleanMethod(listObj, addMid, jperon);//在listObj中add一个Person对象
+    //返回ArrayList的对象
+    return listObj;
+}
+</code></pre><p>对应jni而言，List，ArrayList以及Map，HashMap，Set，HashSet都只是一个Object，对应于jni而言也就都是jobject，操作jobject都可以用最开始介绍的方法。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>jni里面的方法很多，多用用就熟悉了。常用的上面都有，自己之前还总结了很多常用的类型转换函数。以后有时间再写篇博客分享下。</p>
+
+    </div>
+
+    <div class="post-footer">   
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="http://blog.csdn.net/hty1053240123?viewmode=contents" target="_blank">天宇240</a>
+            
+        </div>
+        <div>
+            
+        </div>  
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2018/02/04/Android-NDK开发系列教程4：对类变量进行操作/" class="pre-post btn btn-default"><i class="fa fa-angle-left fa-fw"></i>上一篇</a>
+    
+    
+        <a href="/2018/02/02/Android-NDK开发系列教程2：基本方法调用及传参/" class="next-post btn btn-default">下一篇<i class="fa fa-angle-right fa-fw"></i></a>
+    
+</div>
+
+
+    <div id="comments">
+        <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNTA2NC8xMTU5OQ==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+    </div>
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        
+    <div class="widget">    
+        <h3 class="title">搜索</h3>
+        <div id="search-form">
+            <div id="result-mask" class="hide"></div>
+            <div class="search-area">
+                
+                    <input id="search-key" type="search" autocomplete="off" placeholder="搜点什么呢?">
+                    <button type="button" class="search-form-submit" id="search-local">站内搜索</button>
+                
+                
+            </div>
+            <div id="result-wrap" class="hide">
+                <div id="search-result"></div>
+            </div>
+            <div class="hide">
+                <template id="search-tpl">
+                    <div class="item">
+                        <a href="/{path}" title="{title}">
+                            <div class="title">{title}</div>
+                            <div class="content">{content}</div>
+                        </a>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget notification">
+        <h3 class="title">网站公告</h3>
+        <div>
+            <p>公告就是醒目，为了提醒自己多学习，多总结~ <br/>
+好记忆不如烂笔头~ <br/>
+</p>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+      <h3 class="title">社交</h3> 
+        <div class="content social">
+            
+	            <a href="//github.com/huangtianyu" rel="external nofollow" title="Github" target="_blank">
+			    	<i class="git fa fa-git"></i>
+			    </a>
+            
+	            <a href="mailto:1053240123@qq.com" rel="external nofollow" title="邮箱" target="_blank">
+			    	<i class="envelope-o fa fa-envelope-o"></i>
+			    </a>
+            
+	            <a href="https://weibo.com/1804011630/" rel="external nofollow" title="微博" target="_blank">
+			    	<i class="weibo fa fa-weibo"></i>
+			    </a>
+            
+	            <a href="/atom.xml" rel="external nofollow" title="RSS" target="_blank">
+			    	<i class="feed fa fa-feed"></i>
+			    </a>
+            
+        </div>
+    </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">分类</h3>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/"><i class="fa" aria-hidden="true">Android</i></a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/"><i class="fa" aria-hidden="true">Git</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/"><i class="fa" aria-hidden="true">Hexo</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kotlin/"><i class="fa" aria-hidden="true">Kotlin</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/gradle/"><i class="fa" aria-hidden="true">gradle</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/人工智能/"><i class="fa" aria-hidden="true">人工智能</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/"><i class="fa" aria-hidden="true">设计模式</i></a><span class="category-list-count">1</span></li></ul>
+    </div>
+
+
+        
+        
+    <div class="widget">
+      <h3 class="title">归档</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/"><i class="fa" aria-hidden="true">十月 2018</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/"><i class="fa" aria-hidden="true">三月 2018</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/"><i class="fa" aria-hidden="true">二月 2018</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/"><i class="fa" aria-hidden="true">一月 2018</i></a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/"><i class="fa" aria-hidden="true">十二月 2017</i></a><span class="archive-list-count">3</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">标签云</h3>
+    <div class="content tag-cloud">
+        <a href="/tags/Android-DeepLink-源码解析/" style="font-size: 10px;">Android DeepLink 源码解析</a> <a href="/tags/Android-JNI开发/" style="font-size: 15px;">Android JNI开发</a> <a href="/tags/Android-NDK开发，JNI开发/" style="font-size: 20px;">Android NDK开发，JNI开发</a> <a href="/tags/Android学习/" style="font-size: 10px;">Android学习</a> <a href="/tags/Android源码分析/" style="font-size: 10px;">Android源码分析</a> <a href="/tags/AppLinks-DeepLinks/" style="font-size: 10px;">AppLinks, DeepLinks</a> <a href="/tags/Dex类加载/" style="font-size: 10px;">Dex类加载</a> <a href="/tags/Hexo学习/" style="font-size: 10px;">Hexo学习</a> <a href="/tags/Hexo搭建/" style="font-size: 10px;">Hexo搭建</a> <a href="/tags/Kotlin学习/" style="font-size: 15px;">Kotlin学习</a> <a href="/tags/RoboBinding-MVC-MVP/" style="font-size: 10px;">RoboBinding,MVC,MVP</a> <a href="/tags/SharedPreferences-Editor/" style="font-size: 10px;">SharedPreferences Editor</a> <a href="/tags/View-onMeasure/" style="font-size: 10px;">View onMeasure</a> <a href="/tags/ViewPager-Fragment预加载/" style="font-size: 10px;">ViewPager+Fragment预加载</a> <a href="/tags/adb命令/" style="font-size: 10px;">adb命令</a> <a href="/tags/adb查看交互Activity名称/" style="font-size: 10px;">adb查看交互Activity名称</a> <a href="/tags/gradle配置/" style="font-size: 10px;">gradle配置</a> <a href="/tags/onAttachedToWindow和onDetachedFromWindow-源码解析/" style="font-size: 10px;">onAttachedToWindow和onDetachedFromWindow,源码解析</a> <a href="/tags/onSaveInstanceState/" style="font-size: 10px;">onSaveInstanceState</a> <a href="/tags/内存优化/" style="font-size: 10px;">内存优化</a> <a href="/tags/应用内部广播-LocalBroadcastManager/" style="font-size: 10px;">应用内部广播,LocalBroadcastManager</a> <a href="/tags/查看git-bash内容/" style="font-size: 10px;">查看git bash内容</a> <a href="/tags/深度学习-吴恩达/" style="font-size: 10px;">深度学习 吴恩达</a>
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">友链</h3>
+        <div class="content friends-link">
+        
+            <a href="http://blog.csdn.net/hty1053240123?viewmode=contents" class="fa" target="_blank">个人博客</a>
+        
+            <a href="https://www.jianshu.com/u/3c8a983c71dc" class="fa" target="_blank">简书</a>
+        
+        </div>
+    </div>
+
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12"> 
+                <span>Copyright &copy; 2017
+                </span> | 
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> | 
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+	<script src="/js/search.js?rev=@@hash"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+
+    <script type="text/javascript">
+        // highlight
+        //hljs.initHighlightingOnLoad();
+    </script>
+</body>
+</html>

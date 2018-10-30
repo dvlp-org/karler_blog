@@ -1,0 +1,985 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://yoursite.com">
+    <!--SEO-->
+
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+
+<title>DexClassLoader加载过程分析 | 天宇</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="天宇" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico"  type="image/x-icon">
+
+    
+
+
+
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css?rev=9.12.0">
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css?rev=3.3.4">
+<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+    <div class="hide">
+    	<script src="https://s4.cnzz.com/z_stat.php?id=1263868967&web_id=1263868967" language="JavaScript"></script>
+    </div>
+
+
+
+
+
+
+    
+    
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?c3d1d4bce7d4ef1c50d7ef35d759a5b7";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.2.0/styles/github.min.css">
+<script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+<body>
+    <header class="main-header"  style="background-image:url(/img/banner.jpg); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;"  >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title="">
+            <img src="/img/avatar.jpg" alt="logo头像">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                 <img src="/img/branding.png" alt="从未如此简单有趣">  
+             
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only">Toggle navigation</span>
+                    <i class="fa fa-bars"></i>
+                    </span>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation"><a href="/"><i class="fa fa-fw /favicon.ico"></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/前端/"><i class="fa fa-fw /favicon.ico"></i>前端</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/后端/"><i class="fa fa-fw /favicon.ico"></i>后端</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/工具/"><i class="fa fa-fw /favicon.ico"></i>工具</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/资源/"><i class="fa fa-fw /favicon.ico"></i>资源</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/关于/"><i class="fa fa-fw /favicon.ico"></i>关于</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="DexClassLoader加载过程分析">
+            
+            DexClassLoader加载过程分析
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <span>Android</span>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            Dex类加载
+            
+        </span>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">2017/12/27</span>
+    </span>
+
+</div>
+
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <p>在动态加载dex时，均采用的是DexClassLoader类进行加载，网上也有很多对如何加载进行分析的，现结合Android5.1源码进行分析。</p>
+<h4 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h4><p>先来看一个实例，实例完成动态加载SD卡上的一个jar包，在jar包中Toast一段话。</p>
+<pre><code class="java">public class ToastTest {
+    private Context context;
+    public ToastTest(Context context){
+        this.context = context;
+    }
+    public void call() {
+        Toast.makeText(context, &quot;call method&quot;, 0).show();
+    }
+    public String getData() {
+        return &quot;ToastTest&quot;;
+    }
+}
+</code></pre>
+<p>将这个Java类打包生成test.jar包，然后放到SD目录下，然后利用DexClassLoader动态加载该jar包。</p>
+<pre><code class="java">public class MainActivity extends Activity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        File file = new File(Environment.getExternalStorageDirectory()
+                .toString() + File.separator + &quot;test.jar&quot;);
+        final File optimizedDexOutputPath = getDir(&quot;temp&quot;, Context.MODE_PRIVATE);
+        /*
+         * Parameters
+         * dexPath    需要装载的APK或者Jar文件的路径。包含多个路径用File.pathSeparator间隔开,在Android上默认是 &quot;:&quot; 
+         * optimizedDirectory    优化后的dex文件存放目录，不能为null
+         * libraryPath    目标类中使用的C/C++库的列表,每个目录用File.pathSeparator间隔开; 可以为 null
+         * parent    该类装载器的父装载器，一般用当前执行类的装载器
+         */
+        new DexClassLoader(file.getAbsolutePath(),
+                optimizedDexOutputPath.getAbsolutePath(), null,
+                getClassLoader());
+          //利用反射原理去调用
+      try {
+            Class&lt;?&gt; testClass = classLoader.loadClass(&quot;com.demo.ToastTest&quot;);
+            Constructor&lt;?&gt; istructor = testClass.getConstructor(Context.class);
+            Method method = iclass.getMethod(&quot;call&quot;, null);
+            String data = (String) method.invoke(istructor.newInstance(this), null);
+            //System.out.println(data);
+            Log.d(&quot;ToastTest&quot;,data);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+</code></pre>
+<p>上面代码<code>new DexClassLoader(file.getAbsolutePath(),optimizedDexOutputPath.getAbsolutePath(), null, getClassLoader());</code>完成了jar包的加载，下面从该步骤开始分析DexClassLoader是如何加载一个jar包或者dex的。</p>
+<h4 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a>代码分析</h4><p>DexClassLoader类文件在\libcore\dalvik\src\main\java\dalvik\system\ DexClassLoader.java文件下</p>
+<pre><code class="java">public class DexClassLoader extends BaseDexClassLoader {
+    /**
+     * Creates a {@code DexClassLoader} that finds interpreted and native
+     * code.  Interpreted classes are found in a set of DEX files contained
+     * in Jar or APK files.
+     *
+     * &lt;p&gt;The path lists are separated using the character specified by the
+     * {@code path.separator} system property, which defaults to {@code :}.
+     *
+     * @param dexPath the list of jar/apk files containing classes and
+     *     resources, delimited by {@code File.pathSeparator}, which
+     *     defaults to {@code &quot;:&quot;} on Android
+     * @param optimizedDirectory directory where optimized dex files
+     *     should be written; must not be {@code null}
+     * @param libraryPath the list of directories containing native
+     *     libraries, delimited by {@code File.pathSeparator}; may be
+     *     {@code null}
+     * @param parent the parent class loader
+     */
+    public DexClassLoader(String dexPath, String optimizedDirectory,
+            String libraryPath, ClassLoader parent) {
+        super(dexPath, new File(optimizedDirectory), libraryPath, parent);
+    }
+}
+</code></pre>
+<p>代码很简单，直接调用了父类的构造方法。</p>
+<pre><code class="java">public class BaseDexClassLoader extends ClassLoader {
+    private final DexPathList pathList;
+
+    /**
+     * Constructs an instance.
+     *
+     * @param dexPath the list of jar/apk files containing classes and
+     * resources, delimited by {@code File.pathSeparator}, which
+     * defaults to {@code &quot;:&quot;} on Android
+     * @param optimizedDirectory directory where optimized dex files
+     * should be written; may be {@code null}
+     * @param libraryPath the list of directories containing native
+     * libraries, delimited by {@code File.pathSeparator}; may be
+     * {@code null}
+     * @param parent the parent class loader
+     */
+    public BaseDexClassLoader(String dexPath, File optimizedDirectory,
+            String libraryPath, ClassLoader parent) {
+        super(parent);
+        this.pathList = new DexPathList(this, dexPath, libraryPath, optimizedDirectory);
+    }
+    ...
+}
+</code></pre>
+<p>父类构造函数也很简单，首先调用了它自己的父类构造函数，然后new DaxPathList。下面先分析下DexPathList的构造函数。</p>
+<pre><code class="java">    /**
+     * Constructs an instance.
+     *
+     * @param definingContext the context in which any as-yet unresolved
+     * classes should be defined
+     * @param dexPath list of dex/resource path elements, separated by
+     * {@code File.pathSeparator}
+     * @param libraryPath list of native library directory path elements,
+     * separated by {@code File.pathSeparator}
+     * @param optimizedDirectory directory where optimized {@code .dex} files
+     * should be found and written to, or {@code null} to use the default
+     * system directory for same
+     */
+    public DexPathList(ClassLoader definingContext, String dexPath,
+            String libraryPath, File optimizedDirectory) {
+        if (definingContext == null) {
+            throw new NullPointerException(&quot;definingContext == null&quot;);
+        }
+
+        if (dexPath == null) {
+            throw new NullPointerException(&quot;dexPath == null&quot;);
+        }
+
+        if (optimizedDirectory != null) {
+            if (!optimizedDirectory.exists())  {
+                throw new IllegalArgumentException(
+                        &quot;optimizedDirectory doesn&#39;t exist: &quot;
+                        + optimizedDirectory);
+            }
+
+            if (!(optimizedDirectory.canRead()
+                            &amp;&amp; optimizedDirectory.canWrite())) {
+                throw new IllegalArgumentException(
+                        &quot;optimizedDirectory not readable/writable: &quot;
+                        + optimizedDirectory);
+            }
+        }
+        //前面做了一些检查和异常处理
+        this.definingContext = definingContext;
+        ArrayList&lt;IOException&gt; suppressedExceptions = new ArrayList&lt;IOException&gt;();
+        this.dexElements = makeDexElements(splitDexPath(dexPath), optimizedDirectory,
+                                           suppressedExceptions);
+        if (suppressedExceptions.size() &gt; 0) {
+            this.dexElementsSuppressedExceptions =
+                suppressedExceptions.toArray(new IOException[suppressedExceptions.size()]);
+        } else {
+            dexElementsSuppressedExceptions = null;
+        }
+        this.nativeLibraryDirectories = splitLibraryPath(libraryPath);
+    }
+</code></pre>
+<p>其中关键代码是makeDexElements</p>
+<pre><code class="java">    /**
+     * Makes an array of dex/resource path elements, one per element of
+     * the given array.
+     */
+    private static Element[] makeDexElements(ArrayList&lt;File&gt; files, File optimizedDirectory,
+                                             ArrayList&lt;IOException&gt; suppressedExceptions) {
+        ArrayList&lt;Element&gt; elements = new ArrayList&lt;Element&gt;();
+        /*
+         * Open all files and load the (direct or contained) dex files
+         * up front.
+         */
+        for (File file : files) {
+            File zip = null;
+            DexFile dex = null;
+            String name = file.getName();
+            //对每个文件进行处理
+            if (file.isDirectory()) {
+            //如果是文件直接加入到elements中
+                // We support directories for looking up resources.
+                // This is only useful for running libcore tests.
+                elements.add(new Element(file, true, null, null));
+            } else if (file.isFile()){
+                if (name.endsWith(DEX_SUFFIX)) {//是dex
+                    // Raw dex file (not inside a zip/jar).
+                    try {
+                        dex = loadDexFile(file, optimizedDirectory);
+                    } catch (IOException ex) {
+                        System.logE(&quot;Unable to load dex file: &quot; + file, ex);
+                    }
+                } else {//不是dex。即是压缩文件：jar zip apk
+                    zip = file;
+                    try {
+                        dex = loadDexFile(file, optimizedDirectory);
+                    } catch (IOException suppressed) {
+                        /*
+                         * IOException might get thrown &quot;legitimately&quot; by the DexFile constructor if
+                         * the zip file turns out to be resource-only (that is, no classes.dex file
+                         * in it).
+                         * Let dex == null and hang on to the exception to add to the tea-leaves for
+                         * when findClass returns null.
+                         */
+                        suppressedExceptions.add(suppressed);
+                    }
+                }
+            } else {
+                System.logW(&quot;ClassLoader referenced unknown path: &quot; + file);
+            }
+
+            if ((zip != null) || (dex != null)) {
+                elements.add(new Element(file, false, zip, dex));
+            }
+        }
+
+        return elements.toArray(new Element[elements.size()]);
+    }
+</code></pre>
+<p>先看DexPathList内部是如何解析dex文件的，即分析loadDexFile代码</p>
+<pre><code class="java">    /**
+     * Constructs a {@code DexFile} instance, as appropriate depending
+     * on whether {@code optimizedDirectory} is {@code null}.
+     */
+    private static DexFile loadDexFile(File file, File optimizedDirectory)
+            throws IOException {
+        if (optimizedDirectory == null) {
+            return new DexFile(file);
+        } else {
+            String optimizedPath = optimizedPathFor(file, optimizedDirectory);
+            return DexFile.loadDex(file.getPath(), optimizedPath, 0);
+        }
+    }
+</code></pre>
+<p>如果被优化后的路径是空，那么直接返回new DexFile(file)。optimizedPathFor是判断优化路径，代码如下：</p>
+<pre><code class="java">    /**
+     * Converts a dex/jar file path and an output directory to an
+     * output file path for an associated optimized dex file.
+     */
+    private static String optimizedPathFor(File path,
+            File optimizedDirectory) {
+        /*
+         * Get the filename component of the path, and replace the
+         * suffix with &quot;.dex&quot; if that&#39;s not already the suffix.
+         *
+         * We don&#39;t want to use &quot;.odex&quot;, because the build system uses
+         * that for files that are paired with resource-only jar
+         * files. If the VM can assume that there&#39;s no classes.dex in
+         * the matching jar, it doesn&#39;t need to open the jar to check
+         * for updated dependencies, providing a slight performance
+         * boost at startup. The use of &quot;.dex&quot; here matches the use on
+         * files in /data/dalvik-cache.
+         */
+        String fileName = path.getName();
+        if (!fileName.endsWith(DEX_SUFFIX)) {
+            int lastDot = fileName.lastIndexOf(&quot;.&quot;);
+            if (lastDot &lt; 0) {
+                fileName += DEX_SUFFIX;
+            } else {
+                StringBuilder sb = new StringBuilder(lastDot + 4);
+                sb.append(fileName, 0, lastDot);
+                sb.append(DEX_SUFFIX);
+                fileName = sb.toString();
+            }
+        }
+        File result = new File(optimizedDirectory, fileName);
+        return result.getPath();
+    }
+</code></pre>
+<p>真正执行代码优化的是DexFile.loadDex，代码如下：</p>
+<pre><code class="java">    /**
+     * Open a DEX file, specifying the file in which the optimized DEX
+     * data should be written.  If the optimized form exists and appears
+     * to be current, it will be used; if not, the VM will attempt to
+     * regenerate it.
+     *
+     * This is intended for use by applications that wish to download
+     * and execute DEX files outside the usual application installation
+     * mechanism.  This function should not be called directly by an
+     * application; instead, use a class loader such as
+     * dalvik.system.DexClassLoader.
+     *
+     * @param sourcePathName
+     *  Jar or APK file with &quot;classes.dex&quot;.  (May expand this to include
+     *  &quot;raw DEX&quot; in the future.)
+     * @param outputPathName
+     *  File that will hold the optimized form of the DEX data.
+     * @param flags
+     *  Enable optional features.  (Currently none defined.)
+     * @return
+     *  A new or previously-opened DexFile.
+     * @throws IOException
+     *  If unable to open the source or output file.
+     */
+    static public DexFile loadDex(String sourcePathName, String outputPathName,
+        int flags) throws IOException {
+
+        /*
+         * TODO: we may want to cache previously-opened DexFile objects.
+         * The cache would be synchronized with close().  This would help
+         * us avoid mapping the same DEX more than once when an app
+         * decided to open it multiple times.  In practice this may not
+         * be a real issue.
+         */
+        return new DexFile(sourcePathName, outputPathName, flags);
+    }
+</code></pre>
+<p>也就是直接返回了DexFile，下面看看DexFile构造函数做了哪些事情：</p>
+<pre><code class="java">    /**
+     * Opens a DEX file from a given filename, using a specified file
+     * to hold the optimized data.
+     *
+     * @param sourceName
+     *  Jar or APK file with &quot;classes.dex&quot;.
+     * @param outputName
+     *  File that will hold the optimized form of the DEX data.
+     * @param flags
+     *  Enable optional features.
+     */
+    private DexFile(String sourceName, String outputName, int flags) throws IOException {
+        if (outputName != null) {
+            try {
+                String parent = new File(outputName).getParent();
+                if (Libcore.os.getuid() != Libcore.os.stat(parent).st_uid) {
+                    throw new IllegalArgumentException(&quot;Optimized data directory &quot; + parent
+                            + &quot; is not owned by the current user. Shared storage cannot protect&quot;
+                            + &quot; your application from code injection attacks.&quot;);
+                }
+            } catch (ErrnoException ignored) {
+                // assume we&#39;ll fail with a more contextual error later
+            }
+        }
+        //前面是异常判断
+        mCookie = openDexFile(sourceName, outputName, flags);
+        mFileName = sourceName;
+        guard.open(&quot;close&quot;);
+        //System.out.println(&quot;DEX FILE cookie is &quot; + mCookie + &quot; sourceName=&quot; + sourceName + &quot; outputName=&quot; + outputName);
+    }
+</code></pre>
+<p>关键代码:openDexFile</p>
+<pre><code class="java">    /*
+     * Open a DEX file.  The value returned is a magic VM cookie.  On
+     * failure, an IOException is thrown.
+     */
+    private static long openDexFile(String sourceName, String outputName, int flags) throws IOException {
+        // Use absolute paths to enable the use of relative paths when testing on host.
+        return openDexFileNative(new File(sourceName).getAbsolutePath(),
+                                 (outputName == null) ? null : new File(outputName).getAbsolutePath(),
+                                 flags);
+    }
+    /*
+     * Open a DEX file.  The value returned is a magic VM cookie.  On
+     * failure, an IOException is thrown.
+     */
+    private static native long openDexFileNative(String sourceName, String outputName, int flags);
+</code></pre>
+<p>这里也就直接调用了native方法进行优化。继续跟进代码在\dalvik\vm\native\dalvik_system_DexFile.cpp文件中的openDexFileNative() 函数，接下重点就在这个函数：</p>
+<pre><code class="cpp">static void Dalvik_dalvik_system_DexFile_openDexFileNative(const u4* args,
+    JValue* pResult)
+{
+//args[0]: sourceName java层传入的
+//args[1]: outputName    
+    StringObject* sourceNameObj = (StringObject*) args[0];
+    StringObject* outputNameObj = (StringObject*) args[1];
+    DexOrJar* pDexOrJar = NULL;
+    JarFile* pJarFile;
+RawDexFile* pRawDexFile;
+//DexOrJar*  JarFile*   RawDexFile* 目录
+    char* sourceName;
+    char* outputName;
+    //……
+    sourceName = dvmCreateCstrFromString(sourceNameObj);
+    if (outputNameObj != NULL)
+        outputName = dvmCreateCstrFromString(outputNameObj);
+    else
+        outputName = NULL;
+/*判断要加载的dex是否为系统中的dex文件
+* gDvm ？？？
+*/
+    if (dvmClassPathContains(gDvm.bootClassPath, sourceName)) {
+        ALOGW(&quot;Refusing to reopen boot DEX &#39;%s&#39;&quot;, sourceName);
+        dvmThrowIOException(
+            &quot;Re-opening BOOTCLASSPATH DEX files is not allowed&quot;);
+        free(sourceName);
+        free(outputName);
+        RETURN_VOID();
+    }
+
+    /*
+     * Try to open it directly as a DEX if the name ends with &quot;.dex&quot;.
+     * If that fails (or isn&#39;t tried in the first place), try it as a
+     * Zip with a &quot;classes.dex&quot; inside.
+     */
+    //判断sourcename扩展名是否是.dex
+    if (hasDexExtension(sourceName)
+            &amp;&amp; dvmRawDexFileOpen(sourceName, outputName, &amp;pRawDexFile, false) == 0) {
+        ALOGV(&quot;Opening DEX file &#39;%s&#39; (DEX)&quot;, sourceName);
+        pDexOrJar = (DexOrJar*) malloc(sizeof(DexOrJar));
+        pDexOrJar-&gt;isDex = true;
+        pDexOrJar-&gt;pRawDexFile = pRawDexFile;
+        pDexOrJar-&gt;pDexMemory = NULL;
+    //.jar文件
+    } else if (dvmJarFileOpen(sourceName, outputName, &amp;pJarFile, false) == 0) {
+        ALOGV(&quot;Opening DEX file &#39;%s&#39; (Jar)&quot;, sourceName);
+        pDexOrJar = (DexOrJar*) malloc(sizeof(DexOrJar));
+        pDexOrJar-&gt;isDex = false;
+        pDexOrJar-&gt;pJarFile = pJarFile;
+        pDexOrJar-&gt;pDexMemory = NULL;
+} else {
+//都不满足，抛出异常
+        ALOGV(&quot;Unable to open DEX file &#39;%s&#39;&quot;, sourceName);
+        dvmThrowIOException(&quot;unable to open DEX file&quot;);
+    }
+if (pDexOrJar != NULL) {
+        pDexOrJar-&gt;fileName = sourceName;
+    //把pDexOr这个结构体中的内容加到gDvm中的userDexFile结构的hash表中，便于Dalvik以后的查找
+        addToDexFileTable(pDexOrJar);
+    } else {
+        free(sourceName);
+    }
+    free(outputName);
+    RETURN_PTR(pDexOrJar);
+}
+</code></pre>
+<p>再看对.dex文件的处理函数dvmRawDexFileOpen（\dalvik\vm\RawDexFile.cpp）的处理</p>
+<pre><code class="cpp">/* See documentation comment in header. */
+int dvmRawDexFileOpen(const char* fileName, const char* odexOutputName,
+    RawDexFile** ppRawDexFile, bool isBootstrap)
+{
+    DvmDex* pDvmDex = NULL;
+    char* cachedName = NULL;
+    int result = -1;
+    int dexFd = -1;
+    int optFd = -1;
+    u4 modTime = 0;
+    u4 adler32 = 0;
+    size_t fileSize = 0;
+    bool newFile = false;
+    bool locked = false;
+    dexFd = open(fileName, O_RDONLY);  //打开dex文件
+    if (dexFd &lt; 0) goto bail;
+    /* If we fork/exec into dexopt, don&#39;t let it inherit the open fd. */
+dvmSetCloseOnExec(dexFd);//dexfd不继承
+//校验dex文件的标志，将第8字节开始的4个字节赋值给adler32。
+    if (verifyMagicAndGetAdler32(dexFd, &amp;adler32) &lt; 0) {
+        ALOGE(&quot;Error with header for %s&quot;, fileName);
+        goto bail;
+    }
+    //得到dex文件的大小和修改时间，保存在modTime和filesize中
+    if (getModTimeAndSize(dexFd, &amp;modTime, &amp;fileSize) &lt; 0) {
+        ALOGE(&quot;Error with stat for %s&quot;, fileName);
+        goto bail;
+    }
+
+    //odexOutputName就是odex文件名，如果odexOutputName为空，则自动生成一个。
+    if (odexOutputName == NULL) {
+        cachedName = dexOptGenerateCacheFileName(fileName, NULL);
+        if (cachedName == NULL)
+            goto bail;
+    } else {
+        cachedName = strdup(odexOutputName);   
+    }
+    //主要是验证缓存文件名的正确性，之后将dexOptHeader结构写入fd中
+    optFd = dvmOpenCachedDexFile(fileName, cachedName, modTime,
+        adler32, isBootstrap, &amp;newFile, /*createIfMissing=*/true);
+    locked = true;
+
+    if (newFile) {
+        u8 startWhen, copyWhen, endWhen;
+        bool result;
+        off_t dexOffset;
+        dexOffset = lseek(optFd, 0, SEEK_CUR);  //文件指针的位置
+        result = (dexOffset &gt; 0);
+        if (result) {
+            startWhen = dvmGetRelativeTimeUsec();
+    //将dex文件中的内容拷贝到当前odex文件，也就是dexOffset开始
+            result = copyFileToFile(optFd, dexFd, fileSize) == 0;
+            copyWhen = dvmGetRelativeTimeUsec();
+        }
+        if (result) {
+    //优化odex文件
+            result = dvmOptimizeDexFile(optFd, dexOffset, fileSize,
+                fileName, modTime, adler32, isBootstrap);
+        }
+    }
+    /*
+     * Map the cached version.  This immediately rewinds the fd, so it
+     * doesn&#39;t have to be seeked anywhere in particular.
+     */
+//将odex文件映射到内存空间(mmap)，并用mprotect将属性置为只读属性，并将映射的dex结构放在pDvmDex数据结构中，具体代码在下面。
+    if (dvmDexFileOpenFromFd(optFd, &amp;pDvmDex) != 0) {
+        ALOGI(&quot;Unable to map cached %s&quot;, fileName);
+        goto bail;
+    }
+……
+}
+</code></pre>
+<pre><code class="cpp">//Dalvik/vm/RewDexFile.cpp
+static int verifyMagicAndGetAdler32(int fd, u4 *adler32)
+{
+    u1 headerStart[12];
+    ssize_t amt = read(fd, headerStart, sizeof(headerStart));
+    if (amt &lt; 0) {
+        ALOGE(&quot;Unable to read header: %s&quot;, strerror(errno));
+        return -1;
+    }
+    if (amt != sizeof(headerStart)) {
+        ALOGE(&quot;Unable to read full header (only got %d bytes)&quot;, (int) amt);
+        return -1;
+    }
+    if (!dexHasValidMagic((DexHeader*) (void*) headerStart)) {
+        return -1;
+    }
+    *adler32 = (u4) headerStart[8]
+        | (((u4) headerStart[9]) &lt;&lt; 8)
+        | (((u4) headerStart[10]) &lt;&lt; 16)
+        | (((u4) headerStart[11]) &lt;&lt; 24);
+
+    return 0;
+}
+</code></pre>
+<pre><code class="cpp">//dalvik\vm\DvmDex.cpp
+/*
+ * Given an open optimized DEX file, map it into read-only shared memory and
+ * parse the contents.
+ *
+ * Returns nonzero on error.
+ */
+int dvmDexFileOpenFromFd(int fd, DvmDex** ppDvmDex)
+{
+    DvmDex* pDvmDex;
+    DexFile* pDexFile;
+    MemMapping memMap;
+    int parseFlags = kDexParseDefault;
+    int result = -1;
+
+    if (gDvm.verifyDexChecksum)
+        parseFlags |= kDexParseVerifyChecksum;
+    if (lseek(fd, 0, SEEK_SET) &lt; 0) {
+        ALOGE(&quot;lseek rewind failed&quot;);
+        goto bail;
+    }
+    //mmap映射fd文件,就是我们之前的odex文件
+   if (sysMapFileInShmemWritableReadOnly(fd, &amp;memMap) != 0) {
+        ALOGE(&quot;Unable to map file&quot;);
+        goto bail;
+    }
+    pDexFile = dexFileParse((u1*)memMap.addr, memMap.length, parseFlags);
+    if (pDexFile == NULL) {
+        ALOGE(&quot;DEX parse failed&quot;);
+        sysReleaseShmem(&amp;memMap);
+        goto bail;
+    }
+    pDvmDex = allocateAuxStructures(pDexFile);
+    if (pDvmDex == NULL) {
+        dexFileFree(pDexFile);
+        sysReleaseShmem(&amp;memMap);
+        goto bail;
+    }
+/* tuck this into the DexFile so it gets released later */
+//将映射odex文件的内存拷贝到DvmDex的结构中
+    sysCopyMap(&amp;pDvmDex-&gt;memMap, &amp;memMap);
+    pDvmDex-&gt;isMappedReadOnly = true;
+    *ppDvmDex = pDvmDex;
+    result = 0;
+
+bail:
+    return result;
+}
+</code></pre>
+<pre><code class="cpp">/*dalvik\libdex\SysUtil.cpp
+*/
+int sysMapFileInShmemWritableReadOnly(int fd, MemMapping* pMap)
+{
+    off_t start;
+    size_t length;
+    void* memPtr;
+assert(pMap != NULL);
+//获得文件长度和文件开始地址
+    if (getFileStartAndLength(fd, &amp;start, &amp;length) &lt; 0)
+        return -1;
+//映射文件
+    memPtr = mmap(NULL, length, PROT_READ | PROT_WRITE, MAP_FILE | MAP_PRIVATE,
+            fd, start);
+    //……
+//将保护属性置为只读属性
+    if (mprotect(memPtr, length, PROT_READ) &lt; 0) {
+      //…….
+    }
+    pMap-&gt;baseAddr = pMap-&gt;addr = memPtr;
+    pMap-&gt;baseLength = pMap-&gt;length = length;
+return 0;
+//……
+}
+</code></pre>
+<p>这些就是对dex的文件处理，对压缩包zip,jar,apk的有兴趣的可以直接分析下源码。</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>首先是对文件名的修正，后缀名置为”.dex”作为输出文件，然后生个一个DexPathList对象函数直接返回一个DexPathList对象，</p>
+<p>在DexPathList的构造函数中调用makeDexElements()函数，在makeDexElement()函数中调用loadDexFile()开始对.dex或者是.jar .zip .apk文件进行处理，</p>
+<p>跟入loadDexFile()函数中，会发现里面做的工作很简单，调用optimizedPathFor()函数对optimizedDiretcory路径进行修正。</p>
+<p>之后才真正通过DexFile.loadDex()开始加载文件中的数据，其中的加载也只是返回一个DexFile对象。</p>
+<p>在DexFile类的构造函数中，重点便放在了其调用的openDexFile()函数，在openDexFile()中调用了openDexFileNative()真正进入native层，</p>
+<p>在openDexFileNative()的真正实现中，对于后缀名为.dex的文件或者其他文件(.jar .apk .zip)分开进行处理：</p>
+<p>.dex文件调用dvmRawDexFileOpen()；<br>其他文件调用dvmJarFileOpen()。</p>
+<p>在dvmRawDexFileOpen()函数中，检验dex文件的标志，检验odex文件的缓存名称，之后将dex文件拷贝到odex文件中，并对odex进行优化</p>
+<p>调用dvmDexFileOpenFromFd()对优化后的odex文件进行映射，通过mprotect置为”只读”属性并将映射的内存结构保存在DvmDex*结构中。</p>
+<p>dvmJarFileOpen()先对文件进行映射，结构保存在ZipArchive中，然后再尝试以文件名作为dex文件名来“打开”文件，<br>如果失败，则调用dexZipFindEntry在ZipArchive的名称hash表中找名为”class.dex”的文件,然后创建odex文件，下面就和<br>dvmRawDexFileOpen()一样了，就是对dex文件进行优化和映射。</p>
+
+    </div>
+
+    <div class="post-footer">   
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="http://blog.csdn.net/hty1053240123?viewmode=contents" target="_blank">天宇240</a>
+            
+        </div>
+        <div>
+            
+        </div>  
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2018/01/03/AsyncTask研究/" class="pre-post btn btn-default"><i class="fa fa-angle-left fa-fw"></i>上一篇</a>
+    
+    
+        <a href="/2017/12/27/Hexo-GitHub搭建个人博客/" class="next-post btn btn-default">下一篇<i class="fa fa-angle-right fa-fw"></i></a>
+    
+</div>
+
+
+    <div id="comments">
+        <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNTA2NC8xMTU5OQ==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+    </div>
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        
+    <div class="widget">    
+        <h3 class="title">搜索</h3>
+        <div id="search-form">
+            <div id="result-mask" class="hide"></div>
+            <div class="search-area">
+                
+                    <input id="search-key" type="search" autocomplete="off" placeholder="搜点什么呢?">
+                    <button type="button" class="search-form-submit" id="search-local">站内搜索</button>
+                
+                
+            </div>
+            <div id="result-wrap" class="hide">
+                <div id="search-result"></div>
+            </div>
+            <div class="hide">
+                <template id="search-tpl">
+                    <div class="item">
+                        <a href="/{path}" title="{title}">
+                            <div class="title">{title}</div>
+                            <div class="content">{content}</div>
+                        </a>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget notification">
+        <h3 class="title">网站公告</h3>
+        <div>
+            <p>公告就是醒目，为了提醒自己多学习，多总结~ <br/>
+好记忆不如烂笔头~ <br/>
+</p>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+      <h3 class="title">社交</h3> 
+        <div class="content social">
+            
+	            <a href="//github.com/huangtianyu" rel="external nofollow" title="Github" target="_blank">
+			    	<i class="git fa fa-git"></i>
+			    </a>
+            
+	            <a href="mailto:1053240123@qq.com" rel="external nofollow" title="邮箱" target="_blank">
+			    	<i class="envelope-o fa fa-envelope-o"></i>
+			    </a>
+            
+	            <a href="https://weibo.com/1804011630/" rel="external nofollow" title="微博" target="_blank">
+			    	<i class="weibo fa fa-weibo"></i>
+			    </a>
+            
+	            <a href="/atom.xml" rel="external nofollow" title="RSS" target="_blank">
+			    	<i class="feed fa fa-feed"></i>
+			    </a>
+            
+        </div>
+    </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">分类</h3>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/"><i class="fa" aria-hidden="true">Android</i></a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/"><i class="fa" aria-hidden="true">Git</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/"><i class="fa" aria-hidden="true">Hexo</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kotlin/"><i class="fa" aria-hidden="true">Kotlin</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/gradle/"><i class="fa" aria-hidden="true">gradle</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/人工智能/"><i class="fa" aria-hidden="true">人工智能</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/"><i class="fa" aria-hidden="true">设计模式</i></a><span class="category-list-count">1</span></li></ul>
+    </div>
+
+
+        
+        
+    <div class="widget">
+      <h3 class="title">归档</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/"><i class="fa" aria-hidden="true">十月 2018</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/"><i class="fa" aria-hidden="true">三月 2018</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/"><i class="fa" aria-hidden="true">二月 2018</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/"><i class="fa" aria-hidden="true">一月 2018</i></a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/"><i class="fa" aria-hidden="true">十二月 2017</i></a><span class="archive-list-count">3</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">标签云</h3>
+    <div class="content tag-cloud">
+        <a href="/tags/Android-DeepLink-源码解析/" style="font-size: 10px;">Android DeepLink 源码解析</a> <a href="/tags/Android-JNI开发/" style="font-size: 15px;">Android JNI开发</a> <a href="/tags/Android-NDK开发，JNI开发/" style="font-size: 20px;">Android NDK开发，JNI开发</a> <a href="/tags/Android学习/" style="font-size: 10px;">Android学习</a> <a href="/tags/Android源码分析/" style="font-size: 10px;">Android源码分析</a> <a href="/tags/AppLinks-DeepLinks/" style="font-size: 10px;">AppLinks, DeepLinks</a> <a href="/tags/Dex类加载/" style="font-size: 10px;">Dex类加载</a> <a href="/tags/Hexo学习/" style="font-size: 10px;">Hexo学习</a> <a href="/tags/Hexo搭建/" style="font-size: 10px;">Hexo搭建</a> <a href="/tags/Kotlin学习/" style="font-size: 15px;">Kotlin学习</a> <a href="/tags/RoboBinding-MVC-MVP/" style="font-size: 10px;">RoboBinding,MVC,MVP</a> <a href="/tags/SharedPreferences-Editor/" style="font-size: 10px;">SharedPreferences Editor</a> <a href="/tags/View-onMeasure/" style="font-size: 10px;">View onMeasure</a> <a href="/tags/ViewPager-Fragment预加载/" style="font-size: 10px;">ViewPager+Fragment预加载</a> <a href="/tags/adb命令/" style="font-size: 10px;">adb命令</a> <a href="/tags/adb查看交互Activity名称/" style="font-size: 10px;">adb查看交互Activity名称</a> <a href="/tags/gradle配置/" style="font-size: 10px;">gradle配置</a> <a href="/tags/onAttachedToWindow和onDetachedFromWindow-源码解析/" style="font-size: 10px;">onAttachedToWindow和onDetachedFromWindow,源码解析</a> <a href="/tags/onSaveInstanceState/" style="font-size: 10px;">onSaveInstanceState</a> <a href="/tags/内存优化/" style="font-size: 10px;">内存优化</a> <a href="/tags/应用内部广播-LocalBroadcastManager/" style="font-size: 10px;">应用内部广播,LocalBroadcastManager</a> <a href="/tags/查看git-bash内容/" style="font-size: 10px;">查看git bash内容</a> <a href="/tags/深度学习-吴恩达/" style="font-size: 10px;">深度学习 吴恩达</a>
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">友链</h3>
+        <div class="content friends-link">
+        
+            <a href="http://blog.csdn.net/hty1053240123?viewmode=contents" class="fa" target="_blank">个人博客</a>
+        
+            <a href="https://www.jianshu.com/u/3c8a983c71dc" class="fa" target="_blank">简书</a>
+        
+        </div>
+    </div>
+
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12"> 
+                <span>Copyright &copy; 2017
+                </span> | 
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> | 
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+	<script src="/js/search.js?rev=@@hash"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+
+    <script type="text/javascript">
+        // highlight
+        //hljs.initHighlightingOnLoad();
+    </script>
+</body>
+</html>

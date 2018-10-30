@@ -1,0 +1,875 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://yoursite.com">
+    <!--SEO-->
+
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+
+<title>RoboBinding(MVVM)架构介绍 | 天宇</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="天宇" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico"  type="image/x-icon">
+
+    
+
+
+
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css?rev=9.12.0">
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css?rev=3.3.4">
+<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+    <div class="hide">
+    	<script src="https://s4.cnzz.com/z_stat.php?id=1263868967&web_id=1263868967" language="JavaScript"></script>
+    </div>
+
+
+
+
+
+
+    
+    
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?c3d1d4bce7d4ef1c50d7ef35d759a5b7";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.2.0/styles/github.min.css">
+<script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+<body>
+    <header class="main-header"  style="background-image:url(/img/banner.jpg); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;"  >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title="">
+            <img src="/img/avatar.jpg" alt="logo头像">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                 <img src="/img/branding.png" alt="从未如此简单有趣">  
+             
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only">Toggle navigation</span>
+                    <i class="fa fa-bars"></i>
+                    </span>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation"><a href="/"><i class="fa fa-fw /favicon.ico"></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/前端/"><i class="fa fa-fw /favicon.ico"></i>前端</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/后端/"><i class="fa fa-fw /favicon.ico"></i>后端</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/工具/"><i class="fa fa-fw /favicon.ico"></i>工具</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/资源/"><i class="fa fa-fw /favicon.ico"></i>资源</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/关于/"><i class="fa fa-fw /favicon.ico"></i>关于</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="RoboBinding(MVVM)架构介绍">
+            
+            RoboBinding(MVVM)架构介绍
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <span>设计模式</span>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            RoboBinding,MVC,MVP
+            
+        </span>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">2018/01/03</span>
+    </span>
+
+</div>
+
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <p>[TOC]</p>
+<h3 id="1-什么是RoboBinding"><a href="#1-什么是RoboBinding" class="headerlink" title="1. 什么是RoboBinding?"></a>1. 什么是RoboBinding?</h3><p><b>同步差异</b> - RoboBinding 是一个数据绑定器。<a href="http://martinfowler.com/eaaDev/PresentationModel.html" target="_blank" rel="noopener"> Presentation Model framework（著名的MVVM框架）</a>是安卓上的一个框架. RoboBinding帮助你在写UI代码时能方便的阅读、测试和维护。</p>
+<h3 id="2-AndroidMVVM-Presentation-Model-框架"><a href="#2-AndroidMVVM-Presentation-Model-框架" class="headerlink" title="2.AndroidMVVM(Presentation Model)框架"></a>2.AndroidMVVM(Presentation Model)框架</h3><p>通过RoboBinding建立的一个activity由三个部分组成：layout布局，activity类，还有一个演示模型类。这里有个简单的事例<a href="https://github.com/RoboBinding/AndroidMVVM" target="_blank" rel="noopener">AndroidMVVM</a>。</p>
+<h4 id="2-1-Layout布局"><a href="#2-1-Layout布局" class="headerlink" title="2.1. Layout布局"></a>2.1. Layout布局</h4><p>在布局文件总，我们声明一下RoboBinding的命名空间，属性和一些事件的attribute绑定。例如activity_main.xml</p>
+<pre><code class="xml">&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+xmlns:tools=&quot;http://schemas.android.com/tools&quot;
+xmlns:bind=&quot;http://robobinding.org/android&quot;&gt;
+&lt;TextView
+bind:text=&quot;{hello}&quot; /&gt;
+...
+&lt;Button
+android:text=&quot;Say Hello&quot;
+bind:onClick=&quot;sayHello&quot;/&gt;
+&lt;/LinearLayout&gt;
+</code></pre>
+<h4 id="2-2-Presentation-Model-简单的Java对象"><a href="#2-2-Presentation-Model-简单的Java对象" class="headerlink" title="2.2. Presentation Model(简单的Java对象)"></a>2.2. Presentation Model(简单的Java对象)</h4><p>在演示层中，我们声明一个对应的属性和方法。代码如下org.robobinding.androidmvvm.PresentationModel.java</p>
+<pre><code class="java">org.robobinding.annotation.PresentationModel
+public class PresentationModel implements HasPresentationModelChangeSupport {
+private String name;
+public String getHello() {
+return name + &quot;: hello Android MVVM(Presentation Model)!&quot;;
+}
+...
+public void sayHello() {
+firePropertyChange(&quot;hello&quot;);
+}
+}
+</code></pre>
+<h4 id="2-3-Activity类"><a href="#2-3-Activity类" class="headerlink" title="2.3. Activity类"></a>2.3. Activity类</h4><p>通过RoboBinding框架将布局和演示层的model绑定在activity界面上。<br>org.robobinding.androidmvvm.MainActivity.java</p>
+<pre><code class="java">public class MainActivity extends Activity {
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+...
+PresentationModel presentationModel = new PresentationModel();
+View rootView = Binders.inflateAndBindWithoutPreInitializingViews(this, R.layout.activity_main, presentationModel);
+setContentView(rootView);
+}
+}
+</code></pre>
+<p>这样一个简单的AndroidMVVM事例就写完了。我们使用工具类Binders将UI空间和数据Model很简单的进行绑定。在真正使用时我们推荐使用<code>org.robobinding.binder.BinderFactoryBuilder</code>类。我们可以将BinderFactoryBuilder以单例模式保存在整个工程中，也可以使用第三方法库，例如 <a href="https://github.com/roboguice/roboguice" target="_blank" rel="noopener">RoboGuice</a> ，来帮忙管理BinderFactory对象实例，这样可以在全局共享和重复使用该实例。</p>
+<h4 id="2-4-介绍视频"><a href="#2-4-介绍视频" class="headerlink" title="2.4. 介绍视频"></a>2.4. 介绍视频</h4><p><code>2012年2月</code> Robert Taylor 录了一个介绍RoboBinding的视频，<a href="http://skillsmatter.com/podcast/os-mobile-server/core-dev-talk-robobinding" target="_blank" rel="noopener">下载地址</a>.<br><code>2014年7月</code>Cheng Wei录了一个中文的介绍视频，<a href="https://www.youtube.com/watch?v=2sSBVaX77xA" target="_blank" rel="noopener">下载地址</a>.</p>
+<h3 id="3-环境设置"><a href="#3-环境设置" class="headerlink" title="3. 环境设置"></a>3. 环境设置</h3><h4 id="3-1-Eclipse下安装使用"><a href="#3-1-Eclipse下安装使用" class="headerlink" title="3.1. Eclipse下安装使用"></a>3.1. Eclipse下安装使用</h4><p>安装Eclipse.</p>
+<h5 id="3-1-1-没有AspectJ时"><a href="#3-1-1-没有AspectJ时" class="headerlink" title="3.1.1. 没有AspectJ时"></a>3.1.1. 没有AspectJ时</h5><p>将<em>robobinding-[version]-with-dependencies.jar</em> 或者<em>robobinding-[version].jar + [google guava]-[11.0.1+].jar</em> 放到工程的libs目录下，然后把他们添加到classpath上。点击顺序： <strong>project→Properties→Java Build Path→Libraries→Add JARs</strong>.在展开的列表上点击对应的jar包。<br><img src="http://robobinding.github.io/RoboBinding/images/eclipse_build_settings.png" alt="Alt text" title="Figure 1. Project build settings(An example using robobinding-[version]-with-dependencies.jar)"></p>
+<h5 id="3-1-2-在有AspectJ时"><a href="#3-1-2-在有AspectJ时" class="headerlink" title="3.1.2. 在有AspectJ时"></a>3.1.2. 在有AspectJ时</h5><p>RoboBinding能帮我们减少一些自动绑定的代码。首先安装<a href="http://developer.android.com/tools/sdk/eclipse-adt.html" target="_blank" rel="noopener">Android Development Tools</a> 插件。然后右击项目→Configure→Convert to AspectJ Project. 这样就可以将AspectJ特性加入到项目当中。<br>按同样的方法将<code> robobinding-[version]-with-aop-and-dependencies.jar </code>或者<code> the robobinding-[version]-with-aop.jar + [google guava]-[11.0.1+].jar</code>加入的libs目录下，然后添加的项目的classpath中。<br>最后确保RoboBinding的jar是加入到Aspect路径中，具体方法如下：<br><img src="http://robobinding.github.io/RoboBinding/images/eclipse_aspectj_settings.png" alt="Figure 2. AspectJ settings(An example using robobinding-[version]-with-aop-and-dependencies.jar)" title="Figure 2. AspectJ settings(An example using robobinding-[version]-with-aop-and-dependencies.jar)"></p>
+<h5 id="3-1-3-Annotaton-Processing-设置"><a href="#3-1-3-Annotaton-Processing-设置" class="headerlink" title="3.1.3. Annotaton Processing 设置"></a>3.1.3. Annotaton Processing 设置</h5><p>下载RoboBinding<code>codegen-[version]-with-dependencies.jar</code>的jar包。按如下方式添加到工程，注意项目不要依赖这个jar。<br><img src="http://robobinding.github.io/RoboBinding/images/eclipse_annotation_processing_settings.png" alt="Figure 3. Annotaton processing settings"></p>
+<h4 id="3-2-Android-Studio安装方法"><a href="#3-2-Android-Studio安装方法" class="headerlink" title="3.2. Android Studio安装方法"></a>3.2. Android Studio安装方法</h4><h5 id="3-2-1-没有AspectJ时"><a href="#3-2-1-没有AspectJ时" class="headerlink" title="3.2.1. 没有AspectJ时"></a>3.2.1. 没有AspectJ时</h5><p>将robobinding依赖添加到gradle.build中。</p>
+<pre><code class="xml">dependencies {
+...
+compile&quot;org.robobinding:robobinding:${robobindingVersion}&quot;
+
+//alternatively we can use with-dependencies jar(RoboBinding provide a minimal Proguarded with-dependencies jar.).
+compile(&quot;org.robobinding:robobinding:${robobindingVersion}:with-dependencies&quot;) {
+exclude group: &#39;com.google.guava&#39;, module: &#39;guava&#39;
+}
+}
+</code></pre>
+<p><a href="https://github.com/RoboBinding" target="_blank" rel="noopener">RoboBinding</a>是完全免费的，可以随意引用,例如：AndroidMVVM, RoboBinding-album-sample 和 RoboBinding-gallery.</p>
+<h5 id="3-2-2-有AspectJ时"><a href="#3-2-2-有AspectJ时" class="headerlink" title="3.2.2. 有AspectJ时"></a>3.2.2. 有AspectJ时</h5><p>在gradle.build中应用RoboBinding的Android aspcetj插件。</p>
+<pre><code class="xml">buildscript {
+repositories {
+...
+maven() {
+name &#39;RoboBinding AspectJPlugin Maven Repository&#39;
+url &quot;https://github.com/RoboBinding/RoboBinding-aspectj-plugin/raw/master/mavenRepo&quot;
+}
+}
+
+dependencies {
+...
+classpath &#39;org.robobinding:aspectj-plugin:0.8.+&#39;
+}
+}
+
+...
+apply plugin: &#39;org.robobinding.android-aspectj&#39;
+</code></pre>
+<p>添加RoboBinding 依赖到 gradle.build中</p>
+<pre><code class="xml">dependencies {
+...
+compile &quot;org.robobinding:robobinding:$robobindingVersion&quot;
+aspectPath &quot;org.robobinding:robobinding:$robobindingVersion&quot;
+
+//alternatively we can use with-aop-and-dependencies jar(RoboBinding provides a minimal Proguarded with-aop-and-dependencies jar.).
+compile (&quot;org.robobinding:robobinding:$robobindingVersion:with-aop-and-dependencies&quot;) {
+exclude group: &#39;com.google.guava&#39;, module: &#39;guava&#39;
+}
+aspectPath (&quot;org.robobinding:robobinding:$robobindingVersion:with-aop-and-dependencies&quot;) {
+exclude group: &#39;com.google.guava&#39;, module: &#39;guava&#39;
+}
+}
+</code></pre>
+<p><a href="https://github.com/RoboBinding" target="_blank" rel="noopener">RoboBinding</a>是完全免费的，可以随意引用,例如：AndroidMVVM, RoboBinding-album-sample 和 RoboBinding-gallery.</p>
+<h5 id="3-2-3-Annotation-Processing-设置"><a href="#3-2-3-Annotation-Processing-设置" class="headerlink" title="3.2.3. Annotation Processing 设置"></a>3.2.3. Annotation Processing 设置</h5><p>在gradle.build中添加apt插件。</p>
+<pre><code class="xml">buildscript {
+repositories {
+...
+}
+
+dependencies {
+...
+classpath &#39;com.neenbedankt.gradle.plugins:android-apt:1.+&#39;
+}
+}
+
+...
+apply plugin: &#39;com.neenbedankt.android-apt&#39;
+</code></pre>
+<h4 id="3-3-ProGuard设置"><a href="#3-3-ProGuard设置" class="headerlink" title="3.3. ProGuard设置"></a>3.3. ProGuard设置</h4><p>在proguard中需要保存PresentationModel和生成的构造方法，我们也需要保存所以的注解。在proguard配置中进行如下设置：</p>
+<pre><code class="xml">-keepattributes *Annotation*,Signature
+-keep,allowobfuscation @interface org.robobinding.annotation.PresentationModel
+
+-keep @org.robobinding.annotation.PresentationModel class * {
+public *** *(...);
+}
+
+-keep class * implements org.robobinding.itempresentationmodel.ItemPresentationModel{
+public *** *(...);
+}
+
+-keep class * extends org.robobinding.presentationmodel.AbstractPresentationModelObject{
+public &lt;init&gt;(...);
+}
+
+-keep class * extends org.robobinding.presentationmodel.AbstractItemPresentationModelObject{
+public &lt;init&gt;(...);
+}
+</code></pre>
+<p>添加如下几行以便保持view监听的构造函数。</p>
+<pre><code class="xml">-keepclassmembers class * implements org.robobinding.viewattribute.ViewListeners {
+public &lt;init&gt;(...);
+}
+</code></pre>
+<p>添加如下几行来抑制Google的javax.annotation.XX 引用警告。</p>
+<pre><code class="xml">-dontwarn javax.annotation.**
+</code></pre>
+<p>在如下链接中有相关样例 <a href="https://github.com/RoboBinding/" target="_blank" rel="noopener">RoboBinding organization</a>.</p>
+<h3 id="4-概念和特性"><a href="#4-概念和特性" class="headerlink" title="4. 概念和特性"></a>4. 概念和特性</h3><p><img src="http://robobinding.github.io/RoboBinding/images/robobinding_based_app.png" alt="Figure 4. A RoboBinding-based Android application" title="Figure 4. A RoboBinding-based Android application"><br>一个安卓应用中包含若干个activity界面和其他一些元素。在以RoboBinding架构编写的安卓应用中，一个activity包含一个activity类，一个layout布局和一个PresentationModel的普通类（而在普通安卓应用中，一个activity仅仅包含activity类和layout布局文件）。原先都在Activity类中编写展示逻辑的现在都提取到一个独立PresentationModel的简单类中。布局中视图控件的展示数据都绑定在PresentationModel的属性上，视图控件的各个事件都绑定在PresentationModel的方法上。RoboBinding可以帮助我们减少或者删除在Activity类中的UI相关代码，通过简单的在layout布局进行绑定。理想的PresentationModel仅仅包含UI展示逻辑，不包含UI代码或者UI连接代码，并且能够被单独的、简单的测试。<br>这部分样例代码可以通过如下链接查看<a href="https://github.com/RoboBinding/RoboBinding-gallery/" target="_blank" rel="noopener">Robobinding Gallery</a>.</p>
+<h4 id="4-1-单向属性绑定"><a href="#4-1-单向属性绑定" class="headerlink" title="4.1. 单向属性绑定"></a>4.1. 单向属性绑定</h4><p>当我们将一根属性绑定到一个presentation模型时，任何对该属性的更改都会直接传给相应的View。<br>activity_view.xml</p>
+<pre><code class="xml">&lt;TextView
+bind:visibility=&quot;{integerVisibility}&quot;/&gt;
+</code></pre>
+<p>ViewPresentationModel.java</p>
+<pre><code class="java">public int getIntegerVisibility() {
+return integerVisibilityRotation.value();
+}
+</code></pre>
+<p>robobinding遵循JavaBeans规范也提供getters和setters方法。在单方向绑定中，仅仅需要提供getters方法，即view的任何改变不需要更新给对应的presentation模型。更多关于属性绑定的内容可以参考<em><b>API和属性绑定文档</b></em></p>
+<h4 id="4-2-双向属性绑定"><a href="#4-2-双向属性绑定" class="headerlink" title="4.2. 双向属性绑定"></a>4.2. 双向属性绑定</h4><p>双方向属性绑定顾名思义就是对presentation model的任何改变会反映到对应的view上，同时对view的任何改变也会更改对应的presentation Model。<br>EditText控件中的text属性是支持双向绑定的。考虑这种情况，无论何时用户更改了EditText的text内容，对应的presentation Model都会相应的进行更改。<br>双向属性绑定仅仅需要在大括号外加一个美元$符，例如：<br>activity_edittext.xml</p>
+<pre><code class="xml">&lt;EditText
+bind:text=&quot;${text}&quot;/&gt;
+</code></pre>
+<p>为了支持双向绑定，需要在对应的presentation model中添加setter方法：<br>org.robobinding.gallery.presentationmodel.EditTextPresentationModel.java</p>
+<pre><code class="java">PresentationModel
+public class EditTextPresentationModel {
+private String text;
+
+public String getText() {
+return text;
+}
+
+public void setText(String text) {
+this.text = text;
+}
+}
+</code></pre>
+<h4 id="4-3-事件绑定"><a href="#4-3-事件绑定" class="headerlink" title="4.3. 事件绑定"></a>4.3. 事件绑定</h4><p>将view的事件绑定到presentation model的方法上，可以通过<code>bind:onClick=”showDemo”</code>来实现。<br>activity_gallery.xml</p>
+<pre><code class="xml">&lt;Button
+bind:onClick=&quot;showDemo&quot;/&gt;
+</code></pre>
+<p>org.robobinding.gallery.presentationmodel.GalleryPresentationModel.java</p>
+<pre><code class="java">PresentationModel
+public class GalleryPresentationModel
+{
+...
+public void showDemo()
+{
+...
+}
+}
+</code></pre>
+<p>当点击事件被触发时，presentation Model绑定的方法将被执行。我们能选择性的支持一个事件的参数，在上面例子中对应的参数是<code>org.robobinding.widget.view.ClickEvent</code><br>更多关于UI事件绑定可以参考<em><b>API和属性绑定文档</b></em></p>
+<h4 id="4-4-AdapterViews的绑定"><a href="#4-4-AdapterViews的绑定" class="headerlink" title="4.4. AdapterViews的绑定"></a>4.4. AdapterViews的绑定</h4><p>当我们绑定一个AdapterViews时，RoboBinding首先要求我们指出对于presentation model基础的数据。可以是以下几个类型：an Array, List or org.robobinding.itempresentationmodel.TypedCursor.<br>在有基础数据后，RoboBinding需要知道presentation模型和子view对应的绑定关系。我们可以通过 @ItemPresentationModel注解实现。例如：<br>activity_adapter_view.xml</p>
+<pre><code class="xml">&lt;ListView
+bind:itemLayout=&quot;@android:layout/simple_list_item_1&quot;
+bind:itemMapping=&quot;[text1.text:{value}]&quot;
+bind:source=&quot;{dynamicStrings}&quot;/&gt;
+</code></pre>
+<p>org.robobinding.gallery.presentationmodel.AdapterViewPresentationModel.java</p>
+<pre><code class="java">PresentationModel
+public class AdapterViewPresentationModel
+{
+...
+@ItemPresentationModel(value=StringItemPresentationModel.class)
+public List&lt;String&gt; getDynamicStrings()
+{
+return getSelectedSource().getSample();
+}
+···
+</code></pre>
+<p>提供的基础数据需要继承自ItemPresentationModel 接口。<br>org.robobinding.gallery.presentationmodel.StringItemPresentationModel.java</p>
+<pre><code class="java">public class StringItemPresentationModel implements ItemPresentationModel&lt;String&gt;
+{
+private String value;
+
+@Override
+public void updateData(int index, String bean)
+{
+value = bean;
+}
+
+public String getValue()
+{
+return value;
+}
+}
+</code></pre>
+<p>然后我们给每一个条目行定义一个布局。在该例中我们使用Android库给的simple_list_item_1.xml布局。通过<code>bind:itemMapping=”[text1.text:{value}]”</code>进行绑定我们将simple_list_item_1.xml中的text1.text绑定到StringItemPresentationModel.value中。<br>在@ItemPresentationModel中有一个工厂方法属性(<code>factoryMethod</code>)。当ItemPresentationModels有一些扩展的依赖时，我们能增加一个工厂方法(<code>factoryMethod</code>)到PresentationModel里面以便ItemPresentationModels能通过该方法进行创建。通过这种方式，我们能将任何依赖让到ItemPresentationModel中，通过完全自由的方式。下面是一个简单的例子。</p>
+<pre><code class="java">@PresentationModel
+public class PresentationModelSample
+{
+...
+@ItemPresentationModel(value=ItemPresentationModelSample.class, factoryMethod=&quot;createItemPresentationModelSample&quot;)
+public List&lt;String&gt; getDynamicStrings()
+{
+return getSelectedSource().getSample();
+}
+
+public ItemPresentationModelSample createItemPresentationModelSample() {
+return ItemPresentationModelSample(dependency1, dependency2, ...);
+}
+</code></pre>
+<h4 id="4-5-轻量级关系cursor游标映射对应的对象cursor游标"><a href="#4-5-轻量级关系cursor游标映射对应的对象cursor游标" class="headerlink" title="4.5. 轻量级关系cursor游标映射对应的对象cursor游标"></a>4.5. 轻量级关系cursor游标映射对应的对象cursor游标</h4><p>在AdapterViews绑定中提到数据类型<code>org.robobinding.itempresentationmod el.TypedCursor</code>。由于我们经常操作对象甚过操作对象数据，因而我们希望能将操作关系数据库的代码进行分离。RoboBinding增加了一个轻量级的对象cursor游标-<code>TypedCursor</code>。通过<code>org.robobinding.itempresentationmodel.RowMapper</code>类，我们能将一条数据转换为一个对象。示例如下：<br>org.robobinding.gallery.presentationmodel.TypedCursorPresentationModel.java</p>
+<pre><code class="java">@PresentationModel
+public class TypedCursorPresentationModel {
+...
+@ItemPresentationModel(value=ProductItemPresentationModel.class)
+public TypedCursor&lt;Product&gt; getProducts() {
+return allProductsQuery.execute(db);
+}
+}
+</code></pre>
+<p>org.robobinding.gallery.model.typedcursor.GetAllQuery.java</p>
+<pre><code class="java">public class GetAllQuery&lt;T&gt;
+{
+private String tableName;
+private final RowMapper&lt;T&gt; rowMapper;
+
+public GetAllQuery(String tableName, RowMapper&lt;T&gt; rowMapper)
+{
+...
+this.tableName = tableName;
+this.rowMapper = rowMapper;
+}
+
+public TypedCursor&lt;T&gt; execute(SQLiteDatabase db)
+{
+Cursor cursor = db.query(
+tableName,
+null,
+null,
+null,
+null,
+null,
+BaseColumns._ID+&quot; ASC&quot;);
+return new TypedCursorAdapter&lt;T&gt;(cursor, rowMapper);
+}
+}
+</code></pre>
+<p>org.robobinding.gallery.model.typedcursor.ProductRowMapper.java</p>
+<pre><code class="java">public class ProductRowMapper implements RowMapper&lt;Product&gt; {
+
+@Override
+public Product mapRow(Cursor cursor) {
+String name = cursor.getString(cursor.getColumnIndex(ProductTable.NAME));
+String description = cursor.getString(cursor.getColumnIndex(ProductTable.DESCRIPTION));
+return new Product(name, description);
+}
+
+}
+</code></pre>
+<h4 id="4-6-菜单绑定"><a href="#4-6-菜单绑定" class="headerlink" title="4.6. 菜单绑定"></a>4.6. 菜单绑定</h4><p>将一个res/menu中的菜单资源绑定到一个Presentation Models中。看如下例子：<br>res/menu/context_menu.xml</p>
+<pre><code class="xml">&lt;menu xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+xmlns:bind=&quot;http://robobinding.org/android&quot;
+xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;&gt;
+&lt;item android:title=&quot;Delete Product&quot;
+bind:onMenuItemClick=&quot;deleteProduct&quot;
+android:id=&quot;@+id/deleteProduct&quot;
+app:showAsAction=&quot;always&quot;/&gt;
+
+&lt;/menu&gt;
+</code></pre>
+<p>org.robobinding.gallery.presentationmodel.ContextMenuPresentationModel.java</p>
+<pre><code class="java">@PresentationModel
+public class ContextMenuPresentationModel {
+...
+public void deleteProduct(MenuItem menuItem) {
+...
+}
+}
+</code></pre>
+<h4 id="4-7-Presentation-Models（演示models）"><a href="#4-7-Presentation-Models（演示models）" class="headerlink" title="4.7. Presentation Models（演示models）"></a>4.7. Presentation Models（演示models）</h4><p>我们将任何一个presentationModel添加<code>@org.robobinding.annotation.PresentationModel</code>注解。当一个presentationmodel需要<code>org.robobinding.presentationmodel.PresentationModelChangeSupport</code>支持时，presentationmodel必须继承自<code>org.robobinding.presentationmodel.HasPresentationModelChangeSupport </code>接口，以便于框架层能在内部使用<code>PresentationModelChangeSupport</code>对象。</p>
+<p>有两种方式可以实现一个Presentationmodel，一个是有AspectJ时，一个是没有AspectJ时，</p>
+<h5 id="4-7-1-没有-AspectJ"><a href="#4-7-1-没有-AspectJ" class="headerlink" title="4.7.1.没有 AspectJ"></a>4.7.1.没有 AspectJ</h5><ul>
+<li>使用robobinding-[version].jar或者robobinding-[version]-with-dependencies.jar库</li>
+<li>这种方式的好处是没有额外的依赖，可以使最终的apk尽可能的小</li>
+<li>不好的地方在我们需要手动设置每一个firePropertyChange(“propertyName”).<br>以下有具体的样例<br><a href="https://github.com/RoboBinding/AndroidMVVM" target="_blank" rel="noopener">AndroidMVVM</a> 和 <a href="https://github.com/RoboBinding/Android-CleanArchitecture" target="_blank" rel="noopener">Android-CleanArchitecture</a> </li>
+</ul>
+<h5 id="4-7-2-有-AspectJ"><a href="#4-7-2-有-AspectJ" class="headerlink" title="4.7.2. 有 AspectJ"></a>4.7.2. 有 AspectJ</h5><ul>
+<li><p>使用robobinding-[version]-with-aop.jar 或者robobinding-[version]-with-aop-and-dependencies.jar库</p>
+</li>
+<li><p>好处是许多firePropertyChange(“propertyName”) 可以自动生成</p>
+</li>
+<li><p>不好的地方是在AspectJ运行库里面包含依赖，这轻微的增加了最终apk的大小。<br>以下是具体样例<br><a href="https://github.com/RoboBinding/RoboBinding-album-sample" target="_blank" rel="noopener">Album Sample</a> 和 <a href="https://github.com/RoboBinding/RoboBinding-gallery" target="_blank" rel="noopener">Gallery</a></p>
+</li>
+</ul>
+<h3 id="5-创造我们自己的view绑定"><a href="#5-创造我们自己的view绑定" class="headerlink" title="5. 创造我们自己的view绑定"></a>5. 创造我们自己的view绑定</h3><p>这一节的样例代码是： <a href="https://github.com/RoboBinding/RoboBinding-gallery/" target="_blank" rel="noopener">Robobinding Gallery</a>.</p>
+<h4 id="5-1-单向绑定"><a href="#5-1-单向绑定" class="headerlink" title="5.1. 单向绑定"></a>5.1. 单向绑定</h4><p>在如下的例子中我们增加了View的enable属性绑定- <a href="https://github.com/RoboBinding/RoboBinding-gallery/blob/master/app/src/main/java/org/robobinding/gallery/activity/ViewBindingForView.java" target="_blank" rel="noopener">source code</a>.</p>
+<pre><code class="java">@ViewBinding(simpleOneWayProperties = {&quot;enabled&quot;})
+public class ViewBindingForView extends CustomViewBinding&lt;View&gt; {
+}
+</code></pre>
+<p>然后添加到<code> BinderFactoryBuilder</code> - <a href="https://github.com/RoboBinding/RoboBinding-gallery/blob/master/app/src/main/java/org/robobinding/gallery/activity/GalleryApp.java" target="_blank" rel="noopener">source code</a>.</p>
+<pre><code class="java">new BinderFactoryBuilder()
+.add(new ViewBindingForView().extend(View.class))
+.build();
+</code></pre>
+<p>RoboBinding能够生成如下代码：</p>
+<pre><code class="java">public class ViewBindingForView$$VB implements ViewBinding&lt;View&gt;{
+final ViewBindingForView customViewBinding;
+
+public ViewBindingForView$$VB(ViewBindingForView customViewBinding) {
+this.customViewBinding = customViewBinding;
+}
+
+@Override
+public void mapBindingAttributes(BindingAttributeMappings&lt;View&gt; mappings) {
+mappings.mapOneWayProperty(ViewBindingForView$$VB.EnabledAttribute.class, &quot;enabled&quot;);
+customViewBinding.mapBindingAttributes(mappings);
+}
+
+public static class EnabledAttribute implements OneWayPropertyViewAttribute&lt;View, Boolean&gt;
+{
+@Override
+public void updateView(View view, Boolean newValue) {
+view.setEnabled(newValue);
+}
+}
+}
+</code></pre>
+<p>所以的绑定都是静态static的，这意味着每一性能的影响。</p>
+<h4 id="5-2-其他类型的绑定"><a href="#5-2-其他类型的绑定" class="headerlink" title="5.2. 其他类型的绑定"></a>5.2. 其他类型的绑定</h4><p>除了单向属性绑定外，这里还有事件event绑定，多类型属性绑定和其他组属性类型的绑定。为了能实现这些绑定，我们需要扩展CustomViewBinding和手动实现对应的继承。具体例子如下：</p>
+<pre><code class="java">@ViewBinding
+public class MyCustomViewBinding extends CustomViewBinding&lt;CustomView&gt; {
+@Override
+public void mapBindingAttributes(BindingAttributeMappings&lt;CustomView&gt; mappings) {
+mappings.mapEvent(OnCustomEventAttribute.class, &quot;onCustomEvent&quot;);
+}
+
+public class OnCustomEventAttribute implements EventViewAttributeForView {
+...
+}
+}
+</code></pre>
+<p>对于这些绑定，我们能在如下链接找到例子：- <a href="https://github.com/RoboBinding/RoboBinding/tree/develop/framework/src/main/java/org/robobinding/widget" target="_blank" rel="noopener">source code under widget package</a>.</p>
+<h4 id="5-3-自定义控件或者第三方控件"><a href="#5-3-自定义控件或者第三方控件" class="headerlink" title="5.3. 自定义控件或者第三方控件"></a>5.3. 自定义控件或者第三方控件</h4><p>我们能对于任何自定义控件、第三方控件、Android widgets创建view绑定，以便更容易的使用它们。在RoboBinding中，这些绑定是一样的。<br><img src="http://robobinding.github.io/RoboBinding/images/custom_component.png" alt="Figure 5. custom Title Description Bar" title="Figure 5. custom Title Description Bar"></p>
+<p>下面是一个简单的自定义控件的例子，该View有一个白色的边框。这个控件有一个标题和一个描述组成。当我们输入新的标题和描述后，然后点击应用（Apply），控件自己讲对于的更新。</p>
+<p>这个需求可以用以下简单的代码实现：<br>activity_custom_component.xml</p>
+<pre><code class="xml">&lt;org.robobinding.gallery.model.customcomponent.TitleDescriptionBar
+bind:title=&quot;{title}&quot;
+bind:description=&quot;{description}&quot;/&gt;
+</code></pre>
+<p>这个TitleDescriptionBar控件的代码如下：(对于如何实现一个自定义控件，参考如下：<a href="http://developer.android.com/guide/topics/ui/custom-components.html" target="_blank" rel="noopener">Android Reference</a>):</p>
+<pre><code class="java">public class TitleDescriptionBar extends LinearLayout {
+private TextView title;
+private TextView description;
+
+public TitleDescriptionBar(Context context, AttributeSet attrs) {
+this(context, attrs, R.layout.title_description_bar);
+}
+
+protected TitleDescriptionBar(Context context, AttributeSet attrs, int layoutId) {
+super(context, attrs);
+
+LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+inflater.inflate(layoutId, this);
+title = (TextView) findViewById(R.id.title);
+description = (TextView) findViewById(R.id.description);
+...
+}
+
+public void setTitle(CharSequence titleText) {
+title.setText(titleText);
+}
+
+public void setDescription(CharSequence descriptionText) {
+description.setText(descriptionText);
+}
+}
+</code></pre>
+<p>对于的布局是： title_description_bar.xml:</p>
+<pre><code class="xml">&lt;merge xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+xmlns:bind=&quot;http://robobinding.org/android&quot;&gt;
+&lt;TextView android:id=&quot;@+id/title&quot;/&gt;
+&lt;TextView android:text=&quot;: &quot;/&gt;
+&lt;TextView android:id=&quot;@+id/description&quot;/&gt;
+</code></pre>
+<h5 id="5-3-1-实现属性绑定"><a href="#5-3-1-实现属性绑定" class="headerlink" title="5.3.1. 实现属性绑定"></a>5.3.1. 实现属性绑定</h5><p>这个控件有两个简单的单向属性绑定- <a href="https://github.com/RoboBinding/RoboBinding-gallery/blob/master/app/src/main/java/org/robobinding/gallery/model/customcomponent/TitleDescriptionBarBinding.java" target="_blank" rel="noopener">source code</a>.</p>
+<pre><code class="java">@ViewBinding(simpleOneWayProperties = {&quot;title&quot;, &quot;description&quot;})
+public class TitleDescriptionBarBinding extends CustomViewBinding&lt;TitleDescriptionBar&gt; {
+}
+</code></pre>
+<h5 id="5-3-2-注册ViewBindings"><a href="#5-3-2-注册ViewBindings" class="headerlink" title="5.3.2. 注册ViewBindings"></a>5.3.2. 注册ViewBindings</h5><p>ViewBindings能够通过<code>org.robobinding.binder.BinderFactoryBuilder </code>进行绑定- <a href="https://github.com/RoboBinding/RoboBinding-gallery/blob/master/app/src/main/java/org/robobinding/gallery/activity/CustomComponentActivity.java" target="_blank" rel="noopener">source code</a>.</p>
+<pre><code class="java">BinderFactory binderFactory = new BinderFactoryBuilder()
+.add(new TitleDescriptionBarBinding().forView(TitleDescriptionBar.class))
+.build();
+</code></pre>
+<p>这样就行了。我们能用同样的方法绑定第三方控件或者Android Widgets。</p>
+<h4 id="5-4-替换已有的view绑定"><a href="#5-4-替换已有的view绑定" class="headerlink" title="5.4. 替换已有的view绑定"></a>5.4. 替换已有的view绑定</h4><p>当一个已经存在的view绑定不能满足我们需求时，我们通过注册去替代默认的继承implementations.</p>
+<pre><code class="java">BinderFactory binderFactory = new BinderFactoryBuilder()
+.add(new MyViewBindingForView().forView(View.class))
+.build();
+
+@ViewBinding
+static class MyViewBindingForView extends CustomViewBinding&lt;View&gt; {
+...
+}
+</code></pre>
+<h5 id="5-4-1-扩展一个已经存在的view绑定"><a href="#5-4-1-扩展一个已经存在的view绑定" class="headerlink" title="5.4.1. 扩展一个已经存在的view绑定"></a>5.4.1. 扩展一个已经存在的view绑定</h5><p>扩展一个已经存在的TextViewBinding，并且增加一个属性绑定。</p>
+<pre><code class="java">BinderFactory binderFactory = new BinderFactoryBuilder()
+.add(new MyTextViewBinding().extend(TextView.class))
+.build();
+
+@ViewBinding(simpleOneWayProperties={&quot;typeface&quot;})
+static class MyTextViewBinding extends CustomViewBinding&lt;TextView&gt; {
+...
+}
+</code></pre>
+<h3 id="6-Album例子的具体步骤"><a href="#6-Album例子的具体步骤" class="headerlink" title="6. Album例子的具体步骤"></a>6. Album例子的具体步骤</h3><p>Album工程是一个Martin Fowler的翻译版本<a href="http://martinfowler.com/eaaDev/PresentationModel.html" target="_blank" rel="noopener">original one</a>. 源代码如下： <a href="https://github.com/RoboBinding/RoboBinding-album-sample" target="_blank" rel="noopener">这里</a>.<br><img src="http://robobinding.github.io/RoboBinding/images/album_sample_prototype.png" alt="album_sample_prototype.png" title="Figure 6. Album Sample project prototype"><br>在接下来的几节，包名是已org.robobinding.albumsample开头的</p>
+<p>上面是这个项目的原型。这个项目遵循RoboBinding工程的架构。一个Activity由一个Activity类，布局.xml和一个原型Model组成。在项目中你能看到如下几个包：org.robobinding.albumsample.activity,该包包含所有的Activity界面类；org.robobinding.albumsample.presentationmodel,该包包含所有的原型类；org.robobinding.albumsample.model,该包包含所有的Album实现类；org.robobinding.albumsample.store,该包包含所有的AlbumStore实现类。在原型中有5个表格，分别代表如下：<br>[Home Activity]表格由.activity.HomeActivity,home_activity.xml和.presentationmodel.HomePresentationModel组成。<br>[View Albums Activity]由.activity.ViewAlbumsActivity, view_albums_activity.xml和.presentationmodel.ViewAlbumsPresentationModel组成; 每一个album条目由.presentationmodel.AlbumItemPresentationModel 和album_row.xml来构成; 当album列表是空时，用albums_empty_view.xml布局来代替。<br>[Create Album Activity]和[Edit Album Activity]两者都使用.activity.CreateEditAlbumActivity, create_edit_album_activity.xml 和.presentationmodel.CreateEditAlbumPresentationModel来构成。<br>[View Album Activity].activity.ViewAlbumActivity, view_album_activity.xml 和.presentationmodel.ViewAlbumPresentationModel组成; 它的album 删除对话框.activity.DeleteAlbumDialog, delete_album_dialog.xml和 .presentationmodel.DeleteAlbumDialogPresentationModel构成。<br>把[View Albums Activity]作为一个简单的例子来阐述如何使用RoboBinding。ViewAlbumsActivity是关联到view_albums_activity.xml和ViewAlbumsPresentationModel上面的。view_albums_activity.xml包含3个子View，一个TextView，一个ListView和一个Button。这个TextView不包含任何绑定信息。在ListView中<code>bind:source=”{albums}”</code>绑定到 ViewAlbumsPresentationModel.albums dataset property. <code>bind:onItemClick=”viewAlbum”</code> 绑定到ViewAlbumsPresentationModel.viewAlbum(ItemClickEvent) 方法上. 当album的一个条目被点击时，这个方法将被调用。当数据为空时会使用albums_empte_view.xml布局<code>bind:emptyViewLayout=”@layout/albums_empty_view”</code> 。<code>bind:itemLayout=”@layout/album_row”</code>对应每一行布局，在该布局中有两个TextView，绑定信息如下：<code>bind:text=”{title}”</code> and <code>bind:text=”{artist}”</code> 绑定到AlbumItemPresentationModel.title/artist respectively.在view_albums_activity.xml布局中的子布局是一个 Button. 它的点击事件<code>bind:onClick=”createAlbum”</code> 绑定到ViewAlbumsPresentationModel.createAlbum()方法上。</p>
+<h3 id="7-Gallery-Demos的组成"><a href="#7-Gallery-Demos的组成" class="headerlink" title="7. Gallery Demos的组成"></a>7. Gallery Demos的组成</h3><p>The entry classes mentioned below are from the package org.robobinding.gallery.activity of Robobinding Gallery project.</p>
+<ul>
+<li><p>Binding attributes demo for View. The entry class is ViewActivity.</p>
+</li>
+<li><p>Binding attributes demo for EditText. The entry class is EditTextActivity.</p>
+</li>
+<li><p>Binding attributes demo for AdapterView. The entry class is AdapterViewActivity.</p>
+</li>
+<li><p>Binding attributes demo for ListView. The entry class is ListViewActivity.</p>
+</li>
+<li><p>Binding attributes demo for RecyclerView. The entry class is RecyclerViewActivity.</p>
+</li>
+<li><p>Binding attributes demo for Custom Components. The entry class is CustomComponentActivity.</p>
+</li>
+<li><p>Demo for Object Cursor. The entry class is TypedCursorActivity.</p>
+</li>
+<li><p>Demo for Fragment &amp; ViewPager Binding. The entry class is ListFragmentDemoActivity.</p>
+</li>
+<li><p>Demo for Options Menu Binding. The entry class is OptionsMenuActivity.</p>
+</li>
+<li><p>Demo for Context Menu Binding. The entry class is ContextMenuDemoActivity.</p>
+</li>
+<li><p>Demo for Contextual Action Mode Binding. The entry class is ContextualActionModeActivity.</p>
+</li>
+</ul>
+<h3 id="8-项目结构和项目实践"><a href="#8-项目结构和项目实践" class="headerlink" title="8. 项目结构和项目实践"></a>8. 项目结构和项目实践</h3><p>Involved from MVC pattern, the major motive of Presentation Model(MVVM) pattern is to further decouple UI state and logic into a pure POJO Presentation Model, which can be easily Unit tested. Meanwhile, the dependency of View→Presentation Model→Model becomes unidirectional. When applying the pattern, these are the basic rules we will follow. <a href="https://github.com/RoboBinding/RoboBinding" target="_blank" rel="noopener">Album Sample</a> is an example that follows the best practices. Recommend to read Martin Fowler’s original article on <a href="http://martinfowler.com/eaaDev/PresentationModel.html" target="_blank" rel="noopener">Presentation Model</a>.</p>
+<h4 id="8-1-整个项目框架"><a href="#8-1-整个项目框架" class="headerlink" title="8.1. 整个项目框架"></a>8.1. 整个项目框架</h4><p><img src="http://robobinding.github.io/RoboBinding/images/project_structure.png" alt="project_structure.png" title="Figure 7. Project structure"><br>In Android app, the view layer consists of activities(fragments) and their layouts and the model layer(or business model layer) consists of various services, persistence layer, networking services, business services and so on. The diagram indicates the dependency between different layers. The view layer for example never directly accesses the business model.</p>
+<h4 id="8-2-常见问题解决方案"><a href="#8-2-常见问题解决方案" class="headerlink" title="8.2. 常见问题解决方案"></a>8.2. 常见问题解决方案</h4><ul>
+<li><p>When we are not using a third-party dependency injection lib, we may instantiate business model objects in Activities and then pass them into presentation models, but the view layer(or any activities) will not directly access any business model objects.</p>
+</li>
+<li><p>Sometimes presentation models may need to call some functionalities in the view layer. We can add view interfaces in between to decouple the relationship. Presentation models depends on view interfaces instead of the view layer, which keeps the testability of presentation models. If you prefer, you can shift these view interfaces into presentation model layer or presentation model package, so that the dependency remains unidirectional. Let us have a look a simple example below:<br>``` java<br>interface MainView {<br>void doSomeViewLogic();<br>}</p>
+</li>
+</ul>
+<p>class MainActivity extends Activity implements MainView {<br>…<br>@Override<br>protected void onCreate(Bundle savedInstanceState) {<br>…<br>PresentationModel presentationModel = new PresentationModel(this);<br>…<br>}</p>
+<p>public void doSomeViewLogic() {<br>…<br>}<br>}</p>
+<p>class PresentationModel {<br>private MainView mainView;</p>
+<p>public PresentationModel(MainView mainView) {<br>this.mainView = mainView;<br>}</p>
+<p>public void someEvent() {<br>mainView.doSomeViewLogic();<br>}<br>}<br>```</p>
+<h3 id="9-其他资源"><a href="#9-其他资源" class="headerlink" title="9. 其他资源"></a>9. 其他资源</h3><p><strong>Jan 2012</strong> Robert Taylor has written a couple of introductory articles <a href="http://roberttaylor426.blogspot.com/2011/11/hello-robobinding-part-1.html" target="_blank" rel="noopener">here</a> and <a href="http://roberttaylor426.blogspot.com/2012/01/hello-robobinding-part-2.html" target="_blank" rel="noopener">here</a>.</p>
+<p><strong>Feb 2012</strong> A video of a talk on RoboBinding at SkillsMatter, London can be found<a href="http://skillsmatter.com/podcast/os-mobile-server/core-dev-talk-robobinding" target="_blank" rel="noopener"> here</a>.</p>
+<p><strong>Jul 2014</strong> A video of a talk on RoboBinding in Chinese by Cheng Wei can be found <a href="https://www.youtube.com/watch?v=2sSBVaX77xA" target="_blank" rel="noopener">here</a>.</p>
+<p>Sep 2014 A talk at <a href="http://adilmughal.github.io/YOW2014-Android-MVVM/" target="_blank" rel="noopener">YOW 2014 Android MVVM</a> by Adil Mughal on <em>Write cleaner, maintainable and testable code in Android using MVVM</em>.</p>
+<p><a href="https://github.com/RoboBinding/AndroidMVVM" target="_blank" rel="noopener">AndroidMVVM</a> A minimal android app with MVVM.</p>
+<p><a href="https://github.com/RoboBinding/RoboBinding-album-sample" target="_blank" rel="noopener">RoboBinding album sample</a> is an Android translation of Martin Fowler’s original sample code on <a href="http://martinfowler.com/eaaDev/PresentationModel.html" target="_blank" rel="noopener">Presentation Model</a> pattern.</p>
+<p><a href="https://github.com/RoboBinding/RoboBinding-gallery" target="_blank" rel="noopener">RoboBinding Gallery</a> demonstrates RoboBinding features.</p>
+<hr>
+<p>Version 0.8.10<br>Last updated 2015-10-24 16:50:07</p>
+
+    </div>
+
+    <div class="post-footer">   
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="http://blog.csdn.net/hty1053240123?viewmode=contents" target="_blank">天宇240</a>
+            
+        </div>
+        <div>
+            
+        </div>  
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2018/01/03/应用内存优化之OnLowMemory-OnTrimMemory/" class="pre-post btn btn-default"><i class="fa fa-angle-left fa-fw"></i>上一篇</a>
+    
+    
+        <a href="/2018/01/03/AsyncTask研究/" class="next-post btn btn-default">下一篇<i class="fa fa-angle-right fa-fw"></i></a>
+    
+</div>
+
+
+    <div id="comments">
+        <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNTA2NC8xMTU5OQ==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+    </div>
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        
+    <div class="widget">    
+        <h3 class="title">搜索</h3>
+        <div id="search-form">
+            <div id="result-mask" class="hide"></div>
+            <div class="search-area">
+                
+                    <input id="search-key" type="search" autocomplete="off" placeholder="搜点什么呢?">
+                    <button type="button" class="search-form-submit" id="search-local">站内搜索</button>
+                
+                
+            </div>
+            <div id="result-wrap" class="hide">
+                <div id="search-result"></div>
+            </div>
+            <div class="hide">
+                <template id="search-tpl">
+                    <div class="item">
+                        <a href="/{path}" title="{title}">
+                            <div class="title">{title}</div>
+                            <div class="content">{content}</div>
+                        </a>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget notification">
+        <h3 class="title">网站公告</h3>
+        <div>
+            <p>公告就是醒目，为了提醒自己多学习，多总结~ <br/>
+好记忆不如烂笔头~ <br/>
+</p>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+      <h3 class="title">社交</h3> 
+        <div class="content social">
+            
+	            <a href="//github.com/huangtianyu" rel="external nofollow" title="Github" target="_blank">
+			    	<i class="git fa fa-git"></i>
+			    </a>
+            
+	            <a href="mailto:1053240123@qq.com" rel="external nofollow" title="邮箱" target="_blank">
+			    	<i class="envelope-o fa fa-envelope-o"></i>
+			    </a>
+            
+	            <a href="https://weibo.com/1804011630/" rel="external nofollow" title="微博" target="_blank">
+			    	<i class="weibo fa fa-weibo"></i>
+			    </a>
+            
+	            <a href="/atom.xml" rel="external nofollow" title="RSS" target="_blank">
+			    	<i class="feed fa fa-feed"></i>
+			    </a>
+            
+        </div>
+    </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">分类</h3>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/"><i class="fa" aria-hidden="true">Android</i></a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/"><i class="fa" aria-hidden="true">Git</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/"><i class="fa" aria-hidden="true">Hexo</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kotlin/"><i class="fa" aria-hidden="true">Kotlin</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/gradle/"><i class="fa" aria-hidden="true">gradle</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/人工智能/"><i class="fa" aria-hidden="true">人工智能</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/"><i class="fa" aria-hidden="true">设计模式</i></a><span class="category-list-count">1</span></li></ul>
+    </div>
+
+
+        
+        
+    <div class="widget">
+      <h3 class="title">归档</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/"><i class="fa" aria-hidden="true">十月 2018</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/"><i class="fa" aria-hidden="true">三月 2018</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/"><i class="fa" aria-hidden="true">二月 2018</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/"><i class="fa" aria-hidden="true">一月 2018</i></a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/"><i class="fa" aria-hidden="true">十二月 2017</i></a><span class="archive-list-count">3</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">标签云</h3>
+    <div class="content tag-cloud">
+        <a href="/tags/Android-DeepLink-源码解析/" style="font-size: 10px;">Android DeepLink 源码解析</a> <a href="/tags/Android-JNI开发/" style="font-size: 15px;">Android JNI开发</a> <a href="/tags/Android-NDK开发，JNI开发/" style="font-size: 20px;">Android NDK开发，JNI开发</a> <a href="/tags/Android学习/" style="font-size: 10px;">Android学习</a> <a href="/tags/Android源码分析/" style="font-size: 10px;">Android源码分析</a> <a href="/tags/AppLinks-DeepLinks/" style="font-size: 10px;">AppLinks, DeepLinks</a> <a href="/tags/Dex类加载/" style="font-size: 10px;">Dex类加载</a> <a href="/tags/Hexo学习/" style="font-size: 10px;">Hexo学习</a> <a href="/tags/Hexo搭建/" style="font-size: 10px;">Hexo搭建</a> <a href="/tags/Kotlin学习/" style="font-size: 15px;">Kotlin学习</a> <a href="/tags/RoboBinding-MVC-MVP/" style="font-size: 10px;">RoboBinding,MVC,MVP</a> <a href="/tags/SharedPreferences-Editor/" style="font-size: 10px;">SharedPreferences Editor</a> <a href="/tags/View-onMeasure/" style="font-size: 10px;">View onMeasure</a> <a href="/tags/ViewPager-Fragment预加载/" style="font-size: 10px;">ViewPager+Fragment预加载</a> <a href="/tags/adb命令/" style="font-size: 10px;">adb命令</a> <a href="/tags/adb查看交互Activity名称/" style="font-size: 10px;">adb查看交互Activity名称</a> <a href="/tags/gradle配置/" style="font-size: 10px;">gradle配置</a> <a href="/tags/onAttachedToWindow和onDetachedFromWindow-源码解析/" style="font-size: 10px;">onAttachedToWindow和onDetachedFromWindow,源码解析</a> <a href="/tags/onSaveInstanceState/" style="font-size: 10px;">onSaveInstanceState</a> <a href="/tags/内存优化/" style="font-size: 10px;">内存优化</a> <a href="/tags/应用内部广播-LocalBroadcastManager/" style="font-size: 10px;">应用内部广播,LocalBroadcastManager</a> <a href="/tags/查看git-bash内容/" style="font-size: 10px;">查看git bash内容</a> <a href="/tags/深度学习-吴恩达/" style="font-size: 10px;">深度学习 吴恩达</a>
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">友链</h3>
+        <div class="content friends-link">
+        
+            <a href="http://blog.csdn.net/hty1053240123?viewmode=contents" class="fa" target="_blank">个人博客</a>
+        
+            <a href="https://www.jianshu.com/u/3c8a983c71dc" class="fa" target="_blank">简书</a>
+        
+        </div>
+    </div>
+
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12"> 
+                <span>Copyright &copy; 2017
+                </span> | 
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> | 
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+	<script src="/js/search.js?rev=@@hash"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+
+    <script type="text/javascript">
+        // highlight
+        //hljs.initHighlightingOnLoad();
+    </script>
+</body>
+</html>

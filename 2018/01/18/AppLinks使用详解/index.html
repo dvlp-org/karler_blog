@@ -1,0 +1,552 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://yoursite.com">
+    <!--SEO-->
+
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+
+<title>AppLinks使用详解 | 天宇</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="天宇" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico"  type="image/x-icon">
+
+    
+
+
+
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css?rev=9.12.0">
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css?rev=3.3.4">
+<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+    <div class="hide">
+    	<script src="https://s4.cnzz.com/z_stat.php?id=1263868967&web_id=1263868967" language="JavaScript"></script>
+    </div>
+
+
+
+
+
+
+    
+    
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?c3d1d4bce7d4ef1c50d7ef35d759a5b7";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.2.0/styles/github.min.css">
+<script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+<body>
+    <header class="main-header"  style="background-image:url(/img/banner.jpg); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;"  >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title="">
+            <img src="/img/avatar.jpg" alt="logo头像">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                 <img src="/img/branding.png" alt="从未如此简单有趣">  
+             
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only">Toggle navigation</span>
+                    <i class="fa fa-bars"></i>
+                    </span>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation"><a href="/"><i class="fa fa-fw /favicon.ico"></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/前端/"><i class="fa fa-fw /favicon.ico"></i>前端</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/后端/"><i class="fa fa-fw /favicon.ico"></i>后端</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/工具/"><i class="fa fa-fw /favicon.ico"></i>工具</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/资源/"><i class="fa fa-fw /favicon.ico"></i>资源</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/关于/"><i class="fa fa-fw /favicon.ico"></i>关于</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="AppLinks使用详解">
+            
+            AppLinks使用详解
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <span>Android</span>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            AppLinks, DeepLinks
+            
+        </span>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">2018/01/18</span>
+    </span>
+
+</div>
+
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <h3 id="1-简介"><a href="#1-简介" class="headerlink" title="1. 简介"></a>1. 简介</h3><p>官方介绍<a href="https://developer.android.com/training/app-links/verify-site-associations.html#the-difference" target="_blank" rel="noopener">Android App Links</a>内容是：</p>
+<pre><code>Android App Links are a special type of deep link that allow your website URLs to immediately open the
+ corresponding content in your Android app (without requiring the user to select the app).
+
+To add Android App Links to your app, define intent filters that open your app content using HTTP URLs (as 
+described in [Create Deep Links to App Content]), and verify that you own both your app and the website 
+URLs (as described in this guide). If the system successfully verifies that you own the URLs, the system 
+automatically routes those URL intents to your app.
+</code></pre><p>意思就是AppLinks是一个特殊的DeepLink，它可以让你的应用和你的网站URL进行绑定，这样当你在点击你网站链接的时候（非浏览器中）就能调起你的App，而不是出现选择界面，使用方法如下<br><a href="https://developer.android.com/training/app-links/deep-linking.html" target="_blank" rel="noopener">Create Deep Links to App Content</a><br>这种绑定不是在点击的时候才核对链接，下面会介绍在什么情况下核对这种绑定的。</p>
+<h3 id="2-与DeepLink的区别"><a href="#2-与DeepLink的区别" class="headerlink" title="2. 与DeepLink的区别"></a>2. 与DeepLink的区别</h3><p>官方是这样介绍DeepLink的。</p>
+<pre><code>A [deep link] is an intent filter that allows users to directly enter a specific activity in your Android app. 
+Clicking one of these links might open a disambiguation dialog, which allows the user to select one of 
+multiple apps (including yours) that can hande the given URL. For example, figure 1 shows the 
+disambiguation dialog after the user clicks a map link, asking whether to open the link in Maps or Chrome.
+</code></pre><p><a href="https://developer.android.com/training/app-links/deep-linking.html" target="_blank" rel="noopener">Deeplink</a>是一个intent过滤器，他可以使用户直接进入某个Activity页面。但是有个不好的是当匹配到多个intent时就会弹一个让用户选择的框。官方给了下面一张图，而AppLinks就不会有这个弹框：<br><img src="https://upload-images.jianshu.io/upload_images/7170430-1a711d54789310a9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/200" width="200" height="400" alt="The disambiguation dialog" align="center"><br>具体区别官方也列了以下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Item</th>
+<th style="text-align:center">Deep links</th>
+<th style="text-align:left">App links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Intent URL</td>
+<td style="text-align:center">scheme    http, https, or a custom scheme</td>
+<td style="text-align:left">Requires http or https</td>
+</tr>
+<tr>
+<td style="text-align:left">Intent action</td>
+<td style="text-align:center">Any action</td>
+<td style="text-align:left">Requires android.intent.action.VIEW</td>
+</tr>
+<tr>
+<td style="text-align:left">Intent category</td>
+<td style="text-align:center">Any category</td>
+<td style="text-align:left">Requires android.intent.category.BROWSABLE and android.intent.category.DEFAULT</td>
+</tr>
+<tr>
+<td style="text-align:left">Link verification</td>
+<td style="text-align:center">None</td>
+<td style="text-align:left">Requires a Digital Asset Links file served on you website with HTTPS</td>
+</tr>
+<tr>
+<td style="text-align:left">User experience</td>
+<td style="text-align:center">May show a disambiguation dialog for the user to select which app to open the link</td>
+<td style="text-align:left">No dialog; your app opens to handle your website links</td>
+</tr>
+<tr>
+<td style="text-align:left">Compatibility</td>
+<td style="text-align:center">All Android versions</td>
+<td style="text-align:left">Android 6.0 and higher</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-使用步骤"><a href="#3-使用步骤" class="headerlink" title="3.使用步骤"></a>3.使用步骤</h3><p>官方给的步骤如下<a href="https://developer.android.com/training/app-links/index.html" target="_blank" rel="noopener">Handling Android App Links</a></p>
+<h4 id="3-1-在manifest中开启autoVerify"><a href="#3-1-在manifest中开启autoVerify" class="headerlink" title="3.1 在manifest中开启autoVerify"></a>3.1 在manifest中开启autoVerify</h4><pre><code>&lt;activity ...&gt;
+
+    &lt;intent-filter android:autoVerify=&quot;true&quot;&gt;
+        &lt;action android:name=&quot;android.intent.action.VIEW&quot; /&gt;
+        &lt;category android:name=&quot;android.intent.category.DEFAULT&quot; /&gt;
+        &lt;category android:name=&quot;android.intent.category.BROWSABLE&quot; /&gt;
+        &lt;data android:scheme=&quot;http&quot; android:host=&quot;www.example.com&quot; /&gt;
+        &lt;data android:scheme=&quot;https&quot; /&gt;
+    &lt;/intent-filter&gt;
+
+&lt;/activity&gt;
+</code></pre><p>这里注意下，开启autoVerify的activity中的<intent-filter..>的action必须为android.intent.action.VIEW，category必须包含android.intent.category.BROWSABLE，data的scheme必须包含http/https,否则不生效，而且AppLinks必须在Android 6.0 以上的手机才可生效。验证包含以下几方面：</intent-filter..></p>
+<ol>
+<li>系统会检查包含以下几方面的所有intent-filter</li>
+</ol>
+<ul>
+<li>Action: android.intent.action.VIEW</li>
+<li>Categories: android.intent.category.BROWSABLE and android.intent.category.DEFAULT</li>
+<li>Data scheme: http or https</li>
+</ul>
+<ol>
+<li>原话是：For each unique host name found in the above intent filters, Android queries the corresponding websites for the Digital Asset Links file at <a href="https://hostname/.well-known/assetlinks.json.。翻译过来就是系统会读取网站的/.well-known/assetlinks.json文件，然后验证包名和签名是否包含在assetlinks.json文件中。" target="_blank" rel="noopener">https://hostname/.well-known/assetlinks.json.。翻译过来就是系统会读取网站的/.well-known/assetlinks.json文件，然后验证包名和签名是否包含在assetlinks.json文件中。</a></li>
+</ol>
+<p>当且仅当上面两个条件满足时才会形成绑定。</p>
+<h4 id="3-2-支持多hosts的绑定。"><a href="#3-2-支持多hosts的绑定。" class="headerlink" title="3.2 支持多hosts的绑定。"></a>3.2 支持多hosts的绑定。</h4><pre><code class="xml">&lt;intent-filter&gt;
+  ...
+  &lt;data android:scheme=&quot;https&quot; android:host=&quot;www.example.com&quot; /&gt;
+  &lt;data android:scheme=&quot;app&quot; android:host=&quot;open.my.app&quot; /&gt;
+&lt;/intent-filter&gt;
+</code></pre>
+<p>上面在同一个<intent-filter ..="">里面写的两个<data ..="">，他们除了组合<a href="https://www.example.com和app://open.my.app外app://www.example.com和" target="_blank" rel="noopener">https://www.example.com和app://open.my.app外app://www.example.com和</a> <a href="https://open.my.app也是满足上面的" target="_blank" rel="noopener">https://open.my.app也是满足上面的</a><intent-filter ..="">的。而分开写的时候，不存在上面的问题。</intent-filter></data></intent-filter></p>
+<h4 id="3-3-在网站上创建assetlinks-json文件"><a href="#3-3-在网站上创建assetlinks-json文件" class="headerlink" title="3.3 在网站上创建assetlinks.json文件"></a>3.3 在网站上创建assetlinks.json文件</h4><p>具体格式如下：</p>
+<pre><code>[{
+  &quot;relation&quot;: [&quot;delegate_permission/common.handle_all_urls&quot;],
+  &quot;target&quot;: {
+    &quot;namespace&quot;: &quot;android_app&quot;,
+    &quot;package_name&quot;: &quot;com.example&quot;,
+    &quot;sha256_cert_fingerprints&quot;:
+    [&quot;14:6D:E9:83:C5:73:06:50:D8:EE:B9:95:2F:34:FC:64:16:A0:83:42:E6:1D:BE:A8:8A:04:96:B2:3F:CF:44:E5&quot;]
+  }
+}]
+</code></pre><p>其中package_name就是应用的包名，sha256_cert_fingerprints为正式版的签名。上传时修改这两个属性值。如果一个应用对于多个网站时，可以配置多个对象，配置如下：</p>
+<pre><code>[{
+  &quot;relation&quot;: [&quot;delegate_permission/common.handle_all_urls&quot;],
+  &quot;target&quot;: {
+    &quot;namespace&quot;: &quot;android_app&quot;,
+    &quot;package_name&quot;: &quot;com.example.puppies.app&quot;,
+    &quot;sha256_cert_fingerprints&quot;:
+    [&quot;14:6D:E9:83:C5:73:06:50:D8:EE:B9:95:2F:34:FC:64:16:A0:83:42:E6:1D:BE:A8:8A:04:96:B2:3F:CF:44:E5&quot;]
+  }
+  },
+  {
+  &quot;relation&quot;: [&quot;delegate_permission/common.handle_all_urls&quot;],
+  &quot;target&quot;: {
+    &quot;namespace&quot;: &quot;android_app&quot;,
+    &quot;package_name&quot;: &quot;com.example.monkeys.app&quot;,
+    &quot;sha256_cert_fingerprints&quot;:
+    [&quot;14:6D:E9:83:C5:73:06:50:D8:EE:B9:95:2F:34:FC:64:16:A0:83:42:E6:1D:BE:A8:8A:04:96:B2:3F:CF:44:E5&quot;]
+  }
+}]
+</code></pre><p>然后将该文件放在网站的.well-known目录下，放了之后要试试能不能用：</p>
+<pre><code>https://domain.name/.well-known/assetlinks.json
+</code></pre><p>提交完后确定以下几个是否正确：</p>
+<pre><code>Be sure of the following:
+
+*   The `assetlinks.json` file is served with content-type `application/json`.
+*   The `assetlinks.json` file must be accessible over an HTTPS connection, regardless of whether your app&#39;s intent filters declare HTTPS as the data scheme.
+*   The `assetlinks.json` file must be accessible without any redirects (no 301 or 302 redirects) and be accessible by bots (your `robots.txt` must allow crawling `/.well-known/assetlinks.json`).
+*   If your app links support multiple host domains, then you must publish the `assetlinks.json` file on each domain. See [Supporting app linking for multiple hosts](https://developer.android.com/training/app-links/verify-site-associations.html#multi-host).
+*   Do not publish your app with dev/test URLs in the manifest file that may not be accessible to the public (such as any that are accessible accessible only with a VPN). A work-around in such cases is to [configure build variants](https://developer.android.com/studio/build/build-variants.html) to generate a different manifest file for dev builds
+</code></pre><p>还有AppLinks仅支持https的网站。</p>
+<h4 id="3-4-测试AppLinks"><a href="#3-4-测试AppLinks" class="headerlink" title="3.4 测试AppLinks"></a>3.4 测试AppLinks</h4><ol>
+<li>测试json文件是否正确，请看 <a href="https://developers.google.com/digital-asset-links/tools/generator" target="_blank" rel="noopener">Statement List Generator and Tester</a><br>也可以采用以下链接进行验证：<pre><code>https://digitalassetlinks.googleapis.com/v1/statements:list?
+source.web.site=https://domain.name:optional_port&amp;
+relation=delegate_permission/common.handle_all_urls
+</code></pre></li>
+<li>测试intent是否正确<br>可以使用adb进行测试，命令如下：<pre><code>adb shell am start -a android.intent.action.VIEW \
+ -c android.intent.category.BROWSABLE \
+ -d &quot;http://domain.name:optional_port&quot;
+</code></pre>下面命令测试已经存在的绑定：<pre><code>adb shell dumpsys package domain-preferred-apps
+</code></pre>上面命令等价于：<pre><code>adb shell dumpsys package d
+</code></pre>如果存在绑定的会显示如下结果：<pre><code>Package: com.android.vending
+Domains: play.google.com market.android.com
+Status: always : 200000002
+</code></pre>参数含义如下：<br>```</li>
+</ol>
+<ul>
+<li>Package - Identifies an app by its package name, as declared in its manifest.</li>
+<li>Domains - Shows the full list of hosts whose web links this app handles, using blank spaces as delimiters.</li>
+<li>Status - Shows the current link-handling setting for this app. An app that has passed verification, and<br>whose manifest contains android:autoVerify=”true”, shows a status of always. The hexadecimal number after<br>this status is related to the Android system’s record of the user’s app linkage preferences. This value does<br>not indicate whether verification succeeded.<br>```</li>
+</ul>
+<h3 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h3><ol>
+<li>优点：</li>
+</ol>
+<ul>
+<li>不会弹选择框</li>
+<li>可以直接通过url跳到对应的activity</li>
+</ul>
+<ol>
+<li>缺点：</li>
+</ol>
+<ul>
+<li>网站需要支持https</li>
+<li>有个校验过程，步骤麻烦些。</li>
+</ul>
+<p>使用该机制可以直接绕过intent方式，直接通过url就能打开对应的界面。不过在设置中还是能关闭这个。目前支持该功能的应用和网站还是很少。</p>
+
+    </div>
+
+    <div class="post-footer">   
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="http://blog.csdn.net/hty1053240123?viewmode=contents" target="_blank">天宇240</a>
+            
+        </div>
+        <div>
+            
+        </div>  
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2018/01/19/Android中onSaveInstanceState和onRestoreInstanceState讲解/" class="pre-post btn btn-default"><i class="fa fa-angle-left fa-fw"></i>上一篇</a>
+    
+    
+        <a href="/2018/01/18/DeepLink用法及原理解析/" class="next-post btn btn-default">下一篇<i class="fa fa-angle-right fa-fw"></i></a>
+    
+</div>
+
+
+    <div id="comments">
+        <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNTA2NC8xMTU5OQ==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+    </div>
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        
+    <div class="widget">    
+        <h3 class="title">搜索</h3>
+        <div id="search-form">
+            <div id="result-mask" class="hide"></div>
+            <div class="search-area">
+                
+                    <input id="search-key" type="search" autocomplete="off" placeholder="搜点什么呢?">
+                    <button type="button" class="search-form-submit" id="search-local">站内搜索</button>
+                
+                
+            </div>
+            <div id="result-wrap" class="hide">
+                <div id="search-result"></div>
+            </div>
+            <div class="hide">
+                <template id="search-tpl">
+                    <div class="item">
+                        <a href="/{path}" title="{title}">
+                            <div class="title">{title}</div>
+                            <div class="content">{content}</div>
+                        </a>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget notification">
+        <h3 class="title">网站公告</h3>
+        <div>
+            <p>公告就是醒目，为了提醒自己多学习，多总结~ <br/>
+好记忆不如烂笔头~ <br/>
+</p>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+      <h3 class="title">社交</h3> 
+        <div class="content social">
+            
+	            <a href="//github.com/huangtianyu" rel="external nofollow" title="Github" target="_blank">
+			    	<i class="git fa fa-git"></i>
+			    </a>
+            
+	            <a href="mailto:1053240123@qq.com" rel="external nofollow" title="邮箱" target="_blank">
+			    	<i class="envelope-o fa fa-envelope-o"></i>
+			    </a>
+            
+	            <a href="https://weibo.com/1804011630/" rel="external nofollow" title="微博" target="_blank">
+			    	<i class="weibo fa fa-weibo"></i>
+			    </a>
+            
+	            <a href="/atom.xml" rel="external nofollow" title="RSS" target="_blank">
+			    	<i class="feed fa fa-feed"></i>
+			    </a>
+            
+        </div>
+    </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">分类</h3>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/"><i class="fa" aria-hidden="true">Android</i></a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/"><i class="fa" aria-hidden="true">Git</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/"><i class="fa" aria-hidden="true">Hexo</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kotlin/"><i class="fa" aria-hidden="true">Kotlin</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/gradle/"><i class="fa" aria-hidden="true">gradle</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/人工智能/"><i class="fa" aria-hidden="true">人工智能</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/"><i class="fa" aria-hidden="true">设计模式</i></a><span class="category-list-count">1</span></li></ul>
+    </div>
+
+
+        
+        
+    <div class="widget">
+      <h3 class="title">归档</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/"><i class="fa" aria-hidden="true">十月 2018</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/"><i class="fa" aria-hidden="true">三月 2018</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/"><i class="fa" aria-hidden="true">二月 2018</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/"><i class="fa" aria-hidden="true">一月 2018</i></a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/"><i class="fa" aria-hidden="true">十二月 2017</i></a><span class="archive-list-count">3</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">标签云</h3>
+    <div class="content tag-cloud">
+        <a href="/tags/Android-DeepLink-源码解析/" style="font-size: 10px;">Android DeepLink 源码解析</a> <a href="/tags/Android-JNI开发/" style="font-size: 15px;">Android JNI开发</a> <a href="/tags/Android-NDK开发，JNI开发/" style="font-size: 20px;">Android NDK开发，JNI开发</a> <a href="/tags/Android学习/" style="font-size: 10px;">Android学习</a> <a href="/tags/Android源码分析/" style="font-size: 10px;">Android源码分析</a> <a href="/tags/AppLinks-DeepLinks/" style="font-size: 10px;">AppLinks, DeepLinks</a> <a href="/tags/Dex类加载/" style="font-size: 10px;">Dex类加载</a> <a href="/tags/Hexo学习/" style="font-size: 10px;">Hexo学习</a> <a href="/tags/Hexo搭建/" style="font-size: 10px;">Hexo搭建</a> <a href="/tags/Kotlin学习/" style="font-size: 15px;">Kotlin学习</a> <a href="/tags/RoboBinding-MVC-MVP/" style="font-size: 10px;">RoboBinding,MVC,MVP</a> <a href="/tags/SharedPreferences-Editor/" style="font-size: 10px;">SharedPreferences Editor</a> <a href="/tags/View-onMeasure/" style="font-size: 10px;">View onMeasure</a> <a href="/tags/ViewPager-Fragment预加载/" style="font-size: 10px;">ViewPager+Fragment预加载</a> <a href="/tags/adb命令/" style="font-size: 10px;">adb命令</a> <a href="/tags/adb查看交互Activity名称/" style="font-size: 10px;">adb查看交互Activity名称</a> <a href="/tags/gradle配置/" style="font-size: 10px;">gradle配置</a> <a href="/tags/onAttachedToWindow和onDetachedFromWindow-源码解析/" style="font-size: 10px;">onAttachedToWindow和onDetachedFromWindow,源码解析</a> <a href="/tags/onSaveInstanceState/" style="font-size: 10px;">onSaveInstanceState</a> <a href="/tags/内存优化/" style="font-size: 10px;">内存优化</a> <a href="/tags/应用内部广播-LocalBroadcastManager/" style="font-size: 10px;">应用内部广播,LocalBroadcastManager</a> <a href="/tags/查看git-bash内容/" style="font-size: 10px;">查看git bash内容</a> <a href="/tags/深度学习-吴恩达/" style="font-size: 10px;">深度学习 吴恩达</a>
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">友链</h3>
+        <div class="content friends-link">
+        
+            <a href="http://blog.csdn.net/hty1053240123?viewmode=contents" class="fa" target="_blank">个人博客</a>
+        
+            <a href="https://www.jianshu.com/u/3c8a983c71dc" class="fa" target="_blank">简书</a>
+        
+        </div>
+    </div>
+
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12"> 
+                <span>Copyright &copy; 2017
+                </span> | 
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> | 
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+	<script src="/js/search.js?rev=@@hash"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+
+    <script type="text/javascript">
+        // highlight
+        //hljs.initHighlightingOnLoad();
+    </script>
+</body>
+</html>

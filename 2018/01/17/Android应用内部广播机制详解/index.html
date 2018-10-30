@@ -1,0 +1,602 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://yoursite.com">
+    <!--SEO-->
+
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+
+<title>Android应用内部广播机制详解 | 天宇</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="天宇" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico"  type="image/x-icon">
+
+    
+
+
+
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css?rev=9.12.0">
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css?rev=3.3.4">
+<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+    <div class="hide">
+    	<script src="https://s4.cnzz.com/z_stat.php?id=1263868967&web_id=1263868967" language="JavaScript"></script>
+    </div>
+
+
+
+
+
+
+    
+    
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?c3d1d4bce7d4ef1c50d7ef35d759a5b7";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.2.0/styles/github.min.css">
+<script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+<body>
+    <header class="main-header"  style="background-image:url(/img/banner.jpg); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;"  >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title="">
+            <img src="/img/avatar.jpg" alt="logo头像">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                 <img src="/img/branding.png" alt="从未如此简单有趣">  
+             
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only">Toggle navigation</span>
+                    <i class="fa fa-bars"></i>
+                    </span>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation"><a href="/"><i class="fa fa-fw /favicon.ico"></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/前端/"><i class="fa fa-fw /favicon.ico"></i>前端</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/后端/"><i class="fa fa-fw /favicon.ico"></i>后端</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/工具/"><i class="fa fa-fw /favicon.ico"></i>工具</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/资源/"><i class="fa fa-fw /favicon.ico"></i>资源</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/关于/"><i class="fa fa-fw /favicon.ico"></i>关于</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Android应用内部广播机制详解">
+            
+            Android应用内部广播机制详解
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <span>Android</span>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            应用内部广播,LocalBroadcastManager
+            
+        </span>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">2018/01/17</span>
+    </span>
+
+</div>
+
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <h3 id="1-简介"><a href="#1-简介" class="headerlink" title="1. 简介"></a>1. 简介</h3><p>通常我们在使用Android广播的时候都会直接将广播注册到系统的AMS当中，由于AMS任务繁忙，一般可能不会立即能处理到我们发出的广播，如果我们使用广播是在应用内的单个进程中使用，则完全可以采用LocalBroadcastManager来处理。LocalBroadcastManager采用的是Handler的消息机制来处理的广播，而注册到系统中的是通过Binder机制实现的，速度是应用内广播要慢很多。不过由于Handler的消息机制是为了同一个进程的多线程间进行通信的，因而跨进程时无法使用应用内广播。应用内广播onReceive也是在主线程中被回调执行。</p>
+<h4 id="1-1-使用"><a href="#1-1-使用" class="headerlink" title="1.1 使用"></a>1.1 使用</h4><p>在使用上和普通的Broadcast类似，主要分5步。具体如下：</p>
+<pre><code class="java">//1. 自定义广播接收者
+public class LocalReceiver extends BroadcastReceiver {
+    public void onReceive(Context context, Intent intent) {
+        ...
+    }
+}
+LocalReceiver localReceiver = new LocalReceiver();
+
+//2. 注册广播
+LocalBroadcastManager.getInstance(context)
+             .registerReceiver(localReceiver, new IntentFilter(“test”));
+//4. 发送广播
+LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent(&quot;test&quot;));
+//5. 取消注册广播
+LocalBroadcastManager.getInstance(context).unregisterReceiver(localReceiver);
+</code></pre>
+<p>自定义广播和普通的广播一样，在注册广播的时候将该广播接受者注册到LocalBroadcatManager中。当发生时也是调用LocalBroadcastManager的sendBroadcast进行发生。同样在不使用时记得取消广播注册。</p>
+<h3 id="2-LocalBroadcastManager"><a href="#2-LocalBroadcastManager" class="headerlink" title="2. LocalBroadcastManager"></a>2. LocalBroadcastManager</h3><h4 id="2-1-初始化"><a href="#2-1-初始化" class="headerlink" title="2.1 初始化"></a>2.1 初始化</h4><p>LocalBroadcastManager采用的是单例模式，其构造函数是私有的，获取该类实例的方法是getInstance，具体代码如下：</p>
+<pre><code class="java">  private final Handler mHandler;
+
+    private static final Object mLock = new Object();
+    private static LocalBroadcastManager mInstance;
+
+    public static LocalBroadcastManager getInstance(Context context) {
+        synchronized (mLock) {
+            if (mInstance == null) {
+                mInstance = new LocalBroadcastManager(context.getApplicationContext());
+            }
+            return mInstance;
+        }
+    }
+
+    private LocalBroadcastManager(Context context) {
+        mAppContext = context;
+        //mHandler是主线程的
+        mHandler = new Handler(context.getMainLooper()) {
+
+            @Override
+            public void handleMessage(Message msg) {
+                switch (msg.what) {
+                    case MSG_EXEC_PENDING_BROADCASTS:
+                        executePendingBroadcasts();//这里去执行广播分发
+                        break;
+                    default:
+                        super.handleMessage(msg);
+                }
+            }
+        };
+    }
+</code></pre>
+<p>在构造函数中创建了一个mHandler，该mHandler关联的是主线程的Looper。即消息处理时都在主线程中处理。</p>
+<h4 id="2-2-registerReceiver"><a href="#2-2-registerReceiver" class="headerlink" title="2.2 registerReceiver"></a>2.2 registerReceiver</h4><pre><code class="java">public void registerReceiver(BroadcastReceiver receiver, IntentFilter filter) {
+        //在注册，取消注册，发送广播的时候都需要先获取mReceivers的锁
+        synchronized (mReceivers) {
+            //新建一个ReceiverRecord实体表示该receiver及对应的filter
+            ReceiverRecord entry = new ReceiverRecord(filter, receiver);
+            //获取receiver对应的filters
+            ArrayList&lt;IntentFilter&gt; filters = mReceivers.get(receiver);
+            if (filters == null) {
+                //如果该receiver没有对应的filters则，新建一个。
+                filters = new ArrayList&lt;IntentFilter&gt;(1);
+                mReceivers.put(receiver, filters);
+            }
+            //将filter放入该receiver对应的filters中
+            filters.add(filter);
+            for (int i=0; i&lt;filter.countActions(); i++) {
+                String action = filter.getAction(i);
+                ArrayList&lt;ReceiverRecord&gt; entries = mActions.get(action);
+                if (entries == null) {
+                    entries = new ArrayList&lt;ReceiverRecord&gt;(1);
+                    //将action放入mActions中
+                    mActions.put(action, entries);
+                }
+                entries.add(entry);
+            }
+        }
+    }
+</code></pre>
+<p>注册的时候也就是将receiver自己和对应的filter及action放入到mReceivers和mActions当中。代码比较简单。</p>
+<h4 id="2-3-发送广播sendBroadcast"><a href="#2-3-发送广播sendBroadcast" class="headerlink" title="2.3 发送广播sendBroadcast"></a>2.3 发送广播sendBroadcast</h4><pre><code class="java">public boolean sendBroadcast(Intent intent) {
+        synchronized (mReceivers) {
+            final String action = intent.getAction();
+            final String type = intent.resolveTypeIfNeeded(
+                    mAppContext.getContentResolver());
+            final Uri data = intent.getData();
+            final String scheme = intent.getScheme();
+            final Set&lt;String&gt; categories = intent.getCategories();
+
+            final boolean debug = DEBUG ||
+                    ((intent.getFlags() &amp; Intent.FLAG_DEBUG_LOG_RESOLUTION) != 0);
+            if (debug) Log.v(
+                    TAG, &quot;Resolving type &quot; + type + &quot; scheme &quot; + scheme
+                    + &quot; of intent &quot; + intent);
+
+            ArrayList&lt;ReceiverRecord&gt; entries = mActions.get(intent.getAction());
+            if (entries != null) {
+                if (debug) Log.v(TAG, &quot;Action list: &quot; + entries);
+
+                ArrayList&lt;ReceiverRecord&gt; receivers = null;
+                for (int i=0; i&lt;entries.size(); i++) {
+                    ReceiverRecord receiver = entries.get(i);
+                    if (debug) Log.v(TAG, &quot;Matching against filter &quot; + receiver.filter);
+
+                    if (receiver.broadcasting) {
+                        if (debug) {
+                            Log.v(TAG, &quot;  Filter&#39;s target already added&quot;);
+                        }
+                        continue;
+                    }
+
+                    int match = receiver.filter.match(action, type, scheme, data,
+                            categories, &quot;LocalBroadcastManager&quot;);
+                    if (match &gt;= 0) {
+                        if (debug) Log.v(TAG, &quot;  Filter matched!  match=0x&quot; +
+                                Integer.toHexString(match));
+                        if (receivers == null) {
+                            receivers = new ArrayList&lt;ReceiverRecord&gt;();
+                        }
+                        receivers.add(receiver);
+                        receiver.broadcasting = true;
+                    } else {
+                        if (debug) {
+                            String reason;
+                            switch (match) {
+                                case IntentFilter.NO_MATCH_ACTION: reason = &quot;action&quot;; break;
+                                case IntentFilter.NO_MATCH_CATEGORY: reason = &quot;category&quot;; break;
+                                case IntentFilter.NO_MATCH_DATA: reason = &quot;data&quot;; break;
+                                case IntentFilter.NO_MATCH_TYPE: reason = &quot;type&quot;; break;
+                                default: reason = &quot;unknown reason&quot;; break;
+                            }
+                            Log.v(TAG, &quot;  Filter did not match: &quot; + reason);
+                        }
+                    }
+                }
+
+                if (receivers != null) {
+                    for (int i=0; i&lt;receivers.size(); i++) {
+                        receivers.get(i).broadcasting = false;
+                    }
+                    mPendingBroadcasts.add(new BroadcastRecord(intent, receivers));
+                    if (!mHandler.hasMessages(MSG_EXEC_PENDING_BROADCASTS)) {
+                        mHandler.sendEmptyMessage(MSG_EXEC_PENDING_BROADCASTS);
+                    }
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+</code></pre>
+<p>主要步骤：1.根据Intent的action来查询相应的广播接收者列表；<br>2.创建相应广播，添加到mPendingBroadcasts队列；<br>3.发送MSG_EXEC_PENDING_BROADCASTS消息。将消息传给主线程进行处理。<br>4.主线程mHandler接受到后就由该类的handlerMessage进行处理。在该方法中调用executePendingBroadcasts()进行处理</p>
+<pre><code class="java">
+    private void executePendingBroadcasts() {
+        while (true) {
+            BroadcastRecord[] brs = null;
+            synchronized (mReceivers) {//注意多线程下的同步
+                final int N = mPendingBroadcasts.size();
+                if (N &lt;= 0) {
+                    return;
+                }
+                brs = new BroadcastRecord[N];
+                mPendingBroadcasts.toArray(brs);//把待处理的广播转成数组形式
+                mPendingBroadcasts.clear();//然后就可以把mPendingBroadcasts清空
+            }
+            //for循环变量每个接受者，然后调用对应的onReceive
+            for (int i=0; i&lt;brs.length; i++) {
+                BroadcastRecord br = brs[i];
+                for (int j=0; j&lt;br.receivers.size(); j++) {
+                    br.receivers.get(j).receiver.onReceive(mAppContext, br.intent);
+                }
+            }
+        }
+    }
+</code></pre>
+<p>处理也很简单，查询相应的变量，找到有多少个接受者，然后调用接受者的onReceive，该调用在主线程中，因而不要做耗时操作。在LocalBroadcastManager中还提供了同步发送广播处理的方法：</p>
+<pre><code class="java">    //使用该方法会立即去让接受者处理广播。
+    public void sendBroadcastSync(Intent intent) {
+        if (sendBroadcast(intent)) {
+            executePendingBroadcasts();
+        }
+    }
+</code></pre>
+<h4 id="2-4-广播的注销"><a href="#2-4-广播的注销" class="headerlink" title="2.4 广播的注销"></a>2.4 广播的注销</h4><pre><code class="java"> public void unregisterReceiver(BroadcastReceiver receiver) {
+        synchronized (mReceivers) {
+            ArrayList&lt;IntentFilter&gt; filters = mReceivers.remove(receiver);
+            if (filters == null) {
+                return;
+            }
+            for (int i=0; i&lt;filters.size(); i++) {
+                IntentFilter filter = filters.get(i);
+                for (int j=0; j&lt;filter.countActions(); j++) {
+                    String action = filter.getAction(j);
+                    ArrayList&lt;ReceiverRecord&gt; receivers = mActions.get(action);
+                    if (receivers != null) {
+                        for (int k=0; k&lt;receivers.size(); k++) {
+                            if (receivers.get(k).receiver == receiver) {
+                                receivers.remove(k);
+                                k--;
+                            }
+                        }
+                        if (receivers.size() &lt;= 0) {
+                            mActions.remove(action);
+                        }
+                    }
+                }
+            }
+        }
+    }
+</code></pre>
+<p>注销广播也很简单，找到注册时候添加到List中的变量，然后remove掉。注意要讲mReceivers,mActions里面保存的都remove了。</p>
+<h3 id="3-总结"><a href="#3-总结" class="headerlink" title="3.总结"></a>3.总结</h3><p>和普通广播比，应用内广播安全，速度快。缺点是只能在应用的一个进程中使用，不能跨进程使用。</p>
+
+    </div>
+
+    <div class="post-footer">   
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="http://blog.csdn.net/hty1053240123?viewmode=contents" target="_blank">天宇240</a>
+            
+        </div>
+        <div>
+            
+        </div>  
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2018/01/18/DeepLink用法及原理解析/" class="pre-post btn btn-default"><i class="fa fa-angle-left fa-fw"></i>上一篇</a>
+    
+    
+        <a href="/2018/01/17/SharedPreferences源码详解/" class="next-post btn btn-default">下一篇<i class="fa fa-angle-right fa-fw"></i></a>
+    
+</div>
+
+
+    <div id="comments">
+        <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNTA2NC8xMTU5OQ==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+    </div>
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        
+    <div class="widget">    
+        <h3 class="title">搜索</h3>
+        <div id="search-form">
+            <div id="result-mask" class="hide"></div>
+            <div class="search-area">
+                
+                    <input id="search-key" type="search" autocomplete="off" placeholder="搜点什么呢?">
+                    <button type="button" class="search-form-submit" id="search-local">站内搜索</button>
+                
+                
+            </div>
+            <div id="result-wrap" class="hide">
+                <div id="search-result"></div>
+            </div>
+            <div class="hide">
+                <template id="search-tpl">
+                    <div class="item">
+                        <a href="/{path}" title="{title}">
+                            <div class="title">{title}</div>
+                            <div class="content">{content}</div>
+                        </a>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget notification">
+        <h3 class="title">网站公告</h3>
+        <div>
+            <p>公告就是醒目，为了提醒自己多学习，多总结~ <br/>
+好记忆不如烂笔头~ <br/>
+</p>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+      <h3 class="title">社交</h3> 
+        <div class="content social">
+            
+	            <a href="//github.com/huangtianyu" rel="external nofollow" title="Github" target="_blank">
+			    	<i class="git fa fa-git"></i>
+			    </a>
+            
+	            <a href="mailto:1053240123@qq.com" rel="external nofollow" title="邮箱" target="_blank">
+			    	<i class="envelope-o fa fa-envelope-o"></i>
+			    </a>
+            
+	            <a href="https://weibo.com/1804011630/" rel="external nofollow" title="微博" target="_blank">
+			    	<i class="weibo fa fa-weibo"></i>
+			    </a>
+            
+	            <a href="/atom.xml" rel="external nofollow" title="RSS" target="_blank">
+			    	<i class="feed fa fa-feed"></i>
+			    </a>
+            
+        </div>
+    </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">分类</h3>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/"><i class="fa" aria-hidden="true">Android</i></a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/"><i class="fa" aria-hidden="true">Git</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/"><i class="fa" aria-hidden="true">Hexo</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kotlin/"><i class="fa" aria-hidden="true">Kotlin</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/gradle/"><i class="fa" aria-hidden="true">gradle</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/人工智能/"><i class="fa" aria-hidden="true">人工智能</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/"><i class="fa" aria-hidden="true">设计模式</i></a><span class="category-list-count">1</span></li></ul>
+    </div>
+
+
+        
+        
+    <div class="widget">
+      <h3 class="title">归档</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/"><i class="fa" aria-hidden="true">十月 2018</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/"><i class="fa" aria-hidden="true">三月 2018</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/"><i class="fa" aria-hidden="true">二月 2018</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/"><i class="fa" aria-hidden="true">一月 2018</i></a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/"><i class="fa" aria-hidden="true">十二月 2017</i></a><span class="archive-list-count">3</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">标签云</h3>
+    <div class="content tag-cloud">
+        <a href="/tags/Android-DeepLink-源码解析/" style="font-size: 10px;">Android DeepLink 源码解析</a> <a href="/tags/Android-JNI开发/" style="font-size: 15px;">Android JNI开发</a> <a href="/tags/Android-NDK开发，JNI开发/" style="font-size: 20px;">Android NDK开发，JNI开发</a> <a href="/tags/Android学习/" style="font-size: 10px;">Android学习</a> <a href="/tags/Android源码分析/" style="font-size: 10px;">Android源码分析</a> <a href="/tags/AppLinks-DeepLinks/" style="font-size: 10px;">AppLinks, DeepLinks</a> <a href="/tags/Dex类加载/" style="font-size: 10px;">Dex类加载</a> <a href="/tags/Hexo学习/" style="font-size: 10px;">Hexo学习</a> <a href="/tags/Hexo搭建/" style="font-size: 10px;">Hexo搭建</a> <a href="/tags/Kotlin学习/" style="font-size: 15px;">Kotlin学习</a> <a href="/tags/RoboBinding-MVC-MVP/" style="font-size: 10px;">RoboBinding,MVC,MVP</a> <a href="/tags/SharedPreferences-Editor/" style="font-size: 10px;">SharedPreferences Editor</a> <a href="/tags/View-onMeasure/" style="font-size: 10px;">View onMeasure</a> <a href="/tags/ViewPager-Fragment预加载/" style="font-size: 10px;">ViewPager+Fragment预加载</a> <a href="/tags/adb命令/" style="font-size: 10px;">adb命令</a> <a href="/tags/adb查看交互Activity名称/" style="font-size: 10px;">adb查看交互Activity名称</a> <a href="/tags/gradle配置/" style="font-size: 10px;">gradle配置</a> <a href="/tags/onAttachedToWindow和onDetachedFromWindow-源码解析/" style="font-size: 10px;">onAttachedToWindow和onDetachedFromWindow,源码解析</a> <a href="/tags/onSaveInstanceState/" style="font-size: 10px;">onSaveInstanceState</a> <a href="/tags/内存优化/" style="font-size: 10px;">内存优化</a> <a href="/tags/应用内部广播-LocalBroadcastManager/" style="font-size: 10px;">应用内部广播,LocalBroadcastManager</a> <a href="/tags/查看git-bash内容/" style="font-size: 10px;">查看git bash内容</a> <a href="/tags/深度学习-吴恩达/" style="font-size: 10px;">深度学习 吴恩达</a>
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">友链</h3>
+        <div class="content friends-link">
+        
+            <a href="http://blog.csdn.net/hty1053240123?viewmode=contents" class="fa" target="_blank">个人博客</a>
+        
+            <a href="https://www.jianshu.com/u/3c8a983c71dc" class="fa" target="_blank">简书</a>
+        
+        </div>
+    </div>
+
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12"> 
+                <span>Copyright &copy; 2017
+                </span> | 
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> | 
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+	<script src="/js/search.js?rev=@@hash"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+
+    <script type="text/javascript">
+        // highlight
+        //hljs.initHighlightingOnLoad();
+    </script>
+</body>
+</html>

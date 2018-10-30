@@ -24,7 +24,7 @@
     <!--Title-->
 
 
-<title>天宇</title>
+<title>Android中Handler导致内存泄漏的原理分析 | 天宇</title>
 
 
     <link rel="alternate" href="/atom.xml" title="天宇" type="application/atom+xml">
@@ -36,6 +36,8 @@
 
 
 
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css?rev=9.12.0">
 
 
 <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css?rev=3.3.4">
@@ -134,154 +136,16 @@ var _hmt = _hmt || [];
     <section class="content-wrap">
         <div class="container">
             <div class="row">
-                <main class="col-md-8 main-content ">
-                    <div class="carousel">
-    <img src="/img/head-img.jpg">
-</div>
-
-
-
-
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
 <article class="post">
-    
-    <div class="post-content">
-        <div class="post-head home-post-head">
-            <h1 class="post-title">
-                <a href="/2018/10/05/Kotlin学习笔记二-常用操作符/">Kotlin学习笔记二--常用操作符</a>
-            </h1>
-            <div class="post-meta">  &bull;
-                <time class="post-date" datetime="" title="">
-                    2018年10月05日
-                </time>
-            </div>
-        </div>
-        <p class="brief">
-            ?操作符表示这个对象可能为空
-//在变量类型后面加上问号表示该变量是可空变量
-var name: String? = &quot;test&quot;
-返回值类型若可能为空则也需加?
-fun parseInt(str: String)...
-        </p> 
-    </div>
-    <footer class="post-footer clearfix">
-        <div class="pull-left tag-list">
-            <div class="post-meta">
-    
-    
-    <span class="categories-meta fa-wrap">
-        <i class="fa fa-folder-open-o"></i>
-        <span>Kotlin</span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-tags"></i>
-        <span class="tags-meta">
+    <div class="post-head">
+        <h1 id="Android中Handler导致内存泄漏的原理分析">
             
-            Kotlin学习
+            Android中Handler导致内存泄漏的原理分析
             
-        </span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-clock-o"></i>
-        <span class="date-meta">2018/10/05</span>
-    </span>
-
-</div>
-
-        </div>
-
-        <div class="post-permalink"> 
-            <a href="/2018/10/05/Kotlin学习笔记二-常用操作符/" class="btn btn-default">阅读全文</a>
-        </div>
-    </footer>
-</article>
-
-
-<article class="post">
-    
-    <div class="post-content">
-        <div class="post-head home-post-head">
-            <h1 class="post-title">
-                <a href="/2018/10/03/Kotlin学习笔记一-基本语法/">Kotlin学习笔记一</a>
-            </h1>
-            <div class="post-meta">  &bull;
-                <time class="post-date" datetime="" title="">
-                    2018年10月03日
-                </time>
-            </div>
-        </div>
-        <p class="brief">
-            Kotlin简介Kotlin是一门与Swift类似的静态类型JVM语言，由JetBrains设计开发并开源。与Java相比，Kotlin的语法更简洁、更具表达性，而且提供了更多的特性，比如，高阶函数、操作符重载、字符串模板。它与Jav...
-        </p> 
-    </div>
-    <footer class="post-footer clearfix">
-        <div class="pull-left tag-list">
-            <div class="post-meta">
-    
-    
-    <span class="categories-meta fa-wrap">
-        <i class="fa fa-folder-open-o"></i>
-        <span>Kotlin</span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-tags"></i>
-        <span class="tags-meta">
-            
-            Kotlin学习
-            
-        </span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-clock-o"></i>
-        <span class="date-meta">2018/10/03</span>
-    </span>
-
-</div>
-
-        </div>
-
-        <div class="post-permalink"> 
-            <a href="/2018/10/03/Kotlin学习笔记一-基本语法/" class="btn btn-default">阅读全文</a>
-        </div>
-    </footer>
-</article>
-
-
-<article class="post">
-    
-        <div class="post-media">
-            <a href="javascript:">
-                <img class="img-ajax" src="/img/loading.gif"  data-src="//img-blog.csdn.net/20180322123239909?watermark/2/text/Ly9ibG9nLmNzZG4ubmV0L2h0eTEwNTMyNDAxMjM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"   alt="Android中Handler导致内存泄漏的原理分析"> 
-            </a>
-        </div>
-    
-    <div class="post-content">
-        <div class="post-head home-post-head">
-            <h1 class="post-title">
-                <a href="/2018/03/22/Android中Handler导致内存泄漏的原理分析/">Android中Handler导致内存泄漏的原理分析</a>
-            </h1>
-            <div class="post-meta">  &bull;
-                <time class="post-date" datetime="" title="">
-                    2018年03月22日
-                </time>
-            </div>
-        </div>
-        <p class="brief">
-            1. 简介在写Android应用程序时，Handler应该是很常见的一个类。我们一般在使用该类时有采用如下方法：
-// 1.新建一个匿名的Handler内部类，并重新handleMessage
-private Handler mHan...
-        </p> 
-    </div>
-    <footer class="post-footer clearfix">
-        <div class="pull-left tag-list">
-            <div class="post-meta">
+        </h1>
+        <div class="post-meta">
     
     
     <span class="categories-meta fa-wrap">
@@ -307,186 +171,241 @@ private Handler mHan...
 
 </div>
 
-        </div>
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <h3 id="1-简介"><a href="#1-简介" class="headerlink" title="1. 简介"></a>1. 简介</h3><p>在写Android应用程序时，Handler应该是很常见的一个类。我们一般在使用该类时有采用如下方法：</p>
+<pre><code>// 1.新建一个匿名的Handler内部类，并重新handleMessage
+private Handler mHandler = new Handler() {
+    @Override
+    public void handleMessage(Message msg) {
+        switch (msg.what) {
+            case 1:
+                //主线程可以更新UI
+                Log.e(&quot;handler&quot;, &quot;case 1&quot;);
+                break;
+            default:
+                Log.e(&quot;handler&quot;, &quot;default&quot;);
+                break;
+        }
+    }
+};
 
-        <div class="post-permalink"> 
-            <a href="/2018/03/22/Android中Handler导致内存泄漏的原理分析/" class="btn btn-default">阅读全文</a>
+private void doInBackground() {
+    new Thread(){
+        @Override
+        public void run() {
+            //2.在工作线程中完成具体的事情
+            try {
+                // TODO doSomething();
+                sleep(6000);
+            } catch (Exception e) {
+
+            }
+            //3.事情完成后，通过mHandler线程间消息传递给主线程的Handler进行更新操作
+            mHandler.sendEmptyMessage(1);
+        }
+    }.start();
+}
+</code></pre><p>上面新建Handler时也可以采用如下方法：</p>
+<pre><code>private Handler mHandler;
+
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.about_and_feedback);
+    mContext = this;
+    mHandler = new MyHandler();
+}
+
+private class MyHandler extends Handler {
+    @Override
+    public void handleMessage(Message msg) {
+        switch (msg.what) {
+            case 1:
+                //主线程可以更新UI
+                Log.e(&quot;handler&quot;, &quot;case 1&quot;);
+                break;
+            default:
+                Log.e(&quot;handler&quot;, &quot;default&quot;);
+                break;
+        }
+    }
+}
+</code></pre><p>以上两种方式都是新建了一个匿名的内部类，并直接new给了mHandler变量。采用如上方式使用Handler时会有内存泄漏的风险。</p>
+<h3 id="2-原理剖析"><a href="#2-原理剖析" class="headerlink" title="2. 原理剖析"></a>2. 原理剖析</h3><h4 id="2-1-Android的约定"><a href="#2-1-Android的约定" class="headerlink" title="2.1 Android的约定"></a>2.1 Android的约定</h4><p>在Android中主线程的Looper对象的生命周期是和应用程序的生命周期是一样的，这也就意味在主线程的Looper是一直存在的。同时在Java中非静态内部类或者匿名内部类都是默认持有外部类的引用的，这两个内部类的存在是依赖于外部类的对象的。比如如下例子：</p>
+<pre><code>//OutClass.java
+public class OutClass {
+    public class InnerClass {
+
+    }
+}
+//Client.java
+public class Client {
+    public static void main(String[] args) {
+        //要想new一个InnerClass，必须先new一个OutClass
+        //OutClass.InnerClass inn = new OutClass.InnerClass();//这句代码是错误的，会编译不过
+        OutClass out = new OutClass();
+        OutClass.InnerClass inn = out.new InnerClass();//这句可以编译过，这里就新建了一个依赖于out这个变量的内部类
+    }
+}
+</code></pre><p>单独new InnerClass()是编译不过的，非静态内部类或者匿名内部类是依赖于外部类的，默认是持有外部类的引用的。</p>
+<h4 id="2-2-具体原理分析"><a href="#2-2-具体原理分析" class="headerlink" title="2.2 具体原理分析"></a>2.2 具体原理分析</h4><p>我们在通过mHandler.sendEmptyMessage(1)时，消息Message会被发送的MessageQueue里面，也就是Looper里面的mQueue，消息Message如果有延迟处理时，会留在MessageQueue里面，而Message是持有mHandler的引用，而mHandler是通过匿名内部类的形式创建的，会默认持有外部类Activity的引用。而我们的Looper对象的生命周期和应用程序生命周期一样长。这样在GC垃圾回收机制进行回收时发现这个Activity居然还有其他引用存在，因而就不会去回收这个Activity。<br><img src="//img-blog.csdn.net/20180322123239909?watermark/2/text/Ly9ibG9nLmNzZG4ubmV0L2h0eTEwNTMyNDAxMjM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="具体原理"></p>
+<h3 id="3-解决方案"><a href="#3-解决方案" class="headerlink" title="3. 解决方案"></a>3. 解决方案</h3><h4 id="3-1-在Activity结束时将Handler里面的Message清空"><a href="#3-1-在Activity结束时将Handler里面的Message清空" class="headerlink" title="3.1 在Activity结束时将Handler里面的Message清空"></a>3.1 在Activity结束时将Handler里面的Message清空</h4><p>由于在Activity结束后，Handler里面的消息还没有被处理导致，消息不处理完Handler的引用就一直存在。因而我们可以在onDestroy中将Handler里面的消息给清空了，这样就不会有消息引用Handler了，也就不会因为Handler引用Activity导致Activity无法释放了。具体代码如下：</p>
+<pre><code>@Override
+protected void onDestroy() {
+    super.onDestroy();
+    //将Handler里面消息清空了。
+    mHandler.removeCallbacksAndMessages(null);
+}
+</code></pre><h4 id="3-2-静态内部类-弱引用"><a href="#3-2-静态内部类-弱引用" class="headerlink" title="3.2 静态内部类+弱引用"></a>3.2 静态内部类+弱引用</h4><p>为了避免非静态内部类&amp;匿名内部类持有外部类引用可以采用静态内部类或者直接在外部编写该Handler的继承类。如果该类需要使用Activity相关变量，可以采用弱引用的方式将Activity的变量传过去。在获取Activity的时候还可以加上判断当前Activity是不是isFinishing的代码，避免因为当前Activity已经进入了finish状态，还去引用这个Activity。具体代码如下：</p>
+<pre><code>public class NoLeakHandler&lt;T&gt; extends Handler {
+
+    private final WeakReference&lt;T&gt; mTargetRef;
+
+    public NoLeakHandler(T target) {
+        mTargetRef = new WeakReference(target);
+    }
+    public NoLeakHandler(Looper looper, T target) {
+        super(looper);
+        mTargetRef = new WeakReference(target);
+    }
+
+    public NoLeakHandler(Callback callback, T target) {
+        super(callback);
+        mTargetRef = new WeakReference(target);
+    }
+
+    public NoLeakHandler(Looper looper, Callback callback, T target) {
+        super(looper, callback);
+        mTargetRef = new WeakReference(target);
+    }
+
+    @Override
+    public final void dispatchMessage(Message msg) {
+        //这里可以判断下当前的Activity是不是处于finish状态，如果处于activity.isFinishing()状态则target也为空
+        if (checkNotLeak(mTargetRef) != null) {
+            super.dispatchMessage(msg);
+        }
+    }
+
+    @Override
+    public final void handleMessage(Message msg) {
+        T target;
+        if ((target = checkNotLeak(mTargetRef)) != null) {
+            processMessage(target, msg);
+        }
+    }
+    protected void processMessage(T context, Message msg) {}
+}
+</code></pre><p>Utils.java</p>
+<pre><code>
+private static Class&lt;?&gt; sFragmentClassSupport;
+private static Method sGetActivitySupport;
+private static Class&lt;?&gt; sFragmentClass;
+private static Method sGetActivity;
+
+static {
+    try {
+        sFragmentClassSupport = Class.forName(&quot;android.support.v4.app.Fragment&quot;, false,
+                Thread.currentThread().getContextClassLoader());
+        sGetActivitySupport = sFragmentClassSupport.getDeclaredMethod(&quot;getActivity&quot;);
+    } catch (Exception e) {
+        sFragmentClassSupport = null;
+        sGetActivitySupport = null;
+    }
+
+    try {
+        sFragmentClass = Class.forName(&quot;android.app.Fragment&quot;, false,
+                Thread.currentThread().getContextClassLoader());
+        sGetActivity = sFragmentClass.getDeclaredMethod(&quot;getActivity&quot;);
+    } catch (Exception e) {
+        sFragmentClass = null;
+        sGetActivity = null;
+    }
+}
+//该方法主要判断当前的Activity是不是isFinishing，如果是则返回null。
+public static &lt;T&gt; T checkNotLeak(WeakReference&lt;T&gt; ref) {
+    T target = (ref != null ? ref.get() : null);
+    if (target != null) {
+        Activity activity = null;
+        //is the target instance which shows in the foreground (usually {@link Activity} or {@link Fragment})
+        boolean isShowForeground = false;
+        if ((sFragmentClassSupport != null) &amp;&amp; (sFragmentClassSupport.isInstance(target))) {
+            isShowForeground = true;
+            try {
+                activity = (Activity) sGetActivitySupport.invoke(target, (Object[]) null);
+            } catch (Exception ignored) {
+            }
+        } else if ((target instanceof Activity)) {
+            isShowForeground = true;
+            activity = (Activity) target;
+        } else if ((sFragmentClass != null) &amp;&amp; (sFragmentClass.isInstance(target))) {
+            isShowForeground = true;
+            try {
+                activity = (Activity) sGetActivity.invoke(target, (Object[]) null);
+            } catch (Exception ignored) {
+            }
+        }
+
+        if (isShowForeground) {
+            if ((activity == null) || activity.isFinishing()) {
+                return null;
+            }
+        }
+    }
+    return target;
+}
+</code></pre><h3 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h3><p>Handler导致内存泄漏的原因也就是因为在Looper的MessageQueue里面有还未处理的Message，而该Message又引用了Handler，如果该Handler采用的是非静态内部类或匿名内部类则该Handler又持有外部类Activity的引用，导致了Activity无法是否，因而产生了内存泄漏。<br>在最开始的代码中其中的线程Thread是直接new Thread(){}.start();的，这也会产生内存泄漏，因为该Thread也是匿名内部类，会持有Activity的引用，如果该Thread一直未执行完，也会导致内存泄漏。解决办法还是静态内部类+弱引用的方法。大家可以自己试试。</p>
+
+    </div>
+
+    <div class="post-footer">   
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="http://blog.csdn.net/hty1053240123?viewmode=contents" target="_blank">天宇240</a>
+            
         </div>
-    </footer>
+        <div>
+            
+        </div>  
+    </div>
 </article>
 
-
-<article class="post">
+<div class="article-nav prev-next-wrap clearfix">
     
-    <div class="post-content">
-        <div class="post-head home-post-head">
-            <h1 class="post-title">
-                <a href="/2018/03/06/解决ViewPager+Fragment预加载导致未显示界面提前加载数据/">解决ViewPager+Fragment预加载导致未显示界面提前加载数据</a>
-            </h1>
-            <div class="post-meta">  &bull;
-                <time class="post-date" datetime="" title="">
-                    2018年03月06日
-                </time>
-            </div>
-        </div>
-        <p class="brief">
-            1. 简介当我们使用ViewPager+Fragment结构时，由于谷歌在设计ViewPager时会提前加载下一个界面。虽然用户在滑动到下一页时不会感觉卡顿。但这也存在一个问题：当进入Activity时，当前界面和下一个界面均由网络请...
-        </p> 
-    </div>
-    <footer class="post-footer clearfix">
-        <div class="pull-left tag-list">
-            <div class="post-meta">
+        <a href="/2018/10/03/Kotlin学习笔记一-基本语法/" class="pre-post btn btn-default"><i class="fa fa-angle-left fa-fw"></i>上一篇</a>
     
     
-    <span class="categories-meta fa-wrap">
-        <i class="fa fa-folder-open-o"></i>
-        <span>Android</span>
-    </span>
+        <a href="/2018/03/06/解决ViewPager+Fragment预加载导致未显示界面提前加载数据/" class="next-post btn btn-default">下一篇<i class="fa fa-angle-right fa-fw"></i></a>
     
-    
-    <span class="fa-wrap">
-        <i class="fa fa-tags"></i>
-        <span class="tags-meta">
-            
-            ViewPager+Fragment预加载
-            
-        </span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-clock-o"></i>
-        <span class="date-meta">2018/03/06</span>
-    </span>
-
 </div>
 
-        </div>
 
-        <div class="post-permalink"> 
-            <a href="/2018/03/06/解决ViewPager+Fragment预加载导致未显示界面提前加载数据/" class="btn btn-default">阅读全文</a>
-        </div>
-    </footer>
-</article>
+    <div id="comments">
+        <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNTA2NC8xMTU5OQ==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
 
+       if (typeof LivereTower === 'function') { return; }
 
-<article class="post">
-    
-    <div class="post-content">
-        <div class="post-head home-post-head">
-            <h1 class="post-title">
-                <a href="/2018/02/06/Android-NDK开发系列教程5：局部引用，全局引用，弱全局引用/">Android NDK开发系列教程5：局部引用，全局引用，弱全局引用</a>
-            </h1>
-            <div class="post-meta">  &bull;
-                <time class="post-date" datetime="" title="">
-                    2018年02月06日
-                </time>
-            </div>
-        </div>
-        <p class="brief">
-            1. 简介从Java虚拟机创建的对象当传入到native层时会产生一个引用，在进行垃圾回收时如果有native的引用，改对象同样也不会被回收。在native引用中分局部引用和全局引用。
-1.1 局部引用局部引用又称本地引用，大多数见到...
-        </p> 
-    </div>
-    <footer class="post-footer clearfix">
-        <div class="pull-left tag-list">
-            <div class="post-meta">
-    
-    
-    <span class="categories-meta fa-wrap">
-        <i class="fa fa-folder-open-o"></i>
-        <span>Android</span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-tags"></i>
-        <span class="tags-meta">
-            
-            Android JNI开发
-            
-        </span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-clock-o"></i>
-        <span class="date-meta">2018/02/06</span>
-    </span>
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
 
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用评论功能请激活JavaScript</noscript>
 </div>
-
-        </div>
-
-        <div class="post-permalink"> 
-            <a href="/2018/02/06/Android-NDK开发系列教程5：局部引用，全局引用，弱全局引用/" class="btn btn-default">阅读全文</a>
-        </div>
-    </footer>
-</article>
-
-
-<article class="post">
-    
-    <div class="post-content">
-        <div class="post-head home-post-head">
-            <h1 class="post-title">
-                <a href="/2018/02/04/Android-NDK开发系列教程4：对类变量进行操作/">Android NDK开发系列教程4：对类变量进行操作</a>
-            </h1>
-            <div class="post-meta">  &bull;
-                <time class="post-date" datetime="" title="">
-                    2018年02月04日
-                </time>
-            </div>
-        </div>
-        <p class="brief">
-            通常我们也可以直接利用jni来访问和处理类的变量，不一定非要通过Java方法来操作Java类变量。对类变量操作时，类的静态变量和类的实例变量的操作稍微有些不同，下面进行讲解。
-对类的静态变量进行操作类的静态变量属于类，是所有该类实例共...
-        </p> 
+<!-- City版安装代码已完成 -->
     </div>
-    <footer class="post-footer clearfix">
-        <div class="pull-left tag-list">
-            <div class="post-meta">
-    
-    
-    <span class="categories-meta fa-wrap">
-        <i class="fa fa-folder-open-o"></i>
-        <span>Android</span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-tags"></i>
-        <span class="tags-meta">
-            
-            Android JNI开发
-            
-        </span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-clock-o"></i>
-        <span class="date-meta">2018/02/04</span>
-    </span>
-
-</div>
-
-        </div>
-
-        <div class="post-permalink"> 
-            <a href="/2018/02/04/Android-NDK开发系列教程4：对类变量进行操作/" class="btn btn-default">阅读全文</a>
-        </div>
-    </footer>
-</article>
 
 
-
-
-    <nav class="pagination" role="navigation">
-        <div id="page-nav">
-            <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class='fa fa-angle-right'></i></a>
-        </div>
-    </nav>
 
 
 

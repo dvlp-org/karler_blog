@@ -1,0 +1,583 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://yoursite.com">
+    <!--SEO-->
+
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+
+<title> Android NDK开发系列教程2：基本方法调用及传参 | 天宇</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="天宇" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico"  type="image/x-icon">
+
+    
+
+
+
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css?rev=9.12.0">
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css?rev=3.3.4">
+<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+    <div class="hide">
+    	<script src="https://s4.cnzz.com/z_stat.php?id=1263868967&web_id=1263868967" language="JavaScript"></script>
+    </div>
+
+
+
+
+
+
+    
+    
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?c3d1d4bce7d4ef1c50d7ef35d759a5b7";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.2.0/styles/github.min.css">
+<script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+<body>
+    <header class="main-header"  style="background-image:url(/img/banner.jpg); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;"  >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title="">
+            <img src="/img/avatar.jpg" alt="logo头像">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                 <img src="/img/branding.png" alt="从未如此简单有趣">  
+             
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only">Toggle navigation</span>
+                    <i class="fa fa-bars"></i>
+                    </span>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation"><a href="/"><i class="fa fa-fw /favicon.ico"></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/前端/"><i class="fa fa-fw /favicon.ico"></i>前端</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/后端/"><i class="fa fa-fw /favicon.ico"></i>后端</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/工具/"><i class="fa fa-fw /favicon.ico"></i>工具</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/资源/"><i class="fa fa-fw /favicon.ico"></i>资源</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/关于/"><i class="fa fa-fw /favicon.ico"></i>关于</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id=" Android NDK开发系列教程2：基本方法调用及传参">
+            
+             Android NDK开发系列教程2：基本方法调用及传参
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <span>Android</span>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            Android NDK开发，JNI开发
+            
+        </span>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">2018/02/02</span>
+    </span>
+
+</div>
+
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <h3 id="1-简介"><a href="#1-简介" class="headerlink" title="1. 简介"></a>1. 简介</h3><p>有时候我写了个Java层的方法，希望native层也能够调用（尤其是一个实体类的get，set方法在native一般都会用到）。这在jni开发中也很常见，jni.h中也提供了很多方法。下面利用具体实例进行说明。这里直接使用AS3.0里面的CMake进行编译了，之后会讲解下Android.mk和Application.mk的用法和含义。这里我主要介绍一下几个：</p>
+<ol>
+<li>java向native传递常用基本数据类型和字符串类型</li>
+<li>java向native传递数组类型</li>
+<li>java向native传递自定义java对象</li>
+<li>java向native传递List对象</li>
+</ol>
+<h4 id="1-1-java和jni类型对照表"><a href="#1-1-java和jni类型对照表" class="headerlink" title="1.1 java和jni类型对照表"></a>1.1 java和jni类型对照表</h4><p>在我们调用方法时会用到方法的签名，使用类变量时需要用该变量对应的jni类型。下面给出对应的类型对照表。</p>
+<ol>
+<li>基本数据类型对照表：<br><img src="http://img.blog.csdn.net/20180201185144006?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvaHR5MTA1MzI0MDEyMw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></li>
+<li>对象类型对照表：<br><img src="http://img.blog.csdn.net/20180201185721731?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvaHR5MTA1MzI0MDEyMw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></li>
+<li>简写对应表<br><img src="http://img.blog.csdn.net/20180202143637829?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvaHR5MTA1MzI0MDEyMw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><h3 id="2-具体例子"><a href="#2-具体例子" class="headerlink" title="2. 具体例子"></a>2. 具体例子</h3><h4 id="2-1-java向native传递常用基本数据类型和字符串类型"><a href="#2-1-java向native传递常用基本数据类型和字符串类型" class="headerlink" title="2.1 java向native传递常用基本数据类型和字符串类型"></a>2.1 java向native传递常用基本数据类型和字符串类型</h4>强大的AS在你写了java的native方法后，直接快捷键按Alt+Enter后即可生成对应的方法。<br>java层的方法：<pre><code>package zqc.com.example;
+public class NativeTest {
+ // Used to load the &#39;native-lib&#39; library on application startup.
+ static {
+     System.loadLibrary(&quot;native-lib&quot;);
+ }
+ //定义一个native方法，然后传入基本数据类型和String型
+ public native void java2jniMethod1(boolean b, int i, float f, String s);
+}
+</code></pre>生成后的native方法：<pre><code>extern &quot;C&quot;
+JNIEXPORT void JNICALL
+Java_zqc_com_example_NativeTest_java2jniMethod1(JNIEnv *env, jobject instance, jboolean b, jint i,
+                                             jfloat f, jstring s_) {
+ //在native层会把string转换成c/c++都特别熟悉的char*，由char*可以转string,wstring等等。
+ //在Java层String是对象，这里讲char*指针指向了该对象，在方法结束的时候记得要是否该指针引用
+ if (b == JNI_TRUE) {
+     LOGE(&quot;b is true&quot;);
+ } else {
+     LOGE(&quot;b is false&quot;);
+ }
+ float nativi = i + f;
+ LOGE(&quot;native i: %f&quot;, nativi);
+ const char *s = env-&gt;GetStringUTFChars(s_, 0);
+ LOGE(&quot;native string: %s&quot;, s);
+ env-&gt;ReleaseStringUTFChars(s_, s);
+}
+</code></pre>在上面可以看到，Java层的基本类型方法都会经过jni进行转换，转换成相应的jni类型。其操作也很方便。Java的String类型需要注意下，一般是将jstring先转换为char<em>然后对char </em>进行操作。由于这获取了一个局部引用，一般在调用结束后需要释放该局部引用。</li>
+</ol>
+<h4 id="2-2-java向native传递数组类型"><a href="#2-2-java向native传递数组类型" class="headerlink" title="2.2 java向native传递数组类型"></a>2.2 java向native传递数组类型</h4><pre><code>    //向native传递数组类型
+    public native void java2jniMethod2(int[] as, String[] strs);
+</code></pre><p>对应的jni方法是：</p>
+<pre><code>extern &quot;C&quot;
+JNIEXPORT void JNICALL
+Java_zqc_com_example_NativeTest_java2jniMethod2(JNIEnv *env, jobject instance, jintArray as_,
+                                                jobjectArray strs) {
+    //获取数组里面内容
+    jint *as = env-&gt;GetIntArrayElements(as_, NULL);
+    int result = 0, len = env-&gt;GetArrayLength(as_);
+    for (int i = 0; i &lt; len; ++i) {
+        result += as[i];
+    }
+    LOGE(&quot;intarray sum is %d&quot;, result);
+    env-&gt;ReleaseIntArrayElements(as_, as, 0);
+    //这里可以看出String[]对应的是jobjectArray
+    len = env-&gt;GetArrayLength(strs);
+    for (int i = 0; i &lt; len; ++i) {
+        jstring temp = (jstring) env-&gt;GetObjectArrayElement(strs, i);
+        const char *ctemp = env-&gt;GetStringUTFChars(temp, JNI_FALSE);
+        LOGE(&quot;第%d个：%s&quot;, i, ctemp);
+    }
+}
+</code></pre><p>其中函数： jsize GetArrayLength(jxxxarray array);用于获取数组的长度<br>在Java端调用代码如下：</p>
+<pre><code>    NativeTest test = new NativeTest();
+    int a[] = new int[3];
+    for (int i=0;i&lt;a.length;i++) {
+        a[i] = i + 10;
+    }
+    String[] strs = new String[4];
+    for (int i=0;i&lt;strs.length;i++) {
+        strs[i] = &quot;我的值：&quot;+i;
+    }
+    test.java2jniMethod2(a,strs);
+</code></pre><h5 id="2-2-1-处理基本数据类型有以下几个相关函数："><a href="#2-2-1-处理基本数据类型有以下几个相关函数：" class="headerlink" title="2.2.1 处理基本数据类型有以下几个相关函数："></a>2.2.1 处理基本数据类型有以下几个相关函数：</h5><p>(1) GetXXXArrayElements(Array arr , jboolean* isCopide);<br>这类函数可以把Java基本类型的数组转换到C/C++中的数组，有两种处理方式，一种JNI_TRUE是拷贝一份传回本地代码，另一个是JNI_FALSE把指向Java数组的指针直接传回到本地代码中，处理完本地化的数组后，通过ReleaseXXXArrayElements来释放数组</p>
+<p>(2) ReleaseXXXArrayElements(Array arr , * array , jint mode)<br>用这个函数可以选择将如何处理Java跟C++的数组，是提交，还是撤销等，内存释放还是不释放等mode可以取下面的值:<br>0 ：对Java的数组进行更新并释放C/C++的数组<br>JNI_COMMIT ：对Java的数组进行更新但是不释放C/C++的数组<br>JNI_ABORT：对Java的数组不进行更新,释放C/C++的数组</p>
+<p>(3) GetPrimitiveArrayCritical(jarray arr , jboolean* isCopied);<br>在获得数组上的锁后将返回一个句柄给数组。如果没有建立任何锁，则isCopy被置为JNI_TRUE，否则置为NULL或JNI_FALSE：</p>
+<p>(4) ReleasePrimitiveArrayCritical(jarray arr , void* array , jint mode);<br>释放从GetPrimitiveArrayCritical调用中返回的数组。也是JDK1.2出来的，为了增加直接传回指向Java数组的指针而加入的函数，同样的也会有同GetStringCritical的死锁的问题。mode取值如下：<br>0：从carray中复制值到数组中，并释放分配给carray的存储器<br>JNI_COMMIT：从carray中复制值到数组中，但是不释放分配给carray的存储器<br>JNI_ABORT：不从carray中复制值到数组中</p>
+<p>(5) GetXXXArrayRegion(Array arr , jsize start , jsize len , * buffer);<br>在C/C++预先开辟一段内存，然后把Java基本类型的数组拷贝到这段内存中。用于一个数组子集的复制操作。参数start指定了从何处复制的起始索引，参数len则指定了从数组中复制到本机数组的多个位置数量。</p>
+<p>(6) SetXXXArrayRegion(Array arr , jsize start , jsize len , const * buffer);<br>用来复制本机数组的一段内容回Java数组中。元素一般从本机数组起始处（索引为0）开始复制，但是只是从位置start开始将len个元素复制到Java数组中。</p>
+<p>(7) Array NewXXXArray(jsize sz)<br>创建一个包含length个元素的Java数组。</p>
+<h5 id="2-2-2-处理对象数组类型有以下几个相关函数："><a href="#2-2-2-处理对象数组类型有以下几个相关函数：" class="headerlink" title="2.2.2 处理对象数组类型有以下几个相关函数："></a>2.2.2 处理对象数组类型有以下几个相关函数：</h5><p>(1)  jobjectArray NewObjectArray(jsize length, jclass elementClass, jobject initialElement );<br>创建对象数组，创建一个长度为length，并且持有类型为elementClass的对象的对象数组，数组中的所有元素都被置为initialElement</p>
+<p>(2)  jobject GetObjectArrayElement(jobjectArray array, jsize Index);<br>获取数组元素，通过Index指定的索引在array中获取一个对象，如果索引超出边界，会抛出一个IndexOutOfBoundsException</p>
+<p>(3) void SetObjectArrayElement(jobjectArray array, jsize index,jobject value);<br>设置元素值。在array中通过index指定的索引处设置元素值为value，如果index超出边界，会抛出一个IndexOutOfBoundException。</p>
+<h4 id="2-3-java向native传递自定义java对象"><a href="#2-3-java向native传递自定义java对象" class="headerlink" title="2.3  java向native传递自定义java对象"></a>2.3  java向native传递自定义java对象</h4><p>定义一个Java层方法：</p>
+<pre><code class="java">package zqc.com.example;
+/**
+ * Created by zhangqianchu on 2018/2/1.
+ */
+class Person {
+    long id;
+    String name;
+    int age;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return &quot;Person{&quot; +
+                &quot;id=&quot; + id +
+                &quot;, name=&#39;&quot; + name + &#39;\&#39;&#39; +
+                &quot;, age=&quot; + age +
+                &#39;}&#39;;
+    }
+}
+</code></pre>
+<p>定义一个Java的native方法：</p>
+<pre><code>    //Java向native传自定义类对象
+    public native void java2jniMethod3(Person person);
+</code></pre><p>在native层实现</p>
+<pre><code>extern &quot;C&quot;
+JNIEXPORT void JNICALL
+Java_zqc_com_example_NativeTest_java2jniMethod3(JNIEnv *env, jobject instance, jobject person) {
+    jclass cls = env-&gt;FindClass(&quot;zqc/com/example/Person&quot;);
+    if (cls == 0) {
+        LOGE(&quot;find class fail&quot;);
+        return;
+    }
+    jmethodID mid_ID = env-&gt;GetMethodID(cls, &quot;setId&quot;, &quot;(J)V&quot;);
+    jmethodID mid_Name = env-&gt;GetMethodID(cls, &quot;setName&quot;, &quot;(Ljava/lang/String;)V&quot;);
+    jmethodID mid_Age = env-&gt;GetMethodID(cls, &quot;setAge&quot;, &quot;(I)V&quot;);
+    if (mid_ID &amp;&amp; mid_Name &amp;&amp; mid_Age) {
+        env-&gt;CallVoidMethod(person, mid_ID, 100L);
+        jstring name = env-&gt;NewStringUTF(&quot;Tianyu&quot;);
+        env-&gt;CallVoidMethod(person, mid_Name, name);
+        env-&gt;CallVoidMethod(person, mid_Age, 18);
+        return;
+    }
+}
+</code></pre><p>在Java端调用</p>
+<pre><code>Person person = new Person();
+test.java2jniMethod3(person);
+Toast.makeText(this, person.toString(),Toast.LENGTH_SHORT).show();
+</code></pre><p>从Java端传对象实例给native时，到native端任何对象都变为jobject类型，如果要做对该对象实例的任何操作需先获取该对象的jfieldID ,jmethodID,然后通过env-&gt;CallXXXMethod来操作该对象的方法其中第一个参数是该对象的具体实例，其中env-&gt;CallStaticXXXMethod方法用来调用该类的静态方法，调用静态方法的时候就不用传具体的对象过去了。</p>
+<h4 id="2-4-java向native传递List对象"><a href="#2-4-java向native传递List对象" class="headerlink" title="2.4 java向native传递List对象"></a>2.4 java向native传递List对象</h4><p>定义Java的native方法</p>
+<pre><code>//Java向native传List对象
+public native void java2jniMethod4(List&lt;Person&gt;people);
+</code></pre><p>在native中实现具体方法：</p>
+<pre><code>extern &quot;C&quot;
+JNIEXPORT void JNICALL
+Java_zqc_com_example_NativeTest_java2jniMethod4(JNIEnv *env, jobject instance, jobject people) {
+    //下面所有操作都得先判断是否为空。。。
+    jclass cls = env-&gt;GetObjectClass(people);
+    jclass pcls = env-&gt;FindClass(&quot;zqc/com/example/Person&quot;);
+    //jmethodID getNameMid = env-&gt;GetMethodID(pcls, &quot;getName&quot;, &quot;()Ljava/lang/String;&quot;);
+    jmethodID  setNameMid = env-&gt;GetMethodID(pcls, &quot;setName&quot;, &quot;(Ljava/lang/String;)V&quot;);
+    //获取List的get方法id
+    jmethodID getMid = env-&gt;GetMethodID(cls, &quot;get&quot;, &quot;(I)Ljava/lang/Object;&quot;);
+    //获取List的长度
+    jmethodID sizeMid = env-&gt;GetMethodID(cls, &quot;size&quot;, &quot;()I&quot;);
+    int len = env-&gt;CallIntMethod(people, sizeMid);
+    for (int i = 0; i &lt; len; ++i) {
+        //获取第i个元素
+        jobject  data = env-&gt;CallObjectMethod(people, getMid, i);
+        env-&gt;CallVoidMethod(data, setNameMid, env-&gt;NewStringUTF(&quot;全部随我native&quot;));
+    }
+}
+</code></pre><p><code> jclass cls = env-&gt;GetObjectClass(people);</code>这是获取一个对象实例相应的类的最好的办法。从上面可以看出List在传到native时也是变成了jobject，然后具体操作都得通过env-&gt;GetObjectClass先获取到该类，然后获取到该类的具体jmethodID，jfieldID来完成相应的操作。调用的方法也是env-&gt;CallXXXMethod()。<br>然后在Java端调用该native方法：</p>
+<pre><code>    NativeTest test = new NativeTest();
+    List&lt;Person&gt; people = new ArrayList&lt;&gt;();
+    for (int i = 0; i &lt; 3; i++) {
+        Person person1 = new Person();
+        person1.setName(&quot;我是Java层&quot;);
+        people.add(person1);
+    }
+    test.java2jniMethod4(people);
+    Iterator&lt;Person&gt; iterator = people.iterator();
+    while (iterator.hasNext()) {
+        Person person1 = iterator.next();
+        Log.e(&quot;myndk&quot;, person1.getName() + &quot;\n&quot;);
+    }
+</code></pre><p>在上面即可通过native将Person的name全部进行了更改。</p>
+<p><b>上面</b>都是Java向native传参，基本用法都类似。基本数据类型有相应的对照表，对象类型的都转为jobject，对对象的操作都是先获取该对象jclass,jmethodID,jfielID后再对对象实例进行操作。</p>
+
+    </div>
+
+    <div class="post-footer">   
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="http://blog.csdn.net/hty1053240123?viewmode=contents" target="_blank">天宇240</a>
+            
+        </div>
+        <div>
+            
+        </div>  
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2018/02/02/Android-NDK开发系列教程3：基本方法调用及传参（续）/" class="pre-post btn btn-default"><i class="fa fa-angle-left fa-fw"></i>上一篇</a>
+    
+    
+        <a href="/2018/02/01/Android-NDK开发系列教程1：环境搭建及基本代码结构/" class="next-post btn btn-default">下一篇<i class="fa fa-angle-right fa-fw"></i></a>
+    
+</div>
+
+
+    <div id="comments">
+        <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNTA2NC8xMTU5OQ==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+    </div>
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        
+    <div class="widget">    
+        <h3 class="title">搜索</h3>
+        <div id="search-form">
+            <div id="result-mask" class="hide"></div>
+            <div class="search-area">
+                
+                    <input id="search-key" type="search" autocomplete="off" placeholder="搜点什么呢?">
+                    <button type="button" class="search-form-submit" id="search-local">站内搜索</button>
+                
+                
+            </div>
+            <div id="result-wrap" class="hide">
+                <div id="search-result"></div>
+            </div>
+            <div class="hide">
+                <template id="search-tpl">
+                    <div class="item">
+                        <a href="/{path}" title="{title}">
+                            <div class="title">{title}</div>
+                            <div class="content">{content}</div>
+                        </a>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget notification">
+        <h3 class="title">网站公告</h3>
+        <div>
+            <p>公告就是醒目，为了提醒自己多学习，多总结~ <br/>
+好记忆不如烂笔头~ <br/>
+</p>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+      <h3 class="title">社交</h3> 
+        <div class="content social">
+            
+	            <a href="//github.com/huangtianyu" rel="external nofollow" title="Github" target="_blank">
+			    	<i class="git fa fa-git"></i>
+			    </a>
+            
+	            <a href="mailto:1053240123@qq.com" rel="external nofollow" title="邮箱" target="_blank">
+			    	<i class="envelope-o fa fa-envelope-o"></i>
+			    </a>
+            
+	            <a href="https://weibo.com/1804011630/" rel="external nofollow" title="微博" target="_blank">
+			    	<i class="weibo fa fa-weibo"></i>
+			    </a>
+            
+	            <a href="/atom.xml" rel="external nofollow" title="RSS" target="_blank">
+			    	<i class="feed fa fa-feed"></i>
+			    </a>
+            
+        </div>
+    </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">分类</h3>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/"><i class="fa" aria-hidden="true">Android</i></a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/"><i class="fa" aria-hidden="true">Git</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/"><i class="fa" aria-hidden="true">Hexo</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kotlin/"><i class="fa" aria-hidden="true">Kotlin</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/gradle/"><i class="fa" aria-hidden="true">gradle</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/人工智能/"><i class="fa" aria-hidden="true">人工智能</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/"><i class="fa" aria-hidden="true">设计模式</i></a><span class="category-list-count">1</span></li></ul>
+    </div>
+
+
+        
+        
+    <div class="widget">
+      <h3 class="title">归档</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/"><i class="fa" aria-hidden="true">十月 2018</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/"><i class="fa" aria-hidden="true">三月 2018</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/"><i class="fa" aria-hidden="true">二月 2018</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/"><i class="fa" aria-hidden="true">一月 2018</i></a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/"><i class="fa" aria-hidden="true">十二月 2017</i></a><span class="archive-list-count">3</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">标签云</h3>
+    <div class="content tag-cloud">
+        <a href="/tags/Android-DeepLink-源码解析/" style="font-size: 10px;">Android DeepLink 源码解析</a> <a href="/tags/Android-JNI开发/" style="font-size: 15px;">Android JNI开发</a> <a href="/tags/Android-NDK开发，JNI开发/" style="font-size: 20px;">Android NDK开发，JNI开发</a> <a href="/tags/Android学习/" style="font-size: 10px;">Android学习</a> <a href="/tags/Android源码分析/" style="font-size: 10px;">Android源码分析</a> <a href="/tags/AppLinks-DeepLinks/" style="font-size: 10px;">AppLinks, DeepLinks</a> <a href="/tags/Dex类加载/" style="font-size: 10px;">Dex类加载</a> <a href="/tags/Hexo学习/" style="font-size: 10px;">Hexo学习</a> <a href="/tags/Hexo搭建/" style="font-size: 10px;">Hexo搭建</a> <a href="/tags/Kotlin学习/" style="font-size: 15px;">Kotlin学习</a> <a href="/tags/RoboBinding-MVC-MVP/" style="font-size: 10px;">RoboBinding,MVC,MVP</a> <a href="/tags/SharedPreferences-Editor/" style="font-size: 10px;">SharedPreferences Editor</a> <a href="/tags/View-onMeasure/" style="font-size: 10px;">View onMeasure</a> <a href="/tags/ViewPager-Fragment预加载/" style="font-size: 10px;">ViewPager+Fragment预加载</a> <a href="/tags/adb命令/" style="font-size: 10px;">adb命令</a> <a href="/tags/adb查看交互Activity名称/" style="font-size: 10px;">adb查看交互Activity名称</a> <a href="/tags/gradle配置/" style="font-size: 10px;">gradle配置</a> <a href="/tags/onAttachedToWindow和onDetachedFromWindow-源码解析/" style="font-size: 10px;">onAttachedToWindow和onDetachedFromWindow,源码解析</a> <a href="/tags/onSaveInstanceState/" style="font-size: 10px;">onSaveInstanceState</a> <a href="/tags/内存优化/" style="font-size: 10px;">内存优化</a> <a href="/tags/应用内部广播-LocalBroadcastManager/" style="font-size: 10px;">应用内部广播,LocalBroadcastManager</a> <a href="/tags/查看git-bash内容/" style="font-size: 10px;">查看git bash内容</a> <a href="/tags/深度学习-吴恩达/" style="font-size: 10px;">深度学习 吴恩达</a>
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">友链</h3>
+        <div class="content friends-link">
+        
+            <a href="http://blog.csdn.net/hty1053240123?viewmode=contents" class="fa" target="_blank">个人博客</a>
+        
+            <a href="https://www.jianshu.com/u/3c8a983c71dc" class="fa" target="_blank">简书</a>
+        
+        </div>
+    </div>
+
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12"> 
+                <span>Copyright &copy; 2017
+                </span> | 
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> | 
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+	<script src="/js/search.js?rev=@@hash"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+
+    <script type="text/javascript">
+        // highlight
+        //hljs.initHighlightingOnLoad();
+    </script>
+</body>
+</html>

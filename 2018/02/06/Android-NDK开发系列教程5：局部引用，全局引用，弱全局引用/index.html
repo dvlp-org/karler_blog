@@ -24,7 +24,7 @@
     <!--Title-->
 
 
-<title>天宇</title>
+<title>Android NDK开发系列教程5：局部引用，全局引用，弱全局引用 | 天宇</title>
 
 
     <link rel="alternate" href="/atom.xml" title="天宇" type="application/atom+xml">
@@ -36,6 +36,8 @@
 
 
 
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css?rev=9.12.0">
 
 
 <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css?rev=3.3.4">
@@ -134,263 +136,16 @@ var _hmt = _hmt || [];
     <section class="content-wrap">
         <div class="container">
             <div class="row">
-                <main class="col-md-8 main-content ">
-                    <div class="carousel">
-    <img src="/img/head-img.jpg">
-</div>
-
-
-
-
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
 <article class="post">
-    
-    <div class="post-content">
-        <div class="post-head home-post-head">
-            <h1 class="post-title">
-                <a href="/2018/10/05/Kotlin学习笔记二-常用操作符/">Kotlin学习笔记二--常用操作符</a>
-            </h1>
-            <div class="post-meta">  &bull;
-                <time class="post-date" datetime="" title="">
-                    2018年10月05日
-                </time>
-            </div>
-        </div>
-        <p class="brief">
-            ?操作符表示这个对象可能为空
-//在变量类型后面加上问号表示该变量是可空变量
-var name: String? = &quot;test&quot;
-返回值类型若可能为空则也需加?
-fun parseInt(str: String)...
-        </p> 
-    </div>
-    <footer class="post-footer clearfix">
-        <div class="pull-left tag-list">
-            <div class="post-meta">
-    
-    
-    <span class="categories-meta fa-wrap">
-        <i class="fa fa-folder-open-o"></i>
-        <span>Kotlin</span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-tags"></i>
-        <span class="tags-meta">
+    <div class="post-head">
+        <h1 id="Android NDK开发系列教程5：局部引用，全局引用，弱全局引用">
             
-            Kotlin学习
+            Android NDK开发系列教程5：局部引用，全局引用，弱全局引用
             
-        </span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-clock-o"></i>
-        <span class="date-meta">2018/10/05</span>
-    </span>
-
-</div>
-
-        </div>
-
-        <div class="post-permalink"> 
-            <a href="/2018/10/05/Kotlin学习笔记二-常用操作符/" class="btn btn-default">阅读全文</a>
-        </div>
-    </footer>
-</article>
-
-
-<article class="post">
-    
-    <div class="post-content">
-        <div class="post-head home-post-head">
-            <h1 class="post-title">
-                <a href="/2018/10/03/Kotlin学习笔记一-基本语法/">Kotlin学习笔记一</a>
-            </h1>
-            <div class="post-meta">  &bull;
-                <time class="post-date" datetime="" title="">
-                    2018年10月03日
-                </time>
-            </div>
-        </div>
-        <p class="brief">
-            Kotlin简介Kotlin是一门与Swift类似的静态类型JVM语言，由JetBrains设计开发并开源。与Java相比，Kotlin的语法更简洁、更具表达性，而且提供了更多的特性，比如，高阶函数、操作符重载、字符串模板。它与Jav...
-        </p> 
-    </div>
-    <footer class="post-footer clearfix">
-        <div class="pull-left tag-list">
-            <div class="post-meta">
-    
-    
-    <span class="categories-meta fa-wrap">
-        <i class="fa fa-folder-open-o"></i>
-        <span>Kotlin</span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-tags"></i>
-        <span class="tags-meta">
-            
-            Kotlin学习
-            
-        </span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-clock-o"></i>
-        <span class="date-meta">2018/10/03</span>
-    </span>
-
-</div>
-
-        </div>
-
-        <div class="post-permalink"> 
-            <a href="/2018/10/03/Kotlin学习笔记一-基本语法/" class="btn btn-default">阅读全文</a>
-        </div>
-    </footer>
-</article>
-
-
-<article class="post">
-    
-        <div class="post-media">
-            <a href="javascript:">
-                <img class="img-ajax" src="/img/loading.gif"  data-src="//img-blog.csdn.net/20180322123239909?watermark/2/text/Ly9ibG9nLmNzZG4ubmV0L2h0eTEwNTMyNDAxMjM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"   alt="Android中Handler导致内存泄漏的原理分析"> 
-            </a>
-        </div>
-    
-    <div class="post-content">
-        <div class="post-head home-post-head">
-            <h1 class="post-title">
-                <a href="/2018/03/22/Android中Handler导致内存泄漏的原理分析/">Android中Handler导致内存泄漏的原理分析</a>
-            </h1>
-            <div class="post-meta">  &bull;
-                <time class="post-date" datetime="" title="">
-                    2018年03月22日
-                </time>
-            </div>
-        </div>
-        <p class="brief">
-            1. 简介在写Android应用程序时，Handler应该是很常见的一个类。我们一般在使用该类时有采用如下方法：
-// 1.新建一个匿名的Handler内部类，并重新handleMessage
-private Handler mHan...
-        </p> 
-    </div>
-    <footer class="post-footer clearfix">
-        <div class="pull-left tag-list">
-            <div class="post-meta">
-    
-    
-    <span class="categories-meta fa-wrap">
-        <i class="fa fa-folder-open-o"></i>
-        <span>Android</span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-tags"></i>
-        <span class="tags-meta">
-            
-            Android源码分析
-            
-        </span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-clock-o"></i>
-        <span class="date-meta">2018/03/22</span>
-    </span>
-
-</div>
-
-        </div>
-
-        <div class="post-permalink"> 
-            <a href="/2018/03/22/Android中Handler导致内存泄漏的原理分析/" class="btn btn-default">阅读全文</a>
-        </div>
-    </footer>
-</article>
-
-
-<article class="post">
-    
-    <div class="post-content">
-        <div class="post-head home-post-head">
-            <h1 class="post-title">
-                <a href="/2018/03/06/解决ViewPager+Fragment预加载导致未显示界面提前加载数据/">解决ViewPager+Fragment预加载导致未显示界面提前加载数据</a>
-            </h1>
-            <div class="post-meta">  &bull;
-                <time class="post-date" datetime="" title="">
-                    2018年03月06日
-                </time>
-            </div>
-        </div>
-        <p class="brief">
-            1. 简介当我们使用ViewPager+Fragment结构时，由于谷歌在设计ViewPager时会提前加载下一个界面。虽然用户在滑动到下一页时不会感觉卡顿。但这也存在一个问题：当进入Activity时，当前界面和下一个界面均由网络请...
-        </p> 
-    </div>
-    <footer class="post-footer clearfix">
-        <div class="pull-left tag-list">
-            <div class="post-meta">
-    
-    
-    <span class="categories-meta fa-wrap">
-        <i class="fa fa-folder-open-o"></i>
-        <span>Android</span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-tags"></i>
-        <span class="tags-meta">
-            
-            ViewPager+Fragment预加载
-            
-        </span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-clock-o"></i>
-        <span class="date-meta">2018/03/06</span>
-    </span>
-
-</div>
-
-        </div>
-
-        <div class="post-permalink"> 
-            <a href="/2018/03/06/解决ViewPager+Fragment预加载导致未显示界面提前加载数据/" class="btn btn-default">阅读全文</a>
-        </div>
-    </footer>
-</article>
-
-
-<article class="post">
-    
-    <div class="post-content">
-        <div class="post-head home-post-head">
-            <h1 class="post-title">
-                <a href="/2018/02/06/Android-NDK开发系列教程5：局部引用，全局引用，弱全局引用/">Android NDK开发系列教程5：局部引用，全局引用，弱全局引用</a>
-            </h1>
-            <div class="post-meta">  &bull;
-                <time class="post-date" datetime="" title="">
-                    2018年02月06日
-                </time>
-            </div>
-        </div>
-        <p class="brief">
-            1. 简介从Java虚拟机创建的对象当传入到native层时会产生一个引用，在进行垃圾回收时如果有native的引用，改对象同样也不会被回收。在native引用中分局部引用和全局引用。
-1.1 局部引用局部引用又称本地引用，大多数见到...
-        </p> 
-    </div>
-    <footer class="post-footer clearfix">
-        <div class="pull-left tag-list">
-            <div class="post-meta">
+        </h1>
+        <div class="post-meta">
     
     
     <span class="categories-meta fa-wrap">
@@ -416,77 +171,154 @@ private Handler mHan...
 
 </div>
 
-        </div>
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <h3 id="1-简介"><a href="#1-简介" class="headerlink" title="1. 简介"></a>1. 简介</h3><p>从Java虚拟机创建的对象当传入到native层时会产生一个引用，在进行垃圾回收时如果有native的引用，改对象同样也不会被回收。在native引用中分局部引用和全局引用。</p>
+<h4 id="1-1-局部引用"><a href="#1-1-局部引用" class="headerlink" title="1.1 局部引用"></a>1.1 局部引用</h4><p>局部引用又称本地引用，大多数见到的引用都是局部引用，例如通过NewLocalRef和各种JNI接口创建（FindClass、NewObject、GetObjectClass和NewCharArray等），局部引用只会在本次native调用中有效，当本次调用结束后该引用即被自动释放。局部引用会阻止GC进行回收。同时也可以调用DeleteLocalRef函数来手动释放（比如在循环里面用到了局部引用而退出循环没有使用该局部引用，那么就需要在循环中释放该局部引用）。通常使用NewObject创建的实例返回的也是局部引用。千万不要把局部引用保存为c++的全局变量或者把它定义为静态变量，局部引用的有效期是一次Java本地调用。<br>JNI提供了一系列函数来管理局部引用的生命周期。这些函数包括：EnsureLocalCapacity、NewLocalRef、PushLocalFrame、PopLocalFrame、DeleteLocalRef。</p>
+<pre><code>    //申请扩充局部引用的最大个数限制，返回值等于0的时候表示成功,&gt;0时表示内存溢出。默认至少16个局部引用可以使用，引用数超出时报FatalError
+    jint (*EnsureLocalCapacity)(JNIEnv*, jint);
 
-        <div class="post-permalink"> 
-            <a href="/2018/02/06/Android-NDK开发系列教程5：局部引用，全局引用，弱全局引用/" class="btn btn-default">阅读全文</a>
+    /* PushLocalFrame是一个创建本地引用新作用域的有用函数，这使得PushLocalFrame函数可以释放其使用的框架中所有已分配的本地引用。当该函数被调用时，本地引用的最低数量将在本框架中被创建。该函数如果执行成功则返回0，如果由于错误抛出一个OutOfMemoryException，则返回一个负值。*/   
+    jint PushLocalFrame(jint capacity);
+
+    /*PopLocalFrame函数释放当前框架中的所有本地引用（弹出一个框架）。因为存储该函数的结果（返回值）可能会导致在即将被弹出的框架中创建一个本地引用，该函数接收一个可以导致引用在当前框架被弹出之后的最高框架中创建的参数。这就确保可以维护一个存储PopLocalFrame函数结果的引用。*/
+    jobject PopLocalFrame(jobject result);
+</code></pre><p>PushLocalFrame为当前函数中局部引用创建了一个引用堆栈，在每遍历一次调用(*env)-&gt;GetObjectArrayElement(env, arr, i);返回一个局部引用时，JVM会自动将该引用压入当前局部引用栈中。而PopLocalFrame负责将栈中所有引用释放。这样一来，Push/PopLocalFrame函数对提供了对局部引用生命周期更方便的管理，不用再去一个个Delete了。</p>
+<h4 id="1-2-全局引用"><a href="#1-2-全局引用" class="headerlink" title="1.2 全局引用"></a>1.2 全局引用</h4><p>全局引用可以在当前线程使用，也可以在其他线程使用，可以保存在本地的static静态变量或全局变量中，全局引用需要调用NewGlobalRel函数创建，释放时采用ReleaseGlobalRef函数释放。有效作用域在创建后，一直到调用ReleaseGlobalRef释放时。</p>
+<h4 id="1-3-弱全局引用"><a href="#1-3-弱全局引用" class="headerlink" title="1.3 弱全局引用"></a>1.3 弱全局引用</h4><p>在Java1.2中，新增了弱全局引用，与全局变量一样其创建、删除均需要编程写出，也可以在本地多个代码中使用，也可以跨进程使用。不一样的是，它的存在不影响垃圾回收机制对该引用所指向对象实例的回收。其创建采用NewWeakGlobalRef，释放采用ReleaseWeakGlobalRel。</p>
+<p>以上涉及的函数主要有以下几个：</p>
+<pre><code class="c++">//创建局部引用
+jobject NewLocalRef(jobject obj);
+//释放局部引用
+void DeleteLocalRef(jobject obj);
+//创建全局引用
+jobject NewGlobalRef(jobject obj);
+//释放全局引用
+void DeleteGobalRef(jobject obj);
+//创建弱全局引用
+jobject NewWeakGlobalRef(jobject obj);
+//释放弱全局引用
+void DeleteWeakGlobalRef(jobject obj);
+//该方法判断两个引用是否相等，对于弱全局引用如果对比的是NULL那么还可以判断该引用指向的对象是否被回收
+jboolean IsSameObject(jobject obj1 , jobject obj2);
+</code></pre>
+<p>上述三中引用会影响内存的回收，在C/C++中没有向Java一样的垃圾回收机制，自己申请的内存要记得自己去释放了，否则会导致内存泄漏。虽然现在C/C++里面也有智能指针，但相对而言这个智能指针用起来不如Java。所以在C的世界里要遵循谁申请，谁释放的基本原则。</p>
+<h3 id="2-举个栗子"><a href="#2-举个栗子" class="headerlink" title="2. 举个栗子"></a>2. 举个栗子</h3><p>上面介绍了基本知识，下面给出相应的例子来进行说明下。</p>
+<h4 id="2-1局部引用"><a href="#2-1局部引用" class="headerlink" title="2.1局部引用"></a>2.1局部引用</h4><pre><code>    //1. 局部引用不要存储在static变量中，即使存了下次也不能用
+    //static jclass cls;
+    //以下创建的局部引用都放入到栈中
+    env-&gt;PushLocalFrame(16);
+    jclass cls;
+    if (!cls) {//这里就错误了，前一次方法完成后jvm会释放局部引用，这里static存的值仅第一次有效
+        cls = env-&gt;GetObjectClass(instance);//这里的cls是局部引用
+    }
+
+    //删除栈里面的局部引用
+    env-&gt;PopLocalFrame(NULL);
+    env-&gt;EnsureLocalCapacity(20);//将本地引用的最大限制改为20
+    //下面可以进行其他操作。。。
+</code></pre><p>在局部引用中要注意以下几方面：</p>
+<ol>
+<li>循环体内创建的局部引用，要在循环体内就直接释放了。</li>
+<li>编写的工具函数，里面创建的局部引用，要在该工具函数里面释放了。</li>
+<li>局部引用引用了一个大的Java对象，这时候一定一定要早点释放了。</li>
+<li>局部引用不要缓存在native层</li>
+</ol>
+<h4 id="2-2-全局引用"><a href="#2-2-全局引用" class="headerlink" title="2.2 全局引用"></a>2.2 全局引用</h4><pre><code>extern &quot;C&quot;
+JNIEXPORT void JNICALL
+Java_zqc_com_example_NativeTest_jniGlobalRef(JNIEnv *env, jobject instance) {
+    static jobject obj;
+    static jclass pCls;
+    if (obj) {//第二次点击时，这里就不会空
+        //由于obj和personCls被保存为全局引用了，所有这里使用仍然有效
+        jmethodID getId = env-&gt;GetMethodID(pCls, &quot;getName&quot;, &quot;()Ljava/lang/String;&quot;);
+        jstring name = (jstring) env-&gt;CallObjectMethod(obj, getId);
+        LOGE(&quot;obj is not null, name:%s&quot;, jstringToChar(env, name));
+        return;
+    }
+    if (!pCls) {//为空就去新建
+        jclass tmpCls = env-&gt;FindClass(&quot;zqc/com/example/Person&quot;);
+        pCls = (jclass) env-&gt;NewGlobalRef(tmpCls);
+        env-&gt;DeleteLocalRef(tmpCls);
+    }
+    jmethodID conMid = env-&gt;GetMethodID(pCls, &quot;&lt;init&gt;&quot;, &quot;()V&quot;);
+    jobject tmpObj = env-&gt;NewObject(pCls, conMid);
+    jmethodID setId = env-&gt;GetMethodID(pCls, &quot;setName&quot;, &quot;(Ljava/lang/String;)V&quot;);
+    env-&gt;CallVoidMethod(tmpObj, setId, env-&gt;NewStringUTF(&quot;看看姓名&quot;));
+    obj = env-&gt;NewGlobalRef(tmpObj);
+    env-&gt;DeleteLocalRef(tmpObj);
+}
+</code></pre><h4 id="2-3-弱全局引用"><a href="#2-3-弱全局引用" class="headerlink" title="2.3 弱全局引用"></a>2.3 弱全局引用</h4><p>弱全局引用和全局引用基本差不多，最大的区别就是弱全局引用不影响GC的回收。在使用弱全局引用的时候一定要注意，使用前要检查下是不是被GC回收了。</p>
+<pre><code>extern &quot;C&quot;
+JNIEXPORT void JNICALL
+Java_zqc_com_example_NativeTest_jniWeakGlobalRef(JNIEnv *env, jobject instance) {
+    static jclass pCls;
+    if (!pCls) {
+        jclass tmpCls = env-&gt;FindClass(&quot;zqc/com/example/Person&quot;);
+        pCls = (jclass) env-&gt;NewWeakGlobalRef(tmpCls);
+        env-&gt;DeleteLocalRef(tmpCls);
+    }
+    //除了第一次需要FindClass外，在没有回收pCls之前都可以使用
+
+    //这里使用...
+
+    //可以手动释放
+    //env-&gt;DeleteWeakGlobalRef(pCls);
+}
+</code></pre><h3 id="3-引用的比较"><a href="#3-引用的比较" class="headerlink" title="3. 引用的比较"></a>3. 引用的比较</h3><p>jni提供了相应的函数</p>
+<pre><code>jboolean IsSameObject(jobject ref1, jobject ref2)
+{ return functions-&gt;IsSameObject(this, ref1, ref2); }
+</code></pre><p>如果两个引用指向同一个实例则返回JNI_TRUE，否则返回JNI_FALSE。</p>
+
+    </div>
+
+    <div class="post-footer">   
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="http://blog.csdn.net/hty1053240123?viewmode=contents" target="_blank">天宇240</a>
+            
         </div>
-    </footer>
+        <div>
+            
+        </div>  
+    </div>
 </article>
 
-
-<article class="post">
+<div class="article-nav prev-next-wrap clearfix">
     
-    <div class="post-content">
-        <div class="post-head home-post-head">
-            <h1 class="post-title">
-                <a href="/2018/02/04/Android-NDK开发系列教程4：对类变量进行操作/">Android NDK开发系列教程4：对类变量进行操作</a>
-            </h1>
-            <div class="post-meta">  &bull;
-                <time class="post-date" datetime="" title="">
-                    2018年02月04日
-                </time>
-            </div>
-        </div>
-        <p class="brief">
-            通常我们也可以直接利用jni来访问和处理类的变量，不一定非要通过Java方法来操作Java类变量。对类变量操作时，类的静态变量和类的实例变量的操作稍微有些不同，下面进行讲解。
-对类的静态变量进行操作类的静态变量属于类，是所有该类实例共...
-        </p> 
-    </div>
-    <footer class="post-footer clearfix">
-        <div class="pull-left tag-list">
-            <div class="post-meta">
+        <a href="/2018/03/06/解决ViewPager+Fragment预加载导致未显示界面提前加载数据/" class="pre-post btn btn-default"><i class="fa fa-angle-left fa-fw"></i>上一篇</a>
     
     
-    <span class="categories-meta fa-wrap">
-        <i class="fa fa-folder-open-o"></i>
-        <span>Android</span>
-    </span>
+        <a href="/2018/02/04/Android-NDK开发系列教程4：对类变量进行操作/" class="next-post btn btn-default">下一篇<i class="fa fa-angle-right fa-fw"></i></a>
     
-    
-    <span class="fa-wrap">
-        <i class="fa fa-tags"></i>
-        <span class="tags-meta">
-            
-            Android JNI开发
-            
-        </span>
-    </span>
-    
-    
-    <span class="fa-wrap">
-        <i class="fa fa-clock-o"></i>
-        <span class="date-meta">2018/02/04</span>
-    </span>
-
 </div>
 
-        </div>
 
-        <div class="post-permalink"> 
-            <a href="/2018/02/04/Android-NDK开发系列教程4：对类变量进行操作/" class="btn btn-default">阅读全文</a>
-        </div>
-    </footer>
-</article>
+    <div id="comments">
+        <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNTA2NC8xMTU5OQ==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+    </div>
 
 
-
-
-    <nav class="pagination" role="navigation">
-        <div id="page-nav">
-            <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class='fa fa-angle-right'></i></a>
-        </div>
-    </nav>
 
 
 

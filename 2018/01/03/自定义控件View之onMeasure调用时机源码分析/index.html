@@ -1,0 +1,1044 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://yoursite.com">
+    <!--SEO-->
+
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+
+<title>自定义控件View之onMeasure调用时机源码分析 | 天宇</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="天宇" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico"  type="image/x-icon">
+
+    
+
+
+
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css?rev=9.12.0">
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css?rev=3.3.4">
+<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+    <div class="hide">
+    	<script src="https://s4.cnzz.com/z_stat.php?id=1263868967&web_id=1263868967" language="JavaScript"></script>
+    </div>
+
+
+
+
+
+
+    
+    
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?c3d1d4bce7d4ef1c50d7ef35d759a5b7";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.2.0/styles/github.min.css">
+<script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+<body>
+    <header class="main-header"  style="background-image:url(/img/banner.jpg); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;"  >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title="">
+            <img src="/img/avatar.jpg" alt="logo头像">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                 <img src="/img/branding.png" alt="从未如此简单有趣">  
+             
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only">Toggle navigation</span>
+                    <i class="fa fa-bars"></i>
+                    </span>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation"><a href="/"><i class="fa fa-fw /favicon.ico"></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/前端/"><i class="fa fa-fw /favicon.ico"></i>前端</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/后端/"><i class="fa fa-fw /favicon.ico"></i>后端</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/工具/"><i class="fa fa-fw /favicon.ico"></i>工具</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/资源/"><i class="fa fa-fw /favicon.ico"></i>资源</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/关于/"><i class="fa fa-fw /favicon.ico"></i>关于</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="自定义控件View之onMeasure调用时机源码分析">
+            
+            自定义控件View之onMeasure调用时机源码分析
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <span>Android</span>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            View onMeasure
+            
+        </span>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">2018/01/03</span>
+    </span>
+
+</div>
+
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <p>先上测试代码：</p>
+<p>MainActivity.java</p>
+<pre><code class="java">import android.app.Activity;  
+import android.os.Bundle;  
+import android.util.Log;  
+
+public class MainActivity extends Activity {  
+
+    @Override  
+    protected void onCreate(Bundle savedInstanceState) {  
+        super.onCreate(savedInstanceState);  
+        Log.e(&quot;hty&quot;, &quot;before setContextView&quot;);  
+        setContentView(R.layout.activity_main);  
+        Log.e(&quot;hty&quot;, &quot;after setContextView&quot;);  
+    }  
+
+    @Override  
+    protected void onResume() {  
+        super.onResume();  
+        Log.e(&quot;hty&quot;, &quot;onResume&quot;);  
+    }  
+
+    @Override  
+    protected void onDestroy() {  
+        super.onDestroy();  
+        Log.e(&quot;hty&quot;, &quot;onDestroy&quot;);  
+    }  
+}
+</code></pre>
+<p>MyView.java</p>
+<pre><code class="java">import android.content.Context;  
+import android.graphics.Canvas;  
+import android.graphics.Color;  
+import android.graphics.Paint;  
+import android.util.AttributeSet;  
+import android.util.Log;  
+import android.view.View;  
+
+public class MyView extends View {  
+    Paint paint;  
+    public MyView(Context context) {  
+        this(context, null);  
+    }  
+
+    public MyView(Context context, AttributeSet attrs) {  
+        super(context, attrs);  
+        Log.e(&quot;hty&quot;,&quot;view constructor&quot;);  
+        paint = new Paint();  
+        paint.setColor(Color.RED);  
+        paint.setTextSize(20);  
+    }  
+
+    @Override  
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {  
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);  
+        Log.e(&quot;hty&quot;,&quot;view onMeasure&quot;);  
+    }  
+
+    @Override  
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {  
+        super.onLayout(changed, left, top, right, bottom);  
+        Log.e(&quot;hty&quot;,&quot;view onLayout&quot;);  
+    }  
+    String str = &quot;这里是测试&quot;;  
+    @Override  
+    protected void onDraw(Canvas canvas) {  
+        super.onDraw(canvas);  
+        Log.e(&quot;hty&quot;,&quot;view onDraw&quot;);  
+        canvas.drawText(str, getWidth()/2-paint.measureText(str)/2,getHeight()/2, paint);  
+
+    }  
+}
+</code></pre>
+<p> activity_main.xml</p>
+<pre><code class="java">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;  
+&lt;RelativeLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;  
+    xmlns:tools=&quot;http://schemas.android.com/tools&quot;  
+    android:id=&quot;@+id/activity_main&quot;  
+    android:layout_width=&quot;match_parent&quot;  
+    android:layout_height=&quot;match_parent&quot;  
+    android:paddingBottom=&quot;@dimen/activity_vertical_margin&quot;  
+    android:paddingLeft=&quot;@dimen/activity_horizontal_margin&quot;  
+    android:paddingRight=&quot;@dimen/activity_horizontal_margin&quot;  
+    android:paddingTop=&quot;@dimen/activity_vertical_margin&quot;  
+    tools:context=&quot;com.zqc.mytest.MainActivity&quot;&gt;  
+
+    &lt;com.zqc.mytest.MyView  
+        android:layout_width=&quot;wrap_content&quot;  
+        android:layout_height=&quot;wrap_content&quot;  
+        android:text=&quot;Hello World!&quot; /&gt;  
+&lt;/RelativeLayout&gt;
+</code></pre>
+<p> 正常运行后，查看对应的Log：<br><img src="http://img.blog.csdn.net/20170801161746746?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvaHR5MTA1MzI0MDEyMw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="enter image description here"><br>从Log输出可以看出在一个View的绘制过程中，onMeasure是被多次调用了的。下面通过源码来一步步分析 onMeasure(int widthMeasureSpec, int heightMeasureSpec)函数，尤其是传过来的两个参数到底是从哪里来的。</p>
+<p>首先看下MainActivity里面的setContentView，进入该函数后，其对应的代码如下：</p>
+<p>Activity.java</p>
+<pre><code class="java">public void setContentView(@LayoutRes int layoutResID) {  
+    getWindow().setContentView(layoutResID);  
+    initWindowDecorActionBar();  
+}
+</code></pre>
+<p> 即调用了getWindow()的setContentView方法，查看getWindow方法，其返还的是类Window的一个实例mWindow，该类是一个抽象类，其具体实现类是PhoneWindow，即调用的是PhoneWindow的setContentView方法，查看相应的代码如下：<br>PhoneWindow.java</p>
+<pre><code class="java">@Override  
+public void setContentView(int layoutResID) {  
+    // Note: FEATURE_CONTENT_TRANSITIONS may be set in the process of installing the window  
+    // decor, when theme attributes and the like are crystalized. Do not check the feature  
+    // before this happens.  
+    if (mContentParent == null) {  
+        installDecor();  
+    } else if (!hasFeature(FEATURE_CONTENT_TRANSITIONS)) {  
+        mContentParent.removeAllViews();  
+    }  
+
+    if (hasFeature(FEATURE_CONTENT_TRANSITIONS)) {  
+        final Scene newScene = Scene.getSceneForLayout(mContentParent, layoutResID,  
+                getContext());  
+        transitionTo(newScene);  
+    } else {  
+        mLayoutInflater.inflate(layoutResID, mContentParent);  
+    }  
+    mContentParent.requestApplyInsets();  
+    final Callback cb = getCallback();  
+    if (cb != null &amp;&amp; !isDestroyed()) {  
+        cb.onContentChanged();  
+    }  
+}
+</code></pre>
+<p> 该方法首先判断mContentParent是否为空，不为空则调用installDecor()方法来初始化mContentParent，查看具体的代码：<br>PhoneWindow.java</p>
+<pre><code class="java">private void installDecor() {  
+    if (mDecor == null) {  
+        mDecor = generateDecor();//这里生成了mDecor,它是所有应用窗口的根View 。  
+        mDecor.setDescendantFocusability(ViewGroup.FOCUS_AFTER_DESCENDANTS);  
+        mDecor.setIsRootNamespace(true);  
+        if (!mInvalidatePanelMenuPosted &amp;&amp; mInvalidatePanelMenuFeatures != 0) {  
+            mDecor.postOnAnimation(mInvalidatePanelMenuRunnable);  
+        }  
+    }  
+    if (mContentParent == null) {  
+        mContentParent = generateLayout(mDecor);//这里就生成了mContentParent，这个generateLayout会根据设定的style来布局显示的界面  
+
+        // Set up decor part of UI to ignore fitsSystemWindows if appropriate.  
+        mDecor.makeOptionalFitsSystemWindows();  
+        ....  
+    }  
+}
+</code></pre>
+<p>其中generateDecor方法就直接返回一个DecorView，代码如下：<br>PhoneWindow.java</p>
+<pre><code class="java">protected DecorView generateDecor() {  
+    return new DecorView(getContext(), -1);  
+}
+</code></pre>
+<p> 而generateLayout(mDecor)方法会根据程序Activity设定的style来布局显示的界面，其代码如下：<br>PhoneWindow.java</p>
+<pre><code class="java">protected ViewGroup generateLayout(DecorView decor) {  
+    // Apply data from current theme.  
+
+    TypedArray a = getWindowStyle();//获取窗口的style  
+
+    。。。。  
+
+    if (a.getBoolean(R.styleable.Window_windowNoTitle, false)) {  
+        requestFeature(FEATURE_NO_TITLE);//看到没，你在xml里面设置的FEATURE_NO_TITLE，在这里生效了  
+    } else if (a.getBoolean(R.styleable.Window_windowActionBar, false)) {  
+        // Don&#39;t allow an action bar if there is no title.  
+        requestFeature(FEATURE_ACTION_BAR);  
+    }  
+
+    。。。。  
+
+    final Context context = getContext();  
+
+    。。。。  
+
+    WindowManager.LayoutParams params = getAttributes();  
+
+    if (!hasSoftInputMode()) {  
+        params.softInputMode = a.getInt(  
+                R.styleable.Window_windowSoftInputMode,  
+                params.softInputMode);  
+    }  
+
+    if (a.getBoolean(R.styleable.Window_backgroundDimEnabled,  
+            mIsFloating)) {  
+        /* All dialogs should have the window dimmed */  
+        if ((getForcedWindowFlags()&amp;WindowManager.LayoutParams.FLAG_DIM_BEHIND) == 0) {  
+            params.flags |= WindowManager.LayoutParams.FLAG_DIM_BEHIND;  
+        }  
+        if (!haveDimAmount()) {  
+            params.dimAmount = a.getFloat(  
+                    android.R.styleable.Window_backgroundDimAmount, 0.5f);  
+        }  
+    }  
+
+    。。。。  
+
+    int layoutResource;  
+    int features = getLocalFeatures();  
+
+    。。。。  
+
+    View in = mLayoutInflater.inflate(layoutResource, null);//这里把给定的布局加载出来，然后加到decor中  
+    decor.addView(in, new ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT));  
+    mContentRoot = (ViewGroup) in;  
+
+    ViewGroup contentParent = (ViewGroup)findViewById(ID_ANDROID_CONTENT);//看到没这个ID_ANDROID_CONTENT，也就是一个窗口的根布局  
+    if (contentParent == null) {  
+        throw new RuntimeException(&quot;Window couldn&#39;t find content container view&quot;);  
+    }  
+
+    。。。。  
+
+    mDecor.finishChanging();  
+    return contentParent;  
+}
+</code></pre>
+<p> 通过一张图来分析下一个窗口的布局具体是怎样的。<br><img src="http://img.blog.csdn.net/20170801171514871?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvaHR5MTA1MzI0MDEyMw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="窗口布局"><br>图上标的很详细，在最外层是一个FramLayout，其实也就是DecorView，是所有窗口的根布局，在该根布局下有一个(0)LinearLayout和一个(1)View，这个(1)View就是状态栏，(0)LinearLayout里面有个FrameLayout，在里面的多个View有固定的id，在图中已经标明，所有在一个Activity通过findViewById获取的ID_ANDROID_CONTENT就是<br>(0)FrameLayout-&gt;(0)LinearLayout-&gt;(0)FrameLayout-&gt;(1)FrameLayout对应的View。<br>要知道onMeasure两个参数到底是从哪里来的，还得再找下View是如何绘制的，上一篇文章有分析。View的绘制从ViewRootImpl的performTraversals()函数开始，下面进入该方法中具体分析下。</p>
+<p>ViewRootImpl.java</p>
+<pre><code class="java">private void performTraversals() {  
+    // cache mView since it is used so much below...  
+    final View host = mView;  
+
+    。。。。  
+
+    mIsInTraversal = true;  
+    mWillDrawSoon = true;  
+    boolean windowSizeMayChange = false;  
+    boolean newSurface = false;  
+    boolean surfaceChanged = false;  
+    WindowManager.LayoutParams lp = mWindowAttributes;  
+
+    int desiredWindowWidth;  
+    int desiredWindowHeight;  
+
+    final int viewVisibility = getHostVisibility();  
+    boolean viewVisibilityChanged = mViewVisibility != viewVisibility  
+            || mNewSurfaceNeeded;  
+
+    WindowManager.LayoutParams params = null;  
+    if (mWindowAttributesChanged) {  
+        mWindowAttributesChanged = false;  
+        surfaceChanged = true;  
+        params = lp;  
+    }  
+
+    。。。。  
+
+    Rect frame = mWinFrame;  
+    if (mFirst) {  
+        mFullRedrawNeeded = true;  
+        mLayoutRequested = true;  
+
+        if (lp.type == WindowManager.LayoutParams.TYPE_STATUS_BAR_PANEL  
+                || lp.type == WindowManager.LayoutParams.TYPE_INPUT_METHOD) {  
+            // NOTE -- system code, won&#39;t try to do compat mode.  
+            Point size = new Point();  
+            mDisplay.getRealSize(size);  
+            desiredWindowWidth = size.x;  
+            desiredWindowHeight = size.y;  
+        } else {  
+            DisplayMetrics packageMetrics =  
+                mView.getContext().getResources().getDisplayMetrics();  
+            desiredWindowWidth = packageMetrics.widthPixels;  
+            desiredWindowHeight = packageMetrics.heightPixels;  
+        }  
+
+       。。。。  
+    } else {  
+        desiredWindowWidth = frame.width();  
+        desiredWindowHeight = frame.height();  
+        if (desiredWindowWidth != mWidth || desiredWindowHeight != mHeight) {  
+            if (DEBUG_ORIENTATION) Log.v(TAG,  
+                    &quot;View &quot; + host + &quot; resized to: &quot; + frame);  
+            mFullRedrawNeeded = true;  
+            mLayoutRequested = true;  
+            windowSizeMayChange = true;  
+        }  
+    }  
+
+    if (viewVisibilityChanged) {  
+        mAttachInfo.mWindowVisibility = viewVisibility;  
+        host.dispatchWindowVisibilityChanged(viewVisibility);  
+        if (viewVisibility != View.VISIBLE || mNewSurfaceNeeded) {  
+            destroyHardwareResources();  
+        }  
+        if (viewVisibility == View.GONE) {  
+            // After making a window gone, we will count it as being  
+            // shown for the first time the next time it gets focus.  
+            mHasHadWindowFocus = false;  
+        }  
+    }  
+
+    。。。。  
+
+    boolean layoutRequested = mLayoutRequested &amp;&amp; (!mStopped || mReportNextDraw);  
+    if (layoutRequested) {  
+
+        final Resources res = mView.getContext().getResources();  
+
+        if (mFirst) {  
+            // make sure touch mode code executes by setting cached value  
+            // to opposite of the added touch mode.  
+            mAttachInfo.mInTouchMode = !mAddedTouchMode;  
+            ensureTouchModeLocally(mAddedTouchMode);  
+        } else {  
+            。。。。  
+            if (lp.width == ViewGroup.LayoutParams.WRAP_CONTENT  
+                    || lp.height == ViewGroup.LayoutParams.WRAP_CONTENT) {  
+                windowSizeMayChange = true;  
+
+                if (lp.type == WindowManager.LayoutParams.TYPE_STATUS_BAR_PANEL  
+                        || lp.type == WindowManager.LayoutParams.TYPE_INPUT_METHOD) {  
+                    // NOTE -- system code, won&#39;t try to do compat mode.  
+                    Point size = new Point();  
+                    mDisplay.getRealSize(size);  
+                    desiredWindowWidth = size.x;  
+                    desiredWindowHeight = size.y;  
+                } else {  
+                    DisplayMetrics packageMetrics = res.getDisplayMetrics();  
+                    desiredWindowWidth = packageMetrics.widthPixels;  
+                    desiredWindowHeight = packageMetrics.heightPixels;  
+                }  
+            }  
+        }  
+
+        // Ask host how big it wants to be  
+        windowSizeMayChange |= measureHierarchy(host, lp, res,  
+                desiredWindowWidth, desiredWindowHeight);  
+    }  
+
+    。。。。  
+
+        if (!mStopped || mReportNextDraw) {  
+            boolean focusChangedDueToTouchMode = ensureTouchModeLocally(  
+                    (relayoutResult&amp;WindowManagerGlobal.RELAYOUT_RES_IN_TOUCH_MODE) != 0);  
+            if (focusChangedDueToTouchMode || mWidth != host.getMeasuredWidth()  
+                    || mHeight != host.getMeasuredHeight() || contentInsetsChanged) {  
+                int childWidthMeasureSpec = getRootMeasureSpec(mWidth, lp.width);//获取  
+                int childHeightMeasureSpec = getRootMeasureSpec(mHeight, lp.height);  
+
+                if (DEBUG_LAYOUT) Log.v(TAG, &quot;Ooops, something changed!  mWidth=&quot;  
+                        + mWidth + &quot; measuredWidth=&quot; + host.getMeasuredWidth()  
+                        + &quot; mHeight=&quot; + mHeight  
+                        + &quot; measuredHeight=&quot; + host.getMeasuredHeight()  
+                        + &quot; coveredInsetsChanged=&quot; + contentInsetsChanged);  
+
+                 // Ask host how big it wants to be  
+                performMeasure(childWidthMeasureSpec, childHeightMeasureSpec);//看这里，看这里  
+
+                // Implementation of weights from WindowManager.LayoutParams  
+                // We just grow the dimensions as needed and re-measure if  
+                // needs be  
+                int width = host.getMeasuredWidth();  
+                int height = host.getMeasuredHeight();  
+                boolean measureAgain = false;  
+
+                if (lp.horizontalWeight &gt; 0.0f) {  
+                    width += (int) ((mWidth - width) * lp.horizontalWeight);  
+                    childWidthMeasureSpec = MeasureSpec.makeMeasureSpec(width,  
+                            MeasureSpec.EXACTLY);  
+                    measureAgain = true;  
+                }  
+                if (lp.verticalWeight &gt; 0.0f) {  
+                    height += (int) ((mHeight - height) * lp.verticalWeight);  
+                    childHeightMeasureSpec = MeasureSpec.makeMeasureSpec(height,  
+                            MeasureSpec.EXACTLY);  
+                    measureAgain = true;  
+                }  
+
+                if (measureAgain) {  
+                    if (DEBUG_LAYOUT) Log.v(TAG,  
+                            &quot;And hey let&#39;s measure once more: width=&quot; + width  
+                            + &quot; height=&quot; + height);  
+                    performMeasure(childWidthMeasureSpec, childHeightMeasureSpec);//看这里，看这里  
+                }  
+
+                layoutRequested = true;  
+            }  
+        }  
+    }   
+
+    。。。。  
+
+    mIsInTraversal = false;  
+}   
+
+private void performMeasure(int childWidthMeasureSpec, int childHeightMeasureSpec) {  
+    Trace.traceBegin(Trace.TRACE_TAG_VIEW, &quot;measure&quot;);  
+    try {  
+        mView.measure(childWidthMeasureSpec, childHeightMeasureSpec);  
+    } finally {  
+        Trace.traceEnd(Trace.TRACE_TAG_VIEW);  
+    }  
+}
+</code></pre>
+<p> 看performTraversals方法中调用的performMeasure的地方，performMeasure即调用了View的measure方法，而measure方法会去调用onMeasure方法。<br>看下如下两行代码</p>
+<pre><code class="java">int childWidthMeasureSpec = getRootMeasureSpec(mWidth, lp.width);//获取  
+int childHeightMeasureSpec = getRootMeasureSpec(mHeight, lp.height);
+</code></pre>
+<p> 在这两行代码中获取了child的宽高，使用的方法是getRootMeasureSpec，其中参数lp.width是传入的MATCH_PARENT或者WRAP_CONTENT，mWidth是窗口期望的大小，getRootMeasureSpec代码如下：<br>ViewRootImpl.java</p>
+<pre><code class="java">private static int getRootMeasureSpec(int windowSize, int rootDimension) {  
+    int measureSpec;  
+    switch (rootDimension) {  
+
+    case ViewGroup.LayoutParams.MATCH_PARENT:  
+        // Window can&#39;t resize. Force root view to be windowSize.  
+        measureSpec = MeasureSpec.makeMeasureSpec(windowSize, MeasureSpec.EXACTLY);  
+        break;  
+    case ViewGroup.LayoutParams.WRAP_CONTENT:  
+        // Window can resize. Set max size for root view.  
+        measureSpec = MeasureSpec.makeMeasureSpec(windowSize, MeasureSpec.AT_MOST);  
+        break;  
+    default:  
+        // Window wants to be an exact size. Force root view to be that size.  
+        measureSpec = MeasureSpec.makeMeasureSpec(rootDimension, MeasureSpec.EXACTLY);  
+        break;  
+    }  
+    return measureSpec;  
+}
+</code></pre>
+<p>这里应该很好理解了，其中调用了MeasureSpec类中的方法，关于MeasureSpec类网上资料很多，该类中用一个int值的两部分分别表示Mode和具体的尺寸。其中最高两位表示</p>
+<p>Mode，而最低的30位表示具体的尺寸值，这里计算完之后就进入了View的measure函数中，代码如下：</p>
+<p>View.java</p>
+<pre><code class="java">public final void measure(int widthMeasureSpec, int heightMeasureSpec) {  
+        boolean optical = isLayoutModeOptical(this);  
+        if (optical != isLayoutModeOptical(mParent)) {  
+            Insets insets = getOpticalInsets();  
+            int oWidth  = insets.left + insets.right;  
+            int oHeight = insets.top  + insets.bottom;  
+            widthMeasureSpec  = MeasureSpec.adjust(widthMeasureSpec,  optical ? -oWidth  : oWidth);  
+            heightMeasureSpec = MeasureSpec.adjust(heightMeasureSpec, optical ? -oHeight : oHeight);  
+        }  
+
+        // Suppress sign extension for the low bytes  
+        long key = (long) widthMeasureSpec &lt;&lt; 32 | (long) heightMeasureSpec &amp; 0xffffffffL;  
+        if (mMeasureCache == null) mMeasureCache = new LongSparseLongArray(2);  
+
+        if ((mPrivateFlags &amp; PFLAG_FORCE_LAYOUT) == PFLAG_FORCE_LAYOUT ||  
+                widthMeasureSpec != mOldWidthMeasureSpec ||  
+                heightMeasureSpec != mOldHeightMeasureSpec) {  
+
+            // first clears the measured dimension flag  
+            mPrivateFlags &amp;= ~PFLAG_MEASURED_DIMENSION_SET;  
+
+            resolveRtlPropertiesIfNeeded();  
+
+            int cacheIndex = (mPrivateFlags &amp; PFLAG_FORCE_LAYOUT) == PFLAG_FORCE_LAYOUT ? -1 :  
+                    mMeasureCache.indexOfKey(key);  
+            if (cacheIndex &lt; 0 || sIgnoreMeasureCache) {  
+                // measure ourselves, this should set the measured dimension flag back  
+                onMeasure(widthMeasureSpec, heightMeasureSpec);  
+                mPrivateFlags3 &amp;= ~PFLAG3_MEASURE_NEEDED_BEFORE_LAYOUT;  
+            } else {  
+                long value = mMeasureCache.valueAt(cacheIndex);  
+                // Casting a long to int drops the high 32 bits, no mask needed  
+                setMeasuredDimensionRaw((int) (value &gt;&gt; 32), (int) value);  
+                mPrivateFlags3 |= PFLAG3_MEASURE_NEEDED_BEFORE_LAYOUT;  
+            }  
+
+            // flag not set, setMeasuredDimension() was not invoked, we raise  
+            // an exception to warn the developer  
+            if ((mPrivateFlags &amp; PFLAG_MEASURED_DIMENSION_SET) != PFLAG_MEASURED_DIMENSION_SET) {  
+                throw new IllegalStateException(&quot;View with id &quot; + getId() + &quot;: &quot;  
+                        + getClass().getName() + &quot;#onMeasure() did not set the&quot;  
+                        + &quot; measured dimension by calling&quot;  
+                        + &quot; setMeasuredDimension()&quot;);  
+            }  
+
+            mPrivateFlags |= PFLAG_LAYOUT_REQUIRED;  
+        }  
+
+        mOldWidthMeasureSpec = widthMeasureSpec;  
+        mOldHeightMeasureSpec = heightMeasureSpec;  
+
+        mMeasureCache.put(key, ((long) mMeasuredWidth) &lt;&lt; 32 |  
+                (long) mMeasuredHeight &amp; 0xffffffffL); // suppress sign extension  
+    }
+</code></pre>
+<p>该方法是final的，因而不能被继承，但是里面提供了onMeasure回调，这样子类就可以直接继承onMeasure函数来实现相应的操作。这个View类型的，但是还有一种是ViewGroup类型，也就是容器类型的控件，在具体容器类型的控件里面可以通过重写onMeasure来实现，比如FrameLayout中的onMeasure函数如下：<br>FrameLayout.java</p>
+<pre><code class="java">protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {  
+     int count = getChildCount();  
+
+     final boolean measureMatchParentChildren =  
+             MeasureSpec.getMode(widthMeasureSpec) != MeasureSpec.EXACTLY ||  
+             MeasureSpec.getMode(heightMeasureSpec) != MeasureSpec.EXACTLY;  
+     mMatchParentChildren.clear();  
+
+     int maxHeight = 0;  
+     int maxWidth = 0;  
+     int childState = 0;  
+
+     for (int i = 0; i &lt; count; i++) {  
+         final View child = getChildAt(i);  
+         if (mMeasureAllChildren || child.getVisibility() != GONE) {  
+             measureChildWithMargins(child, widthMeasureSpec, 0, heightMeasureSpec, 0);  
+             final LayoutParams lp = (LayoutParams) child.getLayoutParams();  
+             maxWidth = Math.max(maxWidth,  
+                     child.getMeasuredWidth() + lp.leftMargin + lp.rightMargin);  
+             maxHeight = Math.max(maxHeight,  
+                     child.getMeasuredHeight() + lp.topMargin + lp.bottomMargin);  
+             childState = combineMeasuredStates(childState, child.getMeasuredState());  
+             if (measureMatchParentChildren) {  
+                 if (lp.width == LayoutParams.MATCH_PARENT ||  
+                         lp.height == LayoutParams.MATCH_PARENT) {  
+                     mMatchParentChildren.add(child);  
+                 }  
+             }  
+         }  
+     }  
+
+     // Account for padding too  
+     maxWidth += getPaddingLeftWithForeground() + getPaddingRightWithForeground();  
+     maxHeight += getPaddingTopWithForeground() + getPaddingBottomWithForeground();  
+
+     // Check against our minimum height and width  
+     maxHeight = Math.max(maxHeight, getSuggestedMinimumHeight());  
+     maxWidth = Math.max(maxWidth, getSuggestedMinimumWidth());  
+
+     // Check against our foreground&#39;s minimum height and width  
+     final Drawable drawable = getForeground();  
+     if (drawable != null) {  
+         maxHeight = Math.max(maxHeight, drawable.getMinimumHeight());  
+         maxWidth = Math.max(maxWidth, drawable.getMinimumWidth());  
+     }  
+
+     setMeasuredDimension(resolveSizeAndState(maxWidth, widthMeasureSpec, childState),  
+             resolveSizeAndState(maxHeight, heightMeasureSpec,  
+                     childState &lt;&lt; MEASURED_HEIGHT_STATE_SHIFT));  
+
+     count = mMatchParentChildren.size();  
+     if (count &gt; 1) {  
+         for (int i = 0; i &lt; count; i++) {  
+             final View child = mMatchParentChildren.get(i);  
+             final MarginLayoutParams lp = (MarginLayoutParams) child.getLayoutParams();  
+
+             final int childWidthMeasureSpec;  
+             if (lp.width == LayoutParams.MATCH_PARENT) {  
+                 final int width = Math.max(0, getMeasuredWidth()  
+                         - getPaddingLeftWithForeground() - getPaddingRightWithForeground()  
+                         - lp.leftMargin - lp.rightMargin);  
+                 childWidthMeasureSpec = MeasureSpec.makeMeasureSpec(  
+                         width, MeasureSpec.EXACTLY);  
+             } else {  
+                 childWidthMeasureSpec = getChildMeasureSpec(widthMeasureSpec,  
+                         getPaddingLeftWithForeground() + getPaddingRightWithForeground() +  
+                         lp.leftMargin + lp.rightMargin,  
+                         lp.width);  
+             }  
+
+             final int childHeightMeasureSpec;  
+             if (lp.height == LayoutParams.MATCH_PARENT) {  
+                 final int height = Math.max(0, getMeasuredHeight()  
+                         - getPaddingTopWithForeground() - getPaddingBottomWithForeground()  
+                         - lp.topMargin - lp.bottomMargin);  
+                 childHeightMeasureSpec = MeasureSpec.makeMeasureSpec(  
+                         height, MeasureSpec.EXACTLY);  
+             } else {  
+                 childHeightMeasureSpec = getChildMeasureSpec(heightMeasureSpec,  
+                         getPaddingTopWithForeground() + getPaddingBottomWithForeground() +  
+                         lp.topMargin + lp.bottomMargin,  
+                         lp.height);  
+             }  
+
+             child.measure(childWidthMeasureSpec, childHeightMeasureSpec);  
+         }  
+     }  
+ }
+</code></pre>
+<p> 大概也就是回调本容器里面的子View的measure函数实现尺寸计算。这里通过方法ViewGroup类中的getChildMeasureSpec()来获取子类期望自己获取的宽高大小。其代码是<br>ViewGroup.java</p>
+<pre><code class="java">public static int getChildMeasureSpec(int spec, int padding, int childDimension) {  
+        int specMode = MeasureSpec.getMode(spec);  
+        int specSize = MeasureSpec.getSize(spec);  
+
+        int size = Math.max(0, specSize - padding);  
+
+        int resultSize = 0;  
+        int resultMode = 0;  
+
+        switch (specMode) {  
+        // Parent has imposed an exact size on us  
+        case MeasureSpec.EXACTLY:  
+            if (childDimension &gt;= 0) {  
+                resultSize = childDimension;  
+                resultMode = MeasureSpec.EXACTLY;  
+            } else if (childDimension == LayoutParams.MATCH_PARENT) {  
+                // Child wants to be our size. So be it.  
+                resultSize = size;  
+                resultMode = MeasureSpec.EXACTLY;  
+            } else if (childDimension == LayoutParams.WRAP_CONTENT) {  
+                // Child wants to determine its own size. It can&#39;t be  
+                // bigger than us.  
+                resultSize = size;  
+                resultMode = MeasureSpec.AT_MOST;  
+            }  
+            break;  
+
+        // Parent has imposed a maximum size on us  
+        case MeasureSpec.AT_MOST:  
+            if (childDimension &gt;= 0) {  
+                // Child wants a specific size... so be it  
+                resultSize = childDimension;  
+                resultMode = MeasureSpec.EXACTLY;  
+            } else if (childDimension == LayoutParams.MATCH_PARENT) {  
+                // Child wants to be our size, but our size is not fixed.  
+                // Constrain child to not be bigger than us.  
+                resultSize = size;  
+                resultMode = MeasureSpec.AT_MOST;  
+            } else if (childDimension == LayoutParams.WRAP_CONTENT) {  
+                // Child wants to determine its own size. It can&#39;t be  
+                // bigger than us.  
+                resultSize = size;  
+                resultMode = MeasureSpec.AT_MOST;  
+            }  
+            break;  
+
+        // Parent asked to see how big we want to be  
+        case MeasureSpec.UNSPECIFIED:  
+            if (childDimension &gt;= 0) {  
+                // Child wants a specific size... let him have it  
+                resultSize = childDimension;  
+                resultMode = MeasureSpec.EXACTLY;  
+            } else if (childDimension == LayoutParams.MATCH_PARENT) {  
+                // Child wants to be our size... find out how big it should  
+                // be  
+                resultSize = View.sUseZeroUnspecifiedMeasureSpec ? 0 : size;  
+                resultMode = MeasureSpec.UNSPECIFIED;  
+            } else if (childDimension == LayoutParams.WRAP_CONTENT) {  
+                // Child wants to determine its own size.... find out how  
+                // big it should be  
+                resultSize = View.sUseZeroUnspecifiedMeasureSpec ? 0 : size;  
+                resultMode = MeasureSpec.UNSPECIFIED;  
+            }  
+            break;  
+        }  
+        return MeasureSpec.makeMeasureSpec(resultSize, resultMode);  
+    }
+</code></pre>
+<p>  在重写onMeasure方法时一定要调用setMeasuredDimension，该方法会将mPrivateFlags经过或使得View知道已经经过了measure这个步骤了。代码如下：<br>View.java</p>
+<pre><code class="java">protected final void setMeasuredDimension(int measuredWidth, int measuredHeight) {  
+    boolean optical = isLayoutModeOptical(this);  
+    if (optical != isLayoutModeOptical(mParent)) {  
+        Insets insets = getOpticalInsets();  
+        int opticalWidth  = insets.left + insets.right;  
+        int opticalHeight = insets.top  + insets.bottom;  
+
+        measuredWidth  += optical ? opticalWidth  : -opticalWidth;  
+        measuredHeight += optical ? opticalHeight : -opticalHeight;  
+    }  
+    setMeasuredDimensionRaw(measuredWidth, measuredHeight);  
+}  
+private void setMeasuredDimensionRaw(int measuredWidth, int measuredHeight) {  
+    mMeasuredWidth = measuredWidth;  
+    mMeasuredHeight = measuredHeight;  
+
+    mPrivateFlags |= PFLAG_MEASURED_DIMENSION_SET;  
+}
+</code></pre>
+<p>至此分析结束，所以说一个View的大小是由自己和父类两者共同决定的。</p>
+
+    </div>
+
+    <div class="post-footer">   
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="http://blog.csdn.net/hty1053240123?viewmode=contents" target="_blank">天宇240</a>
+            
+        </div>
+        <div>
+            
+        </div>  
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2018/01/08/通过adb-shell命令查看当前交互的Activity名称/" class="pre-post btn btn-default"><i class="fa fa-angle-left fa-fw"></i>上一篇</a>
+    
+    
+        <a href="/2018/01/03/应用内存优化之OnLowMemory-OnTrimMemory/" class="next-post btn btn-default">下一篇<i class="fa fa-angle-right fa-fw"></i></a>
+    
+</div>
+
+
+    <div id="comments">
+        <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNTA2NC8xMTU5OQ==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+    </div>
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        
+    <div class="widget">    
+        <h3 class="title">搜索</h3>
+        <div id="search-form">
+            <div id="result-mask" class="hide"></div>
+            <div class="search-area">
+                
+                    <input id="search-key" type="search" autocomplete="off" placeholder="搜点什么呢?">
+                    <button type="button" class="search-form-submit" id="search-local">站内搜索</button>
+                
+                
+            </div>
+            <div id="result-wrap" class="hide">
+                <div id="search-result"></div>
+            </div>
+            <div class="hide">
+                <template id="search-tpl">
+                    <div class="item">
+                        <a href="/{path}" title="{title}">
+                            <div class="title">{title}</div>
+                            <div class="content">{content}</div>
+                        </a>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget notification">
+        <h3 class="title">网站公告</h3>
+        <div>
+            <p>公告就是醒目，为了提醒自己多学习，多总结~ <br/>
+好记忆不如烂笔头~ <br/>
+</p>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+      <h3 class="title">社交</h3> 
+        <div class="content social">
+            
+	            <a href="//github.com/huangtianyu" rel="external nofollow" title="Github" target="_blank">
+			    	<i class="git fa fa-git"></i>
+			    </a>
+            
+	            <a href="mailto:1053240123@qq.com" rel="external nofollow" title="邮箱" target="_blank">
+			    	<i class="envelope-o fa fa-envelope-o"></i>
+			    </a>
+            
+	            <a href="https://weibo.com/1804011630/" rel="external nofollow" title="微博" target="_blank">
+			    	<i class="weibo fa fa-weibo"></i>
+			    </a>
+            
+	            <a href="/atom.xml" rel="external nofollow" title="RSS" target="_blank">
+			    	<i class="feed fa fa-feed"></i>
+			    </a>
+            
+        </div>
+    </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">分类</h3>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/"><i class="fa" aria-hidden="true">Android</i></a><span class="category-list-count">19</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/"><i class="fa" aria-hidden="true">Git</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/"><i class="fa" aria-hidden="true">Hexo</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kotlin/"><i class="fa" aria-hidden="true">Kotlin</i></a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/gradle/"><i class="fa" aria-hidden="true">gradle</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/人工智能/"><i class="fa" aria-hidden="true">人工智能</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计模式/"><i class="fa" aria-hidden="true">设计模式</i></a><span class="category-list-count">1</span></li></ul>
+    </div>
+
+
+        
+        
+    <div class="widget">
+      <h3 class="title">归档</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/"><i class="fa" aria-hidden="true">十月 2018</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/"><i class="fa" aria-hidden="true">三月 2018</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/"><i class="fa" aria-hidden="true">二月 2018</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/"><i class="fa" aria-hidden="true">一月 2018</i></a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/"><i class="fa" aria-hidden="true">十二月 2017</i></a><span class="archive-list-count">3</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">标签云</h3>
+    <div class="content tag-cloud">
+        <a href="/tags/Android-DeepLink-源码解析/" style="font-size: 10px;">Android DeepLink 源码解析</a> <a href="/tags/Android-JNI开发/" style="font-size: 15px;">Android JNI开发</a> <a href="/tags/Android-NDK开发，JNI开发/" style="font-size: 20px;">Android NDK开发，JNI开发</a> <a href="/tags/Android学习/" style="font-size: 10px;">Android学习</a> <a href="/tags/Android源码分析/" style="font-size: 10px;">Android源码分析</a> <a href="/tags/AppLinks-DeepLinks/" style="font-size: 10px;">AppLinks, DeepLinks</a> <a href="/tags/Dex类加载/" style="font-size: 10px;">Dex类加载</a> <a href="/tags/Hexo学习/" style="font-size: 10px;">Hexo学习</a> <a href="/tags/Hexo搭建/" style="font-size: 10px;">Hexo搭建</a> <a href="/tags/Kotlin学习/" style="font-size: 15px;">Kotlin学习</a> <a href="/tags/RoboBinding-MVC-MVP/" style="font-size: 10px;">RoboBinding,MVC,MVP</a> <a href="/tags/SharedPreferences-Editor/" style="font-size: 10px;">SharedPreferences Editor</a> <a href="/tags/View-onMeasure/" style="font-size: 10px;">View onMeasure</a> <a href="/tags/ViewPager-Fragment预加载/" style="font-size: 10px;">ViewPager+Fragment预加载</a> <a href="/tags/adb命令/" style="font-size: 10px;">adb命令</a> <a href="/tags/adb查看交互Activity名称/" style="font-size: 10px;">adb查看交互Activity名称</a> <a href="/tags/gradle配置/" style="font-size: 10px;">gradle配置</a> <a href="/tags/onAttachedToWindow和onDetachedFromWindow-源码解析/" style="font-size: 10px;">onAttachedToWindow和onDetachedFromWindow,源码解析</a> <a href="/tags/onSaveInstanceState/" style="font-size: 10px;">onSaveInstanceState</a> <a href="/tags/内存优化/" style="font-size: 10px;">内存优化</a> <a href="/tags/应用内部广播-LocalBroadcastManager/" style="font-size: 10px;">应用内部广播,LocalBroadcastManager</a> <a href="/tags/查看git-bash内容/" style="font-size: 10px;">查看git bash内容</a> <a href="/tags/深度学习-吴恩达/" style="font-size: 10px;">深度学习 吴恩达</a>
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">友链</h3>
+        <div class="content friends-link">
+        
+            <a href="http://blog.csdn.net/hty1053240123?viewmode=contents" class="fa" target="_blank">个人博客</a>
+        
+            <a href="https://www.jianshu.com/u/3c8a983c71dc" class="fa" target="_blank">简书</a>
+        
+        </div>
+    </div>
+
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12"> 
+                <span>Copyright &copy; 2017
+                </span> | 
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> | 
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+	<script src="/js/search.js?rev=@@hash"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+
+    <script type="text/javascript">
+        // highlight
+        //hljs.initHighlightingOnLoad();
+    </script>
+</body>
+</html>
